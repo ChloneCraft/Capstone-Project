@@ -20,7 +20,13 @@ const userSchema = new Schema(
       ref: "Plant",
       required: true,
     },
-    farm: { type: [Schema.Types.ObjectId], ref: "Plant", required: true },
+    farm: {
+      type: [
+        { field: number, content: Schema.Types.ObjectId, unlocked: Boolean },
+      ],
+      ref: "Plant",
+      required: true,
+    },
   },
   { timestamp: true }
 );
