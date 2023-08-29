@@ -1,16 +1,14 @@
-// import Image from "next/image";
-// import Potato from "../../public/CropStage2.png";
+import Image from "next/image";
+import Potato from "../../public/CropStage2.png";
 
-// export default function Crop({ className }) {
-//   return (
-//     <div className="cropContainer">
-//       <Image
-//         src={Potato}
-//         alt="potato"
-//         width={250}
-//         height={250}
-//         className={className}
-//       />
-//     </div>
-//   );
-// }
+export default function Crop({ content }: any) {
+  if (content == "0") {
+    return <></>;
+  } else {
+    return (
+      <div className="crop">
+        <Image src={Potato} alt="potato" width={100} height={100} />
+      </div>
+    );
+  }
+}

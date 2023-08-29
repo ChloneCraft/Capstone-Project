@@ -4,20 +4,21 @@ import Farm from "../../../components/Farm/Farm";
 import Link from "next/link";
 import useSWR from "swr";
 
-// const fetcher = (url: string) => fetch(url).then((r) => r.json());
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export default function PlayerFarmPage() {
-  const { data } = useSWR("/api/hello");
+  const { data } = useSWR("/api/hello", fetcher);
   if (!data) {
-    return <></>;
+    return <div>loading...</div>;
   }
-  console.log("data from fetching user:", data);
 
   return (
     <main>
       <MoneyDisplay />
+      <br />
       <BuyLand />
-      <Farm />
+      <p>username: {data.username}</p>
+      <Farm farm={data.farm} />
       <Link className="storageLink" href="/Farm/Storage">
         Storage
       </Link>

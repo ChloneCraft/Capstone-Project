@@ -1,14 +1,15 @@
 import dbConnect from "../../../db/connect";
 import User from "../../../db/models/User";
-import { ServerResponse, IncomingMessage } from "http";
+import Plant from "../../../db/models/Plant";
 
 export default async function handler(req: any, res: any) {
-  await dbConnect();
-  const developerID = "64edd87cbb6ac3adc5dba86a";
+  const connection = await dbConnect();
+
+  const developerID = "64ee00dc6f0de821d4b93a9a";
 
   if (req.method === "GET") {
-    console.log("there is a GET request");
     const user = await User.findById(developerID);
+
     const {
       username,
       location,

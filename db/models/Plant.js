@@ -4,17 +4,17 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const plantSchema = new Schema({
-  plantName: { type: string, required: true },
-  type: { type: string, required: true },
-  decayTime: { type: number, required: true },
-  waterCapacity: { type: number, required: true },
-  growthTime: { type: number, required: true },
+  plantName: { type: String, required: true },
+  type: { type: String, required: true },
+  decayTime: { type: Number, required: true },
+  waterCapacity: { type: Number, required: true },
+  growthTime: { type: Number, required: true },
   sellers: {
-    type: [{ sellerId: Schema.Types.ObjectId, amount: number, listDate: Date }],
+    type: [{ sellerId: Schema.Types.ObjectId, amount: Number, listDate: Date }],
     required: true,
   },
   history: {
-    type: [{ price: number, amount: number, Timestamp: Date }],
+    type: [{ price: Number, amount: Number, Timestamp: Date }],
     required: true,
   },
 });

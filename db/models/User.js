@@ -5,12 +5,12 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    username: { type: string, required: true },
-    password: { type: string, required: true },
-    location: { type: { x: number, y: number }, required: true },
-    totalMoney: { type: number, required: true },
-    currentMoney: { type: number, required: true },
-    unlockedField: { type: number, required: true },
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+    location: { type: { x: Number, y: Number }, required: true },
+    totalMoney: { type: Number, required: true },
+    currentMoney: { type: Number, required: true },
+    unlockedField: { type: Number, required: true },
     plantsCollected: {
       type: [Schema.Types.ObjectId],
       ref: "Plant",
@@ -22,7 +22,7 @@ const userSchema = new Schema(
       required: true,
     },
     farm: {
-      type: [{ content: string }],
+      type: [{ type: String }],
       ref: "Plant",
       required: true,
     },
