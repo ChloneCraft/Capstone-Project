@@ -7,6 +7,7 @@ export default async function handler(req: any, res: any) {
   const developerID = "64edd87cbb6ac3adc5dba86a";
 
   if (req.method === "GET") {
+    console.log("there is a GET request");
     const user = await User.findById(developerID);
     const {
       username,

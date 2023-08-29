@@ -5,8 +5,8 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    username: { type: String, required: true },
-    password: { type: number, required: true },
+    username: { type: string, required: true },
+    password: { type: string, required: true },
     location: { type: { x: number, y: number }, required: true },
     totalMoney: { type: number, required: true },
     currentMoney: { type: number, required: true },
@@ -22,7 +22,7 @@ const userSchema = new Schema(
       required: true,
     },
     farm: {
-      type: [{ content: String }],
+      type: [{ content: string }],
       ref: "Plant",
       required: true,
     },

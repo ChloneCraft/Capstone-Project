@@ -4,8 +4,8 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const plantSchema = new Schema({
-  plantName: { type: String, required: true },
-  type: { type: String, required: true },
+  plantName: { type: string, required: true },
+  type: { type: string, required: true },
   decayTime: { type: number, required: true },
   waterCapacity: { type: number, required: true },
   growthTime: { type: number, required: true },
