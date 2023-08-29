@@ -83,6 +83,16 @@ a {
   align-self: center;
   transform: rotate3d(0, 1, 1, -45deg) translateY(-90px) translateX(-20px);
 }
+.cropImageHover {
+  position: absolute;
+  justify-self: center;
+  align-self: center;
+  transform: rotate3d(0, 1, 1, -45deg) translateY(-90px) translateX(-20px);
+  opacity: 0;
+}
+.cropImageHover:hover {
+  opacity: 1;
+}
 
 .cropImage:hover {
 }

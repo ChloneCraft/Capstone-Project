@@ -14,10 +14,13 @@ export default function Crop({ content }: { content: String }) {
           width={200}
           height={200}
           className="cropImage"
-          onMouseOver={(e) => {
-            console.log(e.currentTarget);
-            e.currentTarget.src = "../../public/PotatoHover.png";
-          }}
+        />
+        <Image
+          src={PotatoHover}
+          alt="potato"
+          width={200}
+          height={200}
+          className="cropImageHover"
         />
       </div>
     );
