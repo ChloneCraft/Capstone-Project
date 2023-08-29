@@ -43,3 +43,57 @@ a {
   height: 100vh;
   flex-direction: column;
 }
+.marketButtonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  height: 100vh;
+  flex-direction: column;
+}
+.farmContainer {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.farm {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  width: 700px;
+  height: 700px;
+  background-color: rgb(172, 99, 31);
+  transform: rotate3d(1, 0, 1, 45deg);
+}
+.crop {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  justify-self: center;
+  align-self: center;
+  transform: rotate3d(1, 0, 1, -45deg);
+  z-index: 2;
+  position: absolute;
+}
+.crop2 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  justify-self: center;
+  align-self: center;
+  transform: rotate3d(1, 0, 1, -45deg);
+  z-index: 3;
+  position: absolute;
+}
+.crop3 {
+  justify-self: center;
+  align-self: center;
+  transform: rotate3d(1, 0, 1, -45deg);
+  z-index: 4;
+  position: absolute;
+}
+.cropContainer {
+  position: relative;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}

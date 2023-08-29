@@ -10,6 +10,7 @@ const userSchema = new Schema(
     location: { type: { x: number, y: number }, required: true },
     totalMoney: { type: number, required: true },
     currentMoney: { type: number, required: true },
+    unlockedField: { type: number, required: true },
     plantsCollected: {
       type: [Schema.Types.ObjectId],
       ref: "Plant",
@@ -21,9 +22,7 @@ const userSchema = new Schema(
       required: true,
     },
     farm: {
-      type: [
-        { field: number, content: Schema.Types.ObjectId, unlocked: Boolean },
-      ],
+      type: [{ content: String }],
       ref: "Plant",
       required: true,
     },
