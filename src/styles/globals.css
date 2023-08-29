@@ -62,8 +62,8 @@ a {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr;
-  width: 700px;
-  height: 700px;
+  width: 600px;
+  height: 600px;
   background-color: rgb(172, 99, 31);
   transform: rotate3d(1, 0, 1, 45deg);
   border-radius: 30px;
@@ -71,6 +71,24 @@ a {
 .crop {
   justify-self: center;
   align-self: center;
-  transform: rotate3d(0, 1, 1, -45deg);
-  z-index: 2;
+  display: flex;
+  position: relative;
+  border: solid 1px black;
+  height: 150px;
+  width: 150px;
+}
+.cropImage {
+  position: absolute;
+  justify-self: center;
+  align-self: center;
+  transform: rotate3d(0, 1, 1, -45deg) translateY(-90px) translateX(-20px);
+}
+
+.cropImage:hover {
+}
+
+.emptyPlot {
+  background-color: transparent;
+  /* border: none; */
+  border: solid 1px black;
 }
