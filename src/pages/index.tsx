@@ -1,17 +1,10 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import Button from "../../components/Button";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const router = useRouter();
-  const { push } = router;
-
   return (
     <>
       <Head>
@@ -22,14 +15,10 @@ export default function Home() {
       </Head>
       <main>
         <section className="buttonContainer">
-          <Button destination={"Farm"} push={push} text={"Farm"} />
-          <Button destination={"Market"} push={push} text={"Market"} />
-          <Button
-            destination={"Weather"}
-            push={push}
-            text={"Weather Forecast"}
-          />
-          <Button destination={"Rankings"} push={push} text={"Rankings"} />
+          <Button destination={"/Farm"} text={"Farm"} />
+          <Button destination={"/Market"} text={"Market"} />
+          <Button destination={"/Weather"} text={"Weather Forecast"} />
+          <Button destination={"/Rankings"} text={"Rankings"} />
         </section>
       </main>
     </>

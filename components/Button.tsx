@@ -1,15 +1,16 @@
+import Link from "next/link";
+import { Url } from "url";
+
 export default function Button({
   destination,
-  push,
   text,
 }: {
-  destination: String;
-  push: any;
-  text: String;
+  destination: string;
+  text: string;
 }) {
   return (
-    <button className="mainButton" onClick={() => push(`/${destination}`)}>
+    <Link className="mainButton" href={destination}>
       {text}
-    </button>
+    </Link>
   );
 }
