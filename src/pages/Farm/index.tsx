@@ -4,10 +4,8 @@ import Farm from "../../../components/Farm/Farm";
 import Link from "next/link";
 import useSWR from "swr";
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
-
 export default function PlayerFarmPage() {
-  const { data } = useSWR("/api/hello", fetcher);
+  const { data } = useSWR("/api/hello");
   if (!data) {
     return <div>loading...</div>;
   }

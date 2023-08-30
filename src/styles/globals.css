@@ -73,34 +73,37 @@ a {
   align-self: center;
   display: flex;
   position: relative;
-  border: solid 1px black;
+  /* border: solid 1px black; */
   height: 150px;
   width: 150px;
+}
+.crop:hover {
+  border: solid 5px rgba(255, 255, 255, 0.774);
+  border-radius: 10px;
 }
 .cropImage {
   position: absolute;
   justify-self: center;
   align-self: center;
-  transform: rotate3d(0, 1, 1, -45deg) translateY(-90px) translateX(-20px);
-}
-.cropImageHover {
-  position: absolute;
-  justify-self: center;
-  align-self: center;
-  transform: rotate3d(0, 1, 1, -45deg) translateY(-90px) translateX(-20px);
-  opacity: 0;
-}
-.cropImageHover:hover {
-  opacity: 1;
-}
-
-.cropImage:hover {
+  transform: rotate3d(0.5, 1, 1, -45deg) translateY(-90px) translateX(-20px);
 }
 
 .emptyPlot {
   background-color: transparent;
-  /* border: none; */
-  border: solid 1px black;
+  justify-self: center;
+  align-self: center;
+  display: flex;
+  position: relative;
+  /* border: solid 1px black; */
+  height: 150px;
+  width: 150px;
+  border: none;
+  align-items: center;
+  justify-content: center;
+}
+.emptyPlot:hover {
+  outline: solid 5px rgb(255, 255, 255);
+  border-radius: 10px;
 }
 
 .cropInfo {
@@ -113,4 +116,23 @@ a {
   right: 140px;
   transform: rotate3d(0, 1, 1, -45deg);
   z-index: 2;
+}
+.plantSeedButton {
+  border: outset 2px black;
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  background-color: rgb(20, 145, 20);
+  transform: rotate3d(0, 1, 1, -45deg);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  color: rgb(204, 204, 204);
+  font-weight: bolder;
+  font-size: 20px;
+}
+.plantSeedButton:hover {
+  transform: scale(1.1) rotate3d(0, 1, 1, -45deg);
 }

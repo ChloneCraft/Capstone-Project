@@ -17,7 +17,9 @@ const userSchema = new Schema(
       required: true,
     },
     plantStorage: {
-      type: [Schema.Types.ObjectId],
+      type: [
+        { plant: Schema.Types.ObjectId, amount: Number, decayStatus: String },
+      ],
       ref: "Plant",
       required: true,
     },
