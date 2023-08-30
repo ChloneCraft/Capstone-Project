@@ -4,6 +4,20 @@ import PotatoHover from "../../public/PotatoHover.png";
 import { MouseEventHandler } from "react";
 import { useState } from "react";
 
+interface storageItem {
+  plant: {
+    plantName: String;
+    type: String;
+    decayTime: Number;
+    waterCapacity: Number;
+    growthTime: Number;
+    sellers: [{ sellerId: any; amount: Number; listDate: Date }];
+    history: [{ price: Number; amount: Number; Timestamp: Date }];
+  };
+  decayStatus: String;
+  amount: Number;
+}
+
 export default function Crop({
   content,
   storage,
@@ -32,7 +46,13 @@ export default function Crop({
     setIsClicked(true);
   };
   const handlePlantingSeed: MouseEventHandler<HTMLButtonElement> = (e) => {
-    console.log(storage.plantStorage);
+    console.log("storage", storage);
+    console.log("storage.plantStorage", storage.plantStorage);
+    console.log(
+      storage.plantStorage.filter(
+        (storageItem: storageItem) => storageItem.plant.type === "seed"
+      )
+    );
 
     //open list of seeds from userstorage
     //update farm in user in database

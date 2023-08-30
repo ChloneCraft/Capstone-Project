@@ -3,34 +3,31 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema(
-  {
-    username: { type: String, required: true },
-    password: { type: String, required: true },
-    location: { type: { x: Number, y: Number }, required: true },
-    totalMoney: { type: Number, required: true },
-    currentMoney: { type: Number, required: true },
-    unlockedField: { type: Number, required: true },
-    plantsCollected: {
-      type: [Schema.Types.ObjectId],
-      ref: "Plant",
-      required: true,
-    },
-    plantStorage: {
-      type: [
-        { plant: Schema.Types.ObjectId, amount: Number, decayStatus: String },
-      ],
-      ref: "Plant",
-      required: true,
-    },
-    farm: {
-      type: [{ type: String }],
-      ref: "Plant",
-      required: true,
-    },
+const userSchema = new Schema({
+  username: { type: String, required: true },
+  password: { type: String, required: true },
+  location: { type: { x: Number, y: Number }, required: true },
+  totalMoney: { type: Number, required: true },
+  currentMoney: { type: Number, required: true },
+  unlockedField: { type: Number, required: true },
+  plantsCollected: {
+    type: [Schema.Types.ObjectId],
+    ref: "Plant",
+    required: true,
   },
-  { timestamp: true }
-);
+  plantStorage: {
+    type: [
+      { plant: Schema.Types.ObjectId, amount: Number, decayStatus: String },
+    ],
+    ref: "Plant",
+    required: true,
+  },
+  farm: {
+    type: [{ type: String }],
+    ref: "Plant",
+    required: true,
+  },
+});
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
