@@ -1,5 +1,5 @@
-// db/models/Joke.js
 import mongoose from "mongoose";
+import Plant from "./Plant";
 
 const { Schema } = mongoose;
 
@@ -15,13 +15,13 @@ const userSchema = new Schema({
     ref: "Plant",
     required: true,
   },
-  plantStorage: {
-    type: [
-      { plant: Schema.Types.ObjectId, amount: Number, decayStatus: String },
-    ],
-    ref: "Plant",
-    required: true,
-  },
+  plantStorage: [
+    {
+      plant: { type: String, ref: "Plant" },
+      amount: Number,
+      decayStatus: String,
+    },
+  ],
   farm: {
     type: [{ type: String }],
     ref: "Plant",

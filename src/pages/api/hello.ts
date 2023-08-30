@@ -3,17 +3,14 @@ import User from "../../../db/models/User";
 import Plant from "../../../db/models/Plant";
 
 export default async function handler(req: any, res: any) {
-  const connection = await dbConnect();
+  await dbConnect();
 
   const developerID = "64ee00dc6f0de821d4b93a9a";
 
   if (req.method === "GET") {
     const user = await User.findById(developerID).populate({
-      path: "plantStorage",
-      populate: {
-        path: "plant",
-        model: "Plant",
-      },
+      path: "plantStorage.plant",
+      model: "Plant",
     });
     console.log("user", user);
 
