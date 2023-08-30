@@ -102,3 +102,15 @@ a {
   /* border: none; */
   border: solid 1px black;
 }
+
+.cropInfo {
+  border: solid 3px black;
+  border-radius: 10px;
+  position: absolute;
+  width: 200px;
+  height: 250px;
+  background-color: rgb(182, 140, 84);
+  right: 140px;
+  transform: rotate3d(0, 1, 1, -45deg);
+  z-index: 2;
+}
