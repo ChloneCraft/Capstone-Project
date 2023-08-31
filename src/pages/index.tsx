@@ -1,10 +1,19 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import Button from "../../components/general/Button";
+import MoneyDisplay from "../../components/general/MoneyDisplay";
+import BuyLand from "../../components/Farm/BuyLand";
+import Farm from "../../components/Farm/Farm";
+import Link from "next/link";
+import useSWR from "swr";
+import Navbar from "../../components/general/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const { data } = useSWR("/api/users");
+  if (!data) {
+    return <div>loading...</div>;
+  }
   return (
     <>
       <Head>
@@ -13,11 +22,18 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <header>
+        <Navbar pageTitle="Farmstock" />
+      </header>
       <main className="buttonContainer">
-        <Button destination={"/Farm"} text={"Farm"} />
-        <Button destination={"/Market"} text={"Market"} />
-        <Button destination={"/Weather"} text={"Weather Forecast"} />
-        <Button destination={"/Rankings"} text={"Rankings"} />
+        <MoneyDisplay />
+        <br />
+        <BuyLand />
+        <p>username: {data.username}</p>
+        <Farm farm={data.farm} />
+        <Link className="storageLink" href="/Farm/Storage">
+          Storage
+        </Link>
       </main>
     </>
   );
