@@ -5,7 +5,7 @@ import Link from "next/link";
 import useSWR from "swr";
 
 export default function PlayerFarmPage() {
-  const { data } = useSWR("/api/hello");
+  const { data } = useSWR("/api/users");
   if (!data) {
     return <div>loading...</div>;
   }

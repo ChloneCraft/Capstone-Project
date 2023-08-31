@@ -2,6 +2,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 html,
@@ -11,6 +12,9 @@ body {
 
 body {
   background-color: rgb(216, 151, 12);
+}
+main {
+  position: relative;
 }
 
 a {
@@ -52,7 +56,7 @@ a {
   flex-direction: column;
 }
 .farmContainer {
-  width: 100vw;
+  width: 90vw;
   height: 90vh;
   display: flex;
   justify-content: center;
@@ -135,4 +139,24 @@ a {
 }
 .plantSeedButton:hover {
   transform: scale(1.1) rotate3d(0, 1, 1, -45deg);
+}
+.storageLink {
+  width: 200px;
+  height: 60px;
+  display: flex;
+  background-color: green;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border-radius: 10px;
+  border: solid 2px black;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+}
+.storageLink:hover {
+  transform: scale(1.1);
+  background-color: rgb(1, 177, 1);
+}
+.pageTitle {
 }

@@ -27,7 +27,7 @@ export default function Crop({
 }) {
   const [hasMouseOver, setHasMouseOver] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [selectSeed, setSelectSeed] = useState(false);
+  const [wantsToSelectSeed, setWantsToSelectSeed] = useState(false);
 
   const handleMouseEnter: MouseEventHandler<HTMLImageElement> = (e) => {
     setHasMouseOver(true);
@@ -53,6 +53,7 @@ export default function Crop({
         (storageItem: storageItem) => storageItem.plant.type === "seed"
       )
     );
+    setWantsToSelectSeed(true);
 
     //open list of seeds from userstorage
     //update farm in user in database
@@ -74,6 +75,7 @@ export default function Crop({
             plant
           </button>
         )}
+        {/* {wantsToSelectSeed && } */}
       </aside>
     );
   } else {
