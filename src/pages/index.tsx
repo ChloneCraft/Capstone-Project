@@ -31,7 +31,7 @@ export default function Home() {
         <BuyLand />
         <p>username: {data.username}</p>
         <Farm farm={data.farm} />
-        <Link className="storageLink" href="/Farm/Storage">
+        <Link className="storageLink" href="/Storage">
           Storage
         </Link>
       </main>
