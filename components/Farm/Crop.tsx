@@ -1,8 +1,9 @@
 import Image from "next/image";
-import Potato from "../../public/PotatoStage3.png";
-import PotatoHover from "../../public/PotatoHover.png";
+import Potato from "../../public/images/Potato.png";
+import PotatoHover from "../../public/images/PotatoHover.png";
 import { MouseEventHandler } from "react";
 import { useState } from "react";
+import SelectSeed from "./SelectSeed";
 
 interface storageItem {
   plant: {
@@ -20,10 +21,10 @@ interface storageItem {
 
 export default function Crop({
   content,
-  storage,
+  userData,
 }: {
   content: String;
-  storage: any;
+  userData: any;
 }) {
   const [hasMouseOver, setHasMouseOver] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -47,9 +48,9 @@ export default function Crop({
     setIsClicked(true);
   };
   const handlePlantingSeed: MouseEventHandler<HTMLButtonElement> = (e) => {
-    console.log("storage:", storage.plantStorage);
+    console.log("storage:", userData.plantStorage);
     console.log(
-      storage.plantStorage.filter(
+      userData.plantStorage.filter(
         (storageItem: storageItem) => storageItem.plant.type === "seed"
       )
     );
@@ -75,7 +76,13 @@ export default function Crop({
             plant
           </button>
         )}
-        {/* {wantsToSelectSeed && } */}
+        {wantsToSelectSeed && (
+          <SelectSeed
+            seedsInStorage={userData.plantStorage.filter(
+              (storageItem: any) => storageItem.plant.type === "seed"
+            )}
+          />
+        )}
       </aside>
     );
   } else {

@@ -8,7 +8,7 @@ export default function Farm({ farm }: { farm: String[] }) {
     <section className="farmContainer">
       <div className="farm">
         {farm.map((plot) => {
-          return <Crop content={plot} storage={data} key={uid()} />;
+          return <Crop content={plot} userData={data} key={uid()} />;
         })}
       </div>
     </section>

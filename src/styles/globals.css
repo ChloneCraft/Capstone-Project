@@ -206,6 +206,10 @@ nav a {
   justify-content: center;
   align-items: center;
 }
+.storageItem img {
+  width: 60px;
+  height: 60px;
+}
 .sellButton {
   width: 80px;
 }
@@ -236,3 +240,94 @@ nav a {
   border-top: solid 3px black;
   padding-top: 10px;
 }
+/*selectSeed classes*/
+/* .popupWindowBackground {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(128, 128, 128, 0.411);
+  transform: rotate3d(0, 1, 1, -45deg);
+  display: block;
+  right: 0;
+  bottom: 1000px;
+  left: 0;
+  top: -1000px;
+  position: absolute;
+  z-index: 2;
+} */
+.selectSeed {
+  border: solid 3px black;
+  border-radius: 10px;
+  position: absolute;
+  width: 350px;
+  height: 450px;
+  background-color: rgb(190, 181, 168);
+  right: 140px;
+  transform: rotate3d(0, 1, 1, -45deg);
+  z-index: 3;
+}
+.selectSeed__nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 15px;
+  border-bottom: solid 3px black;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.selectSeed__nav h2 {
+  width: 30%;
+  text-align: center;
+}
+.selectSeed__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.selectSeed__list__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: solid 2px black;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: rgb(190, 181, 168);
+}
+.selectSeed__list__item:hover {
+  transform: scale(1.1);
+  border-width: 4px;
+  font-size: 18px;
+}
+.selectSeed__list__item__content {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  padding: 10px;
+}
+.selectSeed__list__item__content h3,
+.selectSeed__list__item__content div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 33%;
+  flex-grow: 1;
+}
+.selectSeed__list__item__content__imageContainer {
+  flex-grow: 1;
+}
+.selectSeed__list__item__content__imageContainer img {
+  margin: 0;
+  padding: 0;
+}
+/* .divider {
+  border-bottom: solid 2px black;
+  width: 90%;
+  margin: 10px;
+} */

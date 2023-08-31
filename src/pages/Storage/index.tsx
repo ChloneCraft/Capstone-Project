@@ -1,5 +1,6 @@
 import Navbar from "../../../components/general/Navbar";
 import useSWR from "swr";
+import Image from "next/image";
 
 export default function Storage() {
   const { data } = useSWR("/api/users");
@@ -31,7 +32,14 @@ export default function Storage() {
               return (
                 <li className="storageItem">
                   <h3>{storageItem.plant.name}</h3>
-                  <div className="imageContainer">{/* <Image></Image> */}</div>
+                  <div className="imageContainer">
+                    <Image
+                      src={storageItem.plant.image}
+                      alt="plantImage"
+                      width={40}
+                      height={60}
+                    />
+                  </div>
                   <h3>{storageItem.decayStatus}</h3>
                   <h3>{storageItem.amount}</h3>
                   <div>
