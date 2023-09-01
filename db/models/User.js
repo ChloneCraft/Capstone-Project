@@ -28,7 +28,7 @@ const userSchema = new Schema({
     required: true,
   },
   farm: {
-    type: [{ type: String }],
+    type: [{ type: Schema.Types.ObjectId }],
     ref: "Plant",
     required: true,
   },

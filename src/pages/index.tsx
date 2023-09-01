@@ -13,15 +13,15 @@ const developerID = "64ee00dc6f0de821d4b93a9a";
 const developer2ID = "64f1b8324b47dbcee3b7fe44";
 
 export default function Home() {
-  const { data } = useSWR(`/api/${developerID}`);
+  const response = useSWR(`/api/${developerID}`);
+  const { data } = response;
   if (!data) {
     return <div>loading...</div>;
   }
-  const farm = useSWR(`/api/${developerID}/farm`).data;
-  if (!farm) {
-    return <div>loading...</div>;
+
+  function triggerMutate() {
+    response.mutate();
   }
-  console.log(farm);
 
   return (
     <>
@@ -39,7 +39,7 @@ export default function Home() {
         <br />
         <BuyLand />
         <p>username: {data.username}</p>
-        <Farm userData={data} />
+        <Farm userData={data} mutate={triggerMutate} />
         <Link className="storageLink" href="/Storage">
           Storage
         </Link>

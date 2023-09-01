@@ -22,9 +22,13 @@ interface storageItem {
 export default function Crop({
   content,
   userData,
+  index,
+  mutate,
 }: {
-  content: String;
+  content: any;
   userData: any;
+  index: number;
+  mutate: any;
 }) {
   const [hasMouseOver, setHasMouseOver] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -57,7 +61,7 @@ export default function Crop({
     //remove seed from storage
   };
 
-  if (content == "0") {
+  if (content.plantID == 0) {
     return (
       <aside
         className="emptyPlot"
@@ -71,7 +75,12 @@ export default function Crop({
           </button>
         )}
         {wantsToSelectSeed && (
-          <SelectSeed userId={userData._id} storage={userData.plantStorage} />
+          <SelectSeed
+            userId={userData._id}
+            userData={userData}
+            index={index}
+            mutate={mutate}
+          />
         )}
       </aside>
     );
