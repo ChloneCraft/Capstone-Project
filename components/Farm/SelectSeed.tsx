@@ -17,7 +17,12 @@ export async function sendRequest(url: any, { arg }: any) {
     console.error(`Error: ${response.status}`);
   }
 }
-export default function SelectSeed({ userData, index, mutate }: any) {
+export default function SelectSeed({
+  userData,
+  index,
+  setKey,
+  renderkey,
+}: any) {
   const { plantStorage: storage, farm } = userData;
 
   const developerID = "64ee00dc6f0de821d4b93a9a";
@@ -70,7 +75,10 @@ export default function SelectSeed({ userData, index, mutate }: any) {
     });
     if (response.ok) {
       console.log("mutated");
-      mutate();
+      setKey(renderkey + 1);
+      setTimeout(() => {
+        console.log(renderkey);
+      }, 5000);
     }
   }
   return (

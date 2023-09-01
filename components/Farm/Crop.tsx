@@ -23,12 +23,14 @@ export default function Crop({
   content,
   userData,
   index,
-  mutate,
+  setKey,
+  renderkey,
 }: {
   content: any;
   userData: any;
   index: number;
-  mutate: any;
+  setKey: any;
+  renderkey: number;
 }) {
   const [hasMouseOver, setHasMouseOver] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -79,7 +81,8 @@ export default function Crop({
             userId={userData._id}
             userData={userData}
             index={index}
-            mutate={mutate}
+            setKey={setKey}
+            renderkey={renderkey}
           />
         )}
       </aside>

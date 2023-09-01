@@ -1,8 +1,10 @@
 import Crop from "./Crop";
 import { uid } from "uid";
 import useSWR from "swr";
+import { useState } from "react";
 
-export default function Farm({ userData, mutate }: any) {
+export default function Farm({ userData }: any) {
+  const [renderkey, setRenderkey] = useState(0);
   const farm = useSWR(`/api/64ee00dc6f0de821d4b93a9a/farm`).data;
   if (!farm) {
     return <div>loading...</div>;
@@ -17,7 +19,8 @@ export default function Farm({ userData, mutate }: any) {
               content={plot}
               userData={userData}
               index={index}
-              mutate={mutate}
+              setKey={setRenderkey}
+              renderkey={renderkey}
               key={uid()}
             />
           );

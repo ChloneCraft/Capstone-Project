@@ -19,10 +19,6 @@ export default function Home() {
     return <div>loading...</div>;
   }
 
-  function triggerMutate() {
-    response.mutate();
-  }
-
   return (
     <>
       <Head>
@@ -39,7 +35,7 @@ export default function Home() {
         <br />
         <BuyLand />
         <p>username: {data.username}</p>
-        <Farm userData={data} mutate={triggerMutate} />
+        <Farm userData={data} />
         <Link className="storageLink" href="/Storage">
           Storage
         </Link>
