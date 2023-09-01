@@ -9,11 +9,20 @@ import Navbar from "../../components/general/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const developerID = "64ee00dc6f0de821d4b93a9a";
+const developer2ID = "64f1b8324b47dbcee3b7fe44";
+
 export default function Home() {
-  const { data } = useSWR("/api/users");
+  const { data } = useSWR(`/api/${developerID}`);
   if (!data) {
     return <div>loading...</div>;
   }
+  const farm = useSWR(`/api/${developerID}/farm`).data;
+  if (!farm) {
+    return <div>loading...</div>;
+  }
+  console.log(farm);
+
   return (
     <>
       <Head>
@@ -30,7 +39,7 @@ export default function Home() {
         <br />
         <BuyLand />
         <p>username: {data.username}</p>
-        <Farm farm={data.farm} />
+        <Farm userData={data} />
         <Link className="storageLink" href="/Storage">
           Storage
         </Link>

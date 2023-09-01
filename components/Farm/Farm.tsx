@@ -1,16 +1,16 @@
 import Crop from "./Crop";
 import { uid } from "uid";
-import useSWR from "swr";
 
-export default function Farm({ farm }: { farm: String[] }) {
-  const { data } = useSWR("/api/users");
+export default function Farm({ userData }: { userData: any }) {
   return (
     <section className="farmContainer">
       <div className="farm">
-        {farm.map((plot) => {
-          return <Crop content={plot} userData={data} key={uid()} />;
+        {userData.farm.map((plot: any) => {
+          return <Crop content={plot} userData={userData} key={uid()} />;
         })}
       </div>
     </section>
   );
 }
+
+//make close button

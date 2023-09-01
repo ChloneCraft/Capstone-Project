@@ -3,9 +3,8 @@ import useSWR from "swr";
 import Image from "next/image";
 
 export default function Storage() {
-  const { data } = useSWR("/api/users");
-  console.log(data);
-  console.log("storage", data.plantStorage);
+  const developerID = "64ee00dc6f0de821d4b93a9a";
+  const { data } = useSWR(`/api/${developerID}`);
 
   return (
     <>

@@ -1,27 +1,65 @@
+import mongoose from "mongoose";
 import Image from "next/image";
+import useSWRMutation from "swr/mutation";
 
-export default function SelectSeed({ seedsInStorage }: any) {
-  console.log("storage for seeds", seedsInStorage);
+export default function SelectSeed({ storage, userId }: any) {
+  const developerID = "64ee00dc6f0de821d4b93a9a";
+
+  async function sendRequest(url: any, { arg }: any) {
+    const response = await fetch(url, {
+      method: "PUT",
+      body: JSON.stringify(arg),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      await response.json();
+    } else {
+      console.error(`Error: ${response.status}`);
+    }
+  }
+  const { trigger, isMutating } = useSWRMutation(
+    `/api/${developerID}`,
+    sendRequest
+  );
+  const seedsInStorage = storage.filter(
+    (storageItem: any) => storageItem.plant.type === "seed"
+  );
   function handleClick(e: any) {
     e.stopPropagation();
   }
-  function handleSeedSelection(index: number) {
-    console.log("index:", index);
+
+  async function handleSeedSelection(id: mongoose.Types.ObjectId) {
+    const { amount, ...rest } = storage.find(
+      (storageItem: any) => storageItem._id === id
+    );
+    const { plant } = rest;
+    //update farm
+    const updatedSeedStack = { ...rest, amount: amount - 1 };
+    const updatedStorage = storage.map((item: any) => {
+      return item._id === id ? updatedSeedStack : item;
+    });
+    console.log(updatedStorage);
+
+    await trigger(updatedStorage);
   }
+
   return (
-    // <section className="popupWindowBackground" >
     <div className="selectSeed" onClick={handleClick}>
       <nav className="selectSeed__nav">
         <h2>Name</h2>
         <h2>Image</h2>
         <h2>amount</h2>
+        <button className="close">❌</button>
       </nav>
       <ul className="selectSeed__list">
-        {seedsInStorage.map((storageItem: any, index: number) => {
+        {seedsInStorage.map((storageItem: any) => {
           return (
             <li
+              key={storageItem._id}
               className="selectSeed__list__item"
-              onClick={() => handleSeedSelection((index = index))}
+              onClick={() => handleSeedSelection(storageItem._id)}
             >
               <aside className="selectSeed__list__item__content">
                 <h3>{storageItem.plant.name}</h3>
@@ -40,6 +78,5 @@ export default function SelectSeed({ seedsInStorage }: any) {
         })}
       </ul>
     </div>
-    // </section>
   );
 }

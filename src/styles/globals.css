@@ -91,6 +91,9 @@ a {
   align-self: center;
   transform: rotate3d(0.5, 1, 1, -45deg) translateY(-90px) translateX(-20px);
 }
+*::selection {
+  background: transparent;
+}
 
 .emptyPlot {
   background-color: transparent;
@@ -325,6 +328,17 @@ nav a {
 .selectSeed__list__item__content__imageContainer img {
   margin: 0;
   padding: 0;
+}
+.close {
+  align-self: flex-start;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  border-style: none none solid solid;
+}
+.close:hover {
+  transform: scale(1.1);
 }
 /* .divider {
   border-bottom: solid 2px black;

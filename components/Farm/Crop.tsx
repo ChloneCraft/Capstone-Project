@@ -48,12 +48,6 @@ export default function Crop({
     setIsClicked(true);
   };
   const handlePlantingSeed: MouseEventHandler<HTMLButtonElement> = (e) => {
-    console.log("storage:", userData.plantStorage);
-    console.log(
-      userData.plantStorage.filter(
-        (storageItem: storageItem) => storageItem.plant.type === "seed"
-      )
-    );
     setWantsToSelectSeed(true);
 
     //open list of seeds from userstorage
@@ -77,11 +71,7 @@ export default function Crop({
           </button>
         )}
         {wantsToSelectSeed && (
-          <SelectSeed
-            seedsInStorage={userData.plantStorage.filter(
-              (storageItem: any) => storageItem.plant.type === "seed"
-            )}
-          />
+          <SelectSeed userId={userData._id} storage={userData.plantStorage} />
         )}
       </aside>
     );
