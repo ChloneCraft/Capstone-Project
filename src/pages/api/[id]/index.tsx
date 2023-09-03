@@ -6,10 +6,12 @@ export default async function handler(req: any, res: any) {
   const { id } = req.query;
 
   if (req.method === "GET") {
-    const user = await User.findById(id).populate({
-      path: "plantStorage.plant",
-      model: "Plant",
-    });
+    const user = await User.findById(id)
+      .populate({
+        path: "plantStorage.plant",
+        model: "Plant",
+      })
+      .populate("farm");
 
     const {
       username,

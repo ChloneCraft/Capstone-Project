@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Potato from "../../public/images/Potato.png";
-import PotatoHover from "../../public/images/PotatoHover.png";
+import Potato from "../../public/images/Potato/Potato_Plant.png";
+import PotatoHover from "../../public/images/Potato/Potato_Plant_hover2.png";
 import { MouseEventHandler } from "react";
 import { useState } from "react";
 import SelectSeed from "./SelectSeed";
@@ -62,6 +62,10 @@ export default function Crop({
     //deselect plot
     //remove seed from storage
   };
+  const image = userData.farm[index].image.img;
+  const image_hover = userData.farm[index].image.hover;
+  console.log(userData);
+  console.log(userData.farm);
 
   if (content.plantID == 0) {
     return (
@@ -95,7 +99,7 @@ export default function Crop({
         onMouseLeave={handleMouseLeave}
       >
         <Image
-          src={hasMouseOver ? PotatoHover : Potato}
+          src={hasMouseOver ? image_hover : image}
           alt="potato"
           width={250}
           height={250}
