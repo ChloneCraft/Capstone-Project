@@ -23,18 +23,15 @@ export default function Crop({
   content,
   userData,
   index,
-  setKey,
-  renderkey,
 }: {
   content: any;
   userData: any;
   index: number;
-  setKey: any;
-  renderkey: number;
 }) {
   const [hasMouseOver, setHasMouseOver] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [wantsToSelectSeed, setWantsToSelectSeed] = useState(false);
+  const [renderkey, setRenderkey] = useState(0);
 
   const handleMouseEnter: MouseEventHandler<HTMLImageElement> = (e) => {
     setHasMouseOver(true);
@@ -64,8 +61,6 @@ export default function Crop({
   };
   const image = userData.farm[index].image.img;
   const image_hover = userData.farm[index].image.hover;
-  console.log(userData);
-  console.log(userData.farm);
 
   if (content.plantID == 0) {
     return (
@@ -85,7 +80,7 @@ export default function Crop({
             userId={userData._id}
             userData={userData}
             index={index}
-            setKey={setKey}
+            setRenderkey={setRenderkey}
             renderkey={renderkey}
           />
         )}

@@ -20,7 +20,7 @@ export async function sendRequest(url: any, { arg }: any) {
 export default function SelectSeed({
   userData,
   index,
-  setKey,
+  setRenderkey,
   renderkey,
 }: any) {
   const { plantStorage: storage, farm } = userData;
@@ -75,7 +75,7 @@ export default function SelectSeed({
     });
     if (response.ok) {
       console.log("mutated");
-      setKey(renderkey + 1);
+      setRenderkey(renderkey + 1);
       setTimeout(() => {
         console.log(renderkey);
       }, 5000);
@@ -101,7 +101,7 @@ export default function SelectSeed({
                 <h3>{storageItem.plant.name}</h3>
                 <div className="selectSeed__list__item__content__imageContainer">
                   <Image
-                    src={storageItem.plant.image}
+                    src={storageItem.plant.image.img}
                     alt="Seed_Image"
                     width={60}
                     height={60}

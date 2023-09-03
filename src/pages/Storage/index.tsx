@@ -33,7 +33,7 @@ export default function Storage() {
                   <h3>{storageItem.plant.name}</h3>
                   <div className="imageContainer">
                     <Image
-                      src={storageItem.plant.image}
+                      src={storageItem.plant.image.img}
                       alt="plantImage"
                       width={40}
                       height={60}
