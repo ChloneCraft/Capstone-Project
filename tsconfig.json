@@ -23,7 +23,9 @@
     "**/*.ts",
     "**/*.tsx",
     "db/models/Plant.js",
-    "db/models/User.js"
+    "db/models/User.js",
+    "src/pages/api/auth/[...nextauth].js",
+    "src/pages/login.jsx"
   ],
   "exclude": ["node_modules"]
 }
