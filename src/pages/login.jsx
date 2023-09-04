@@ -1,6 +1,6 @@
 import { useSession, signIn, signOut, getSession } from "next-auth/react";
 
-const login = () => {
+const Login = () => {
   const { data: session, status } = useSession();
   if (session) {
     return (
@@ -20,7 +20,7 @@ const login = () => {
     );
   }
 };
-export default login;
+export default Login;
 
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
