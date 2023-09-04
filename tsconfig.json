@@ -26,7 +26,7 @@
     "db/models/User.js",
     "src/pages/api/auth/[...nextauth].js",
     "src/pages/login.jsx",
-    "src/pages/_app.jsx"
+    "src/pages/_app.tsx"
   ],
   "exclude": ["node_modules"]
 }
