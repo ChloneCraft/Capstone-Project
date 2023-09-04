@@ -10,7 +10,7 @@ import { useSession, signOut, getSession } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const developerID = "64ee00dc6f0de821d4b93a9a";
+const developerID = "64f60382abbb5a878d33ba3d";
 const developer2ID = "64f1b8324b47dbcee3b7fe44";
 
 export default function Home() {
@@ -37,7 +37,7 @@ export default function Home() {
           <br />
           <BuyLand />
           <p>username: {data.username}</p>
-          <Farm userData={data} />
+          <Farm />
           <Link className="storageLink" href="/Storage">
             Storage
           </Link>
