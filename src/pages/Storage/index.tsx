@@ -4,7 +4,10 @@ import Image from "next/image";
 
 export default function Storage() {
   const developerID = "64ee00dc6f0de821d4b93a9a";
-  const { data } = useSWR(`/api/${developerID}`);
+  const { data: plantStorage } = useSWR(`/api/${developerID}/plantStorage`);
+  if (!plantStorage) {
+    return <div>loading...</div>;
+  }
 
   return (
     <>
@@ -27,9 +30,9 @@ export default function Storage() {
             <h2>sell</h2>
           </nav>
           <ul className="listStorageItems">
-            {data.plantStorage.map((storageItem: any) => {
+            {plantStorage.map((storageItem: any) => {
               return (
-                <li className="storageItem">
+                <li key={storageItem._id} className="storageItem">
                   <h3>{storageItem.plant.name}</h3>
                   <div className="imageContainer">
                     <Image
