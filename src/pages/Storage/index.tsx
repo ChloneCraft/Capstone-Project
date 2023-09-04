@@ -1,6 +1,7 @@
 import Navbar from "../../../components/general/Navbar";
 import useSWR from "swr";
 import Image from "next/image";
+import { getSession } from "next-auth/react";
 
 export default function Storage() {
   const developerID = "64ee00dc6f0de821d4b93a9a";
@@ -65,3 +66,21 @@ export default function Storage() {
     </>
   );
 }
+
+//redirecting if not logged in
+
+export const getServerSideProps = async (context: any) => {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
+};
+//--------

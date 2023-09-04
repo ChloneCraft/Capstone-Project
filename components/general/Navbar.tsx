@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useSession, signOut, getSession } from "next-auth/react";
 
 export default function Navbar({ pageTitle }: { pageTitle: String }) {
   return (
@@ -10,6 +11,7 @@ export default function Navbar({ pageTitle }: { pageTitle: String }) {
         <Link href={"/Rankings"}>Rankings</Link>
       </aside>
       <h1 className="pageTitle">Farmstock</h1>
+      <button onClick={() => signOut()}>Sign Out</button>
     </nav>
   );
 }
