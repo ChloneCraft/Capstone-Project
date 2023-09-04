@@ -25,7 +25,8 @@
     "db/models/Plant.js",
     "db/models/User.js",
     "src/pages/api/auth/[...nextauth].js",
-    "src/pages/login.jsx"
+    "src/pages/login.jsx",
+    "src/pages/_app.jsx"
   ],
   "exclude": ["node_modules"]
 }
