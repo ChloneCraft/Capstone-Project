@@ -30,6 +30,13 @@ const developerID = "64f60382abbb5a878d33ba3d";
 const developer2ID = "64f1b8324b47dbcee3b7fe44";
 export default function Home() {
   let session = useSession();
+  fetch("/api/users", {
+    method: "POST",
+    body: JSON.stringify({ name: "test", email: "test@mail" }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   // console.log("Session", session);
   // console.log("date", new Date());
   // const user = postDate();

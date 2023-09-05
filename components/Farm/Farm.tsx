@@ -4,12 +4,16 @@ import useSWR from "swr";
 import { useState } from "react";
 
 export default function Farm() {
-  const playerId = useSWR("/api/ChloneCraft").data;
-
   const [farm, setFarm]: [[any] | [], any] = useState([]);
-  console.log("playeridddddddddddddddddddddddddddd", playerId);
+  // const { data: playerId, isLoading: loading } = useSWR("/api/ChloneCraft");
+  // if (loading) {
+  //   return <div>loading</div>;
+  // }
+  // console.log("playeridddddddddddddddddddddddddddd", playerId);
 
-  const { data: farmData, isLoading } = useSWR(`/api/${playerId}/farm`);
+  const { data: farmData, isLoading } = useSWR(
+    `/api/64f1b8324b47dbcee3b7fe44/farm`
+  );
   if (isLoading) {
     return <div>loading...</div>;
   }
