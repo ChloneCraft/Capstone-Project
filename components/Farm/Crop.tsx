@@ -78,8 +78,8 @@ export default function Crop({
         )}
         {wantsToSelectSeed && (
           <SelectSeed
-            // userId={userData._id}
-            // userData={userData}
+            setWantsToSelectSeed={setWantsToSelectSeed}
+            setIsClicked={setIsClicked}
             index={index}
             setFarm={setFarm}
           />

@@ -7,8 +7,10 @@ export default async function handler(req: any, res: any) {
 
   if (req.method === "GET") {
     const user = await User.findById(id).populate("farm");
+    console.log("user in farm api###############################", user);
+
     const { farm } = user;
-    console.log("populated farm", farm);
+    console.log("FARMMMMMMMMMMMMMMMMMMMMMMMM", farm);
 
     return res.status(200).json(farm);
   } else if (req.method === "PUT") {
@@ -19,9 +21,6 @@ export default async function handler(req: any, res: any) {
       },
       { new: true }
     ).populate("farm");
-    // await user.populate("farm");
-    // setTimeout(() => {}, 500);
-    console.log("updated farm:", user);
     return res.status(200).json(user);
   } else {
     return res.status(400).json({ error: "something went wrong" });

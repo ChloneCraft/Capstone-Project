@@ -9,17 +9,51 @@ import Navbar from "../../components/general/Navbar";
 import { useSession, signOut, getSession } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
+// let userInfo: any;
+// let playerId: String;
+
+// async function postDate() {
+//   const output = useSWR("/api/ChloneCraft");
+//   if (!output) return;
+//   return output;
+
+//   // await fetch(`http://localhost:3000/api/ChloneCraft`, {
+//   //   method: "PUT",
+//   //   body: JSON.stringify(new Date()),
+//   //   headers: {
+//   //     "Content-Type": "application/json",
+//   //   },
+//   // });
+// }
 
 const developerID = "64f60382abbb5a878d33ba3d";
 const developer2ID = "64f1b8324b47dbcee3b7fe44";
-
 export default function Home() {
-  // const { data: session, status } = useSession();
-  const response = useSWR(`/api/${developerID}`);
-  const { data } = response;
-  if (!data) {
-    return <div>loading...</div>;
-  }
+  let session = useSession();
+  // console.log("Session", session);
+  // console.log("date", new Date());
+  // const user = postDate();
+  // if (!user) {
+  //   return <div>loading</div>;
+  // }
+  // if (!user.data) {
+  //   return <div>loading</div>;
+  // }
+  // if (!user.data._id) {
+  //   return <div>loading</div>;
+  // }
+  // console.log("frontend id", user?.data?._id);
+  // playerId = user?.data?._id;
+  // if (!session) return;
+  // if (!session.data) return;
+  // if (!session.data.user) return;
+  // const response = useSWR(`/api/${session.data.user.name}`);
+  // console.log("USERDATA FROM USERNAME", response.data);
+
+  // const { data } = response;
+  // if (!data) {
+  //   return <div>loading...</div>;
+  // }
   {
     return (
       <>
@@ -36,7 +70,7 @@ export default function Home() {
           <MoneyDisplay />
           <br />
           <BuyLand />
-          <p>username: {data.username}</p>
+          {/* <p>username: {data.username}</p> */}
           <Farm />
           <Link className="storageLink" href="/Storage">
             Storage

@@ -18,7 +18,6 @@ export default async function handler(req: any, res: any) {
     const user = await User.findByIdAndUpdate(id, {
       $set: { plantStorage: req.body },
     });
-    console.log("updated plantStorage:", user.plantStorage);
     return res.status(200).json("success");
   } else {
     return res.status(400).json({ error: "something went wrong" });

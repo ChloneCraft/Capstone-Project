@@ -21,7 +21,12 @@ export async function sendRequest(url: any, { arg }: any) {
 }
 const developerID = "64ee00dc6f0de821d4b93a9a";
 
-export default function SelectSeed({ index, setFarm }: any) {
+export default function SelectSeed({
+  index,
+  setFarm,
+  setWantsToSelectSeed,
+  setIsClicked,
+}: any) {
   // const { plantStorage: storage, farm } = userData;
   // const [selectedSeed, setSelectedSeed] = useState("");
   const { data: farm } = useSWR(`/api/${developerID}/farm`);
@@ -29,7 +34,7 @@ export default function SelectSeed({ index, setFarm }: any) {
   const { data: plants }: any = useSWR("/api/plants");
 
   const { trigger, isMutating } = useSWRMutation(
-    `/api/${developerID}`,
+    `/api/${developerID}/plantStorage`,
     sendRequest
   );
   if (!farm || !storage || !plants) {
@@ -94,13 +99,20 @@ export default function SelectSeed({ index, setFarm }: any) {
   if (!farm || !storage || !plants) {
     return <div>loading...</div>;
   }
+
+  function handleClosing(): void {
+    setIsClicked(false);
+    setWantsToSelectSeed(false);
+  }
   return (
     <div className="selectSeed" onClick={handleClick}>
       <nav className="selectSeed__nav">
         <h2>Name</h2>
         <h2>Image</h2>
         <h2>amount</h2>
-        <button className="close">❌</button>
+        <button className="close" onClick={() => handleClosing()}>
+          ❌
+        </button>
       </nav>
       <ul className="selectSeed__list">
         {seedsInStorage.map((storageItem: any) => {

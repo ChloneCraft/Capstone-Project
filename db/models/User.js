@@ -1,12 +1,12 @@
-import mongoose from "mongoose";
+import mongoose, { InferSchemaType } from "mongoose";
 import Plant from "./Plant";
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
+export const userSchema = new Schema({
   _id: { type: Schema.Types.ObjectId, required: true },
   username: { type: String, required: true },
-  password: { type: String, required: true },
+  lastLogin: { type: Date, required: false },
   location: { type: { x: Number, y: Number }, required: true },
   totalMoney: { type: Number, required: true },
   currentMoney: { type: Number, required: true },

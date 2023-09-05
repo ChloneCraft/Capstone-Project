@@ -1,36 +1,31 @@
+// import { NextApiRequest, NextApiResponse } from "next";
 // import dbConnect from "../../../db/connect";
 // import User from "../../../db/models/User";
+// import { userSchema } from "../../../db/models/User";
+// import { InferSchemaType } from "mongoose";
 
-// export default async function handler(req: any, res: any) {
+// type UserType = InferSchemaType<typeof userSchema>;
+
+// export default async function handler(
+//   req: NextApiRequest,
+//   res: NextApiResponse
+// ) {
 //   await dbConnect();
 
 //   if (req.method === "GET") {
-//     const user = await User.find().populate({
-//       path: "plantStorage.plant",
-//       model: "Plant",
-//     });
+//     const user = await User.find({ username: req.body });
+//     console.log("USER from users api:", req.body);
 
-//     const {
-//       username,
-//       location,
-//       totalMoney,
-//       currentMoney,
-//       plantsCollected,
-//       plantStorage,
-//       farm,
-//     } = user;
-//     return res.status(200).json({
-//       username: username,
-//       location: location,
-//       totalMoney: totalMoney,
-//       currentMoney: currentMoney,
-//       plantsCollected: plantsCollected,
-//       plantStorage: plantStorage,
-//       farm: farm,
-//     });
-//   } else if (req.method === "PUT") {
-//     const user = await User.findById(developerID);
-//   } else {
+//     // return res.status(200).json({
+//     //   username: user.username,
+//     //   location: location,
+//     //   currentMoney: currentMoney,
+//     // });
+//   }
+//   //    else if (req.method === "PUT") {
+//   //     const user = await User.findById(developerID);
+//   //   }
+//   else {
 //     return res.status(400).json({ error: "something went wrong" });
 //   }
 // }
