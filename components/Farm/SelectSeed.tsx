@@ -23,7 +23,7 @@ const developerID = "64ee00dc6f0de821d4b93a9a";
 
 export default function SelectSeed({ index, setFarm }: any) {
   // const { plantStorage: storage, farm } = userData;
-  const [selectedSeed, setSelectedSeed] = useState("");
+  // const [selectedSeed, setSelectedSeed] = useState("");
   const { data: farm } = useSWR(`/api/${developerID}/farm`);
   const { data: storage }: any = useSWR(`/api/${developerID}/plantStorage`);
   const { data: plants }: any = useSWR("/api/plants");
@@ -56,6 +56,10 @@ export default function SelectSeed({ index, setFarm }: any) {
     const { amount, ...rest } = storage.find(
       (storageItem: any) => storageItem._id === id
     );
+    if (amount === 0) {
+      alert(`you have no ${rest.plant.name} seeds.`);
+      return;
+    }
     const updatedSeedStack = { ...rest, amount: amount - 1 };
     const updatedStorage = storage.map((item: any) => {
       return item._id === id ? updatedSeedStack : item;
