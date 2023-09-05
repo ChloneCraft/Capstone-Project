@@ -84,9 +84,9 @@ export default function SelectSeed({ index, setFarm }: any) {
 
     // }
   }
-  useEffect(() => {
-    setFarm(selectedSeed);
-  }, [selectedSeed]);
+  // useEffect(() => {
+  //   setFarm(selectedSeed);
+  // }, [selectedSeed]);
   if (!farm || !storage || !plants) {
     return <div>loading...</div>;
   }

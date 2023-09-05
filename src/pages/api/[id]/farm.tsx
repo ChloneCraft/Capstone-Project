@@ -12,9 +12,13 @@ export default async function handler(req: any, res: any) {
 
     return res.status(200).json(farm);
   } else if (req.method === "PUT") {
-    const user = await User.findByIdAndUpdate(id, {
-      $set: { farm: req.body },
-    }).populate("farm");
+    const user = await User.findByIdAndUpdate(
+      id,
+      {
+        $set: { farm: req.body },
+      },
+      { new: true }
+    ).populate("farm");
     // await user.populate("farm");
     // setTimeout(() => {}, 500);
     console.log("updated farm:", user);
