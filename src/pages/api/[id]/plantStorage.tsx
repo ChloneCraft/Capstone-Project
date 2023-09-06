@@ -1,24 +1,23 @@
 import dbConnect from "../../../../db/connect";
-import User from "../../../../db/models/User";
+import Player from "../../../../db/models/Player";
 
 export default async function handler(req: any, res: any) {
   await dbConnect();
   const { id } = req.query;
 
   if (req.method === "GET") {
-    const user = await User.findById(id).populate({
+    const player = await Player.findById(id).populate({
       path: "plantStorage.plant",
       model: "Plant",
     });
 
-    const { plantStorage } = user;
+    const { plantStorage } = player;
 
     return res.status(200).json(plantStorage);
   } else if (req.method === "PUT") {
-    const user = await User.findByIdAndUpdate(id, {
+    const player = await Player.findByIdAndUpdate(id, {
       $set: { plantStorage: req.body },
     });
-    console.log("updated plantStorage:", user.plantStorage);
     return res.status(200).json("success");
   } else {
     return res.status(400).json({ error: "something went wrong" });

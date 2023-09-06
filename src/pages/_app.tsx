@@ -8,8 +8,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <SessionProvider session={pageProps.session}>
       <SWRConfig
         value={{
-          fetcher: (url: string) =>
-            fetch(url, { next: { revalidate: 2000 } }).then((r) => r.json()),
+          fetcher: (url: string) => fetch(url).then((r) => r.json()),
         }}
       >
         <Component {...pageProps} />

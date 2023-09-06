@@ -3,12 +3,26 @@ import { uid } from "uid";
 import useSWR from "swr";
 import { useState } from "react";
 
-export default function Farm({ userData }: any) {
-  const farm = useSWR(`/api/64ee00dc6f0de821d4b93a9a/farm`).data;
-  if (!farm) {
+export default function Farm() {
+  const [farm, setFarm]: [[any] | [], any] = useState([]);
+  // const { data: playerId, isLoading: loading } = useSWR("/api/ChloneCraft");
+  // if (loading) {
+  //   return <div>loading</div>;
+  // }
+  // console.log("playeridddddddddddddddddddddddddddd", playerId);
+
+  const { data: farmData, isLoading } = useSWR(
+    `/api/64f1b8324b47dbcee3b7fe44/farm`
+  );
+  if (isLoading) {
     return <div>loading...</div>;
   }
-  console.log(farm);
+  if (farm.length === 0) {
+    console.log("farm is empty", farmData);
+    setFarm(farmData);
+  }
+  console.log("farm state:", farm);
+
   return (
     <section className="farmContainer">
       <div className="farm">
@@ -16,7 +30,8 @@ export default function Farm({ userData }: any) {
           return (
             <Crop
               content={plot}
-              userData={userData}
+              farm={farm}
+              setFarm={setFarm}
               index={index}
               key={uid()}
             />

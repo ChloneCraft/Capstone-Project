@@ -21,17 +21,18 @@ interface storageItem {
 
 export default function Crop({
   content,
-  userData,
   index,
+  setFarm,
+  farm,
 }: {
   content: any;
-  userData: any;
   index: number;
+  setFarm: any;
+  farm: any;
 }) {
   const [hasMouseOver, setHasMouseOver] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [wantsToSelectSeed, setWantsToSelectSeed] = useState(false);
-  const [renderkey, setRenderkey] = useState(0);
 
   const handleMouseEnter: MouseEventHandler<HTMLImageElement> = (e) => {
     setHasMouseOver(true);
@@ -52,15 +53,9 @@ export default function Crop({
   };
   const handlePlantingSeed: MouseEventHandler<HTMLButtonElement> = (e) => {
     setWantsToSelectSeed(true);
-
-    //open list of seeds from userstorage
-    //update farm in user in database
-    //close plant window
-    //deselect plot
-    //remove seed from storage
   };
-  const image = userData.farm[index].image.img;
-  const image_hover = userData.farm[index].image.hover;
+  const image = farm[index].image.img;
+  const image_hover = farm[index].image.hover;
 
   if (content.plantID == 0) {
     return (
@@ -77,11 +72,10 @@ export default function Crop({
         )}
         {wantsToSelectSeed && (
           <SelectSeed
-            userId={userData._id}
-            userData={userData}
+            setWantsToSelectSeed={setWantsToSelectSeed}
+            setIsClicked={setIsClicked}
             index={index}
-            setRenderkey={setRenderkey}
-            renderkey={renderkey}
+            setFarm={setFarm}
           />
         )}
       </aside>

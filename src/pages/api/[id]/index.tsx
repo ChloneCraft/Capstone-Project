@@ -1,41 +1,29 @@
 import dbConnect from "../../../../db/connect";
-import User from "../../../../db/models/User";
+import Player from "../../../../db/models/Player";
+import { ObjectId } from "mongoose";
 
 export default async function handler(req: any, res: any) {
   await dbConnect();
-  const { id } = req.query;
+  const { id: nameOfPlayer } = req.query;
 
   if (req.method === "GET") {
-    const user = await User.findById(id)
-      .populate({
-        path: "plantStorage.plant",
-        model: "Plant",
-      })
-      .populate("farm");
+    const player = await Player.findOne({ username: nameOfPlayer });
 
-    const {
-      username,
-      location,
-      totalMoney,
-      currentMoney,
-      plantsCollected,
-      plantStorage,
-      farm,
-    } = user;
-    return res.status(200).json({
-      username: username,
-      location: location,
-      totalMoney: totalMoney,
-      currentMoney: currentMoney,
-      plantsCollected: plantsCollected,
-      plantStorage: plantStorage,
-      farm: farm,
-    });
+    if (player) {
+      return res.status(200).json(player._id);
+    } else {
+      return res.status(200).json("error");
+    }
   } else if (req.method === "PUT") {
-    const user = await User.findByIdAndUpdate(id, {
-      $set: { plantStorage: req.body },
-    });
-    return res.status(200).json("success");
+    try {
+      const player = await Player.updateOne(
+        { username: nameOfPlayer },
+        { $set: { lastLogin: req.body } }
+      );
+      return res.status(200).json("success");
+    } catch (e) {
+      return res.status(400).json("error:", e);
+    }
   } else {
     return res.status(400).json({ error: "something went wrong" });
   }

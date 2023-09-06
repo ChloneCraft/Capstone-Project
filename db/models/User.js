@@ -1,38 +1,16 @@
-import mongoose from "mongoose";
-import Plant from "./Plant";
+import mongoose, { InferSchemaType } from "mongoose";
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
-  _id: { type: Schema.Types.ObjectId, required: true },
-  username: { type: String, required: true },
-  password: { type: String, required: true },
-  location: { type: { x: Number, y: Number }, required: true },
-  totalMoney: { type: Number, required: true },
-  currentMoney: { type: Number, required: true },
-  unlockedField: { type: Number, required: true },
-  plantsCollected: {
-    type: [Schema.Types.ObjectId],
-    ref: "Plant",
-    required: true,
+export const userSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    image: { type: String, required: true },
+    emailVerified: { type: String, required: true },
   },
-  plantStorage: {
-    type: [
-      {
-        _id: { type: mongoose.Types.ObjectId },
-        plant: { type: Schema.Types.ObjectId, ref: "Plant" },
-        amount: Number,
-        decayStatus: String,
-      },
-    ],
-    required: true,
-  },
-  farm: {
-    type: [{ type: Schema.Types.ObjectId }],
-    ref: "Plant",
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 

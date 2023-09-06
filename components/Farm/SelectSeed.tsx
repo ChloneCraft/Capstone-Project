@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import Image from "next/image";
 import useSWRMutation from "swr/mutation";
 import useSWR from "swr";
+import { useEffect } from "react";
+import { useState } from "react";
 
 export async function sendRequest(url: any, { arg }: any) {
   const response = await fetch(url, {
@@ -17,24 +19,31 @@ export async function sendRequest(url: any, { arg }: any) {
     console.error(`Error: ${response.status}`);
   }
 }
-export default function SelectSeed({
-  userData,
-  index,
-  setRenderkey,
-  renderkey,
-}: any) {
-  const { plantStorage: storage, farm } = userData;
+const developerID = "64ee00dc6f0de821d4b93a9a";
 
-  const developerID = "64ee00dc6f0de821d4b93a9a";
-  const { data: plants } = useSWR("/api/plants");
+export default function SelectSeed({
+  index,
+  setFarm,
+  setWantsToSelectSeed,
+  setIsClicked,
+}: any) {
+  const { data: farm } = useSWR(`/api/${developerID}/farm`);
+  const { data: storage }: any = useSWR(`/api/${developerID}/plantStorage`);
+  const { data: plants }: any = useSWR("/api/plants");
 
   const { trigger, isMutating } = useSWRMutation(
-    `/api/${developerID}`,
+    `/api/${developerID}/plantStorage`,
     sendRequest
   );
-  const seedsInStorage = storage.filter(
-    (storageItem: any) => storageItem.plant.type === "seed"
-  );
+  if (!farm || !storage || !plants) {
+    return <div>loading...</div>;
+  }
+  let seedsInStorage: any;
+  if (storage) {
+    seedsInStorage = storage.filter(
+      (storageItem: any) => storageItem.plant.type === "seed"
+    );
+  }
   function handleClick(e: any) {
     e.stopPropagation();
   }
@@ -50,11 +59,14 @@ export default function SelectSeed({
     const { amount, ...rest } = storage.find(
       (storageItem: any) => storageItem._id === id
     );
+    if (amount === 0) {
+      alert(`you have no ${rest.plant.name} seeds.`);
+      return;
+    }
     const updatedSeedStack = { ...rest, amount: amount - 1 };
     const updatedStorage = storage.map((item: any) => {
       return item._id === id ? updatedSeedStack : item;
     });
-    console.log(updatedStorage);
 
     await trigger(updatedStorage);
 
@@ -62,7 +74,6 @@ export default function SelectSeed({
 
     const { plant } = rest;
     const correspondingPlant = findPlantFromSeed(plant.plantID, plants);
-    console.log("correspondingPlant", correspondingPlant);
     const arg = farm.map((farmEntry: any, farmIndex: number) =>
       farmIndex === index ? correspondingPlant : farmEntry
     );
@@ -72,14 +83,24 @@ export default function SelectSeed({
       headers: {
         "Content-Type": "application/json",
       },
-    });
-    if (response.ok) {
-      console.log("mutated");
-      setRenderkey(renderkey + 1);
-      setTimeout(() => {
-        console.log(renderkey);
-      }, 5000);
-    }
+    }).then((response) => response.json());
+    // if (response.ok) {
+    console.log("mutated:", response.farm);
+    // farm.mutate();
+    setFarm(response.farm);
+
+    // }
+  }
+  // useEffect(() => {
+  //   setFarm(selectedSeed);
+  // }, [selectedSeed]);
+  if (!farm || !storage || !plants) {
+    return <div>loading...</div>;
+  }
+
+  function handleClosing(): void {
+    setIsClicked(false);
+    setWantsToSelectSeed(false);
   }
   return (
     <div className="selectSeed" onClick={handleClick}>
@@ -87,7 +108,9 @@ export default function SelectSeed({
         <h2>Name</h2>
         <h2>Image</h2>
         <h2>amount</h2>
-        <button className="close">❌</button>
+        <button className="close" onClick={() => handleClosing()}>
+          ❌
+        </button>
       </nav>
       <ul className="selectSeed__list">
         {seedsInStorage.map((storageItem: any) => {

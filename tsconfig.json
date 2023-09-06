@@ -23,10 +23,11 @@
     "**/*.ts",
     "**/*.tsx",
     "db/models/Plant.js",
-    "db/models/User.js",
+    "db/models/Player.js",
     "src/pages/api/auth/[...nextauth].js",
     "src/pages/login.jsx",
-    "src/pages/_app.tsx"
+    "src/pages/_app.tsx",
+    "components/Farm/Farm.tsx"
   ],
   "exclude": ["node_modules"]
 }
