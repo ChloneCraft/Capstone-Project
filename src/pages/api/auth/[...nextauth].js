@@ -2,6 +2,7 @@ import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "../../../../db/mongoDBAdapter";
+import useSWR from "swr";
 
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -16,7 +17,42 @@ export const authOptions = {
     async session({ session, user }) {
       if (session?.user) {
         session.user.id = user.id;
+
+        //creating a new player if necessary------------
+
+        // const { data: player, isLoading } = useSWR(`/api/${name}`);
+        // while (isLoading) {
+        //   // wait(!isLoading);
+        // }
+        let userCoords = { x: 0, y: 0 };
+        const name = session?.user?.name;
+        console.log("name from session", name);
+
+        function onSuccess(position) {
+          const { latitude, longitude } = position.coords;
+          userCoords = { x: latitude, y: longitude };
+          console.log("coords:", latitude, longitude);
+        }
+
+        // handle error case
+        function onError() {
+          console.log("cant handle position");
+        }
+        // navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        // if (!player) {
+        fetch("http://localhost:3000/api/players", {
+          method: "POST",
+          body: JSON.stringify({
+            name: name,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
       }
+      // }
+      //-----------------create player----------
+      console.log("session!!!!!!!!!!!!!!!!!!!!!!!", session);
       return session;
     },
     // async signIn(user, account, profile) {

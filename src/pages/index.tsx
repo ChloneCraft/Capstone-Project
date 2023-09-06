@@ -10,44 +10,28 @@ import { useSession, signOut, getSession } from "next-auth/react";
 import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
-let isLanding = false;
 
-const developerID = "64f60382abbb5a878d33ba3d";
-const developer2ID = "64f1b8324b47dbcee3b7fe44";
 export default function Home() {
-  let session = useSession();
+  // console.log("name", name);
 
-  const name = session?.data?.user?.name;
-  console.log("name", name);
-  const { data: player, isLoading } = useSWR(`/api/${name}`);
-  while (isLoading) {
-    useEffect(() => {}, []);
+  // console.log("player before effect", player);
 
-    return <div>loading</div>;
-  }
-  console.log("player before effect", player);
-
-  useEffect(() => {
-    console.log("player:", player);
-    // if (!player) {
-    fetch("http://localhost:3000/api/players", {
-      method: "POST",
-      body: JSON.stringify({ username: name }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    // }
-  }, []);
-  if (session.data) {
-    if (isLanding === false) {
-    }
-  } else {
-    return <div>ERROR</div>;
-  }
-  console.log("isLanding before:", isLanding);
-  isLanding = true;
-  console.log("isLanding after:", isLanding);
+  // useEffect(() => {
+  // console.log("player:", player);
+  // if (!player) {
+  // fetch("http://localhost:3000/api/players", {
+  //   method: "POST",
+  //   body: JSON.stringify({
+  //     username: name,
+  //     date: new Date(),
+  //     location: userCoords,
+  //   }),
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // });
+  // }
+  // }, []);
   return (
     <>
       <Head>
