@@ -4,6 +4,7 @@ import useSWRMutation from "swr/mutation";
 import useSWR from "swr";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 export async function sendRequest(url: any, { arg }: any) {
   const response = await fetch(url, {
@@ -19,6 +20,7 @@ export async function sendRequest(url: any, { arg }: any) {
     console.error(`Error: ${response.status}`);
   }
 }
+
 const developerID = "64ee00dc6f0de821d4b93a9a";
 
 export default function SelectSeed({
@@ -27,12 +29,19 @@ export default function SelectSeed({
   setWantsToSelectSeed,
   setIsClicked,
 }: any) {
-  const { data: farm } = useSWR(`/api/${developerID}/farm`);
-  const { data: storage }: any = useSWR(`/api/${developerID}/plantStorage`);
+  const session = useSession();
+  let userId: String = "";
+  console.log("session", session);
+
+  if (session.data) {
+    userId = session?.data?.user?.id;
+  }
+  const { data: farm } = useSWR(`/api/${userId}/farm`);
+  const { data: storage }: any = useSWR(`/api/${userId}/plantStorage`);
   const { data: plants }: any = useSWR("/api/plants");
 
   const { trigger, isMutating } = useSWRMutation(
-    `/api/${developerID}/plantStorage`,
+    `/api/${userId}/plantStorage`,
     sendRequest
   );
   if (!farm || !storage || !plants) {
@@ -40,6 +49,8 @@ export default function SelectSeed({
   }
   let seedsInStorage: any;
   if (storage) {
+    console.log("STORAGE EXISTS", storage);
+
     seedsInStorage = storage.filter(
       (storageItem: any) => storageItem.plant.type === "seed"
     );
@@ -77,7 +88,9 @@ export default function SelectSeed({
     const arg = farm.map((farmEntry: any, farmIndex: number) =>
       farmIndex === index ? correspondingPlant : farmEntry
     );
-    const response = await fetch(`/api/${developerID}/farm`, {
+    console.log("what do you mean undefined?", id);
+
+    const response = await fetch(`/api/${userId}/farm`, {
       method: "PUT",
       body: JSON.stringify(arg),
       headers: {

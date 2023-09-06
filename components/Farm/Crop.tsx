@@ -1,6 +1,4 @@
 import Image from "next/image";
-import Potato from "../../public/images/Potato/Potato_Plant.png";
-import PotatoHover from "../../public/images/Potato/Potato_Plant_hover2.png";
 import { MouseEventHandler } from "react";
 import { useState } from "react";
 import SelectSeed from "./SelectSeed";

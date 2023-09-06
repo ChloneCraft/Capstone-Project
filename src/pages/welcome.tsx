@@ -69,8 +69,7 @@ export default function Welcome() {
         </main>
       );
     } else {
-      //   user;
-      // push("/");
+      push("/");
     }
   }
 }
