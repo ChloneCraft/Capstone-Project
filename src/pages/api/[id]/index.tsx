@@ -10,7 +10,7 @@ export default async function handler(req: any, res: any) {
     const player = await Player.findOne({ username: nameOfPlayer });
 
     if (player) {
-      return res.status(200).json(player._id);
+      return res.status(200).json(player);
     } else {
       return res.status(200).json("error");
     }
@@ -18,7 +18,7 @@ export default async function handler(req: any, res: any) {
     try {
       const player = await Player.updateOne(
         { username: nameOfPlayer },
-        { $set: { lastLogin: req.body } }
+        { $set: req.body }
       );
       return res.status(200).json("success");
     } catch (e) {

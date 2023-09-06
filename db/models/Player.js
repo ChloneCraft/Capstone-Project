@@ -8,9 +8,9 @@ export const playerSchema = new Schema(
     username: { type: String, default: "NewUser", required: true },
     user: { type: Schema.Types.ObjectId, required: true },
     lastLogin: { type: Date, default: new Date() },
-    location: {
-      type: { latitude: Number, longitude: Number },
-      default: { latitude: 0, longitude: 0 },
+    region: {
+      type: String,
+      default: "none",
       required: true,
     },
     totalMoney: { type: Number, default: 1000, required: true },
