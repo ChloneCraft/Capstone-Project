@@ -27,8 +27,6 @@ export default function SelectSeed({
   setWantsToSelectSeed,
   setIsClicked,
 }: any) {
-  // const { plantStorage: storage, farm } = userData;
-  // const [selectedSeed, setSelectedSeed] = useState("");
   const { data: farm } = useSWR(`/api/${developerID}/farm`);
   const { data: storage }: any = useSWR(`/api/${developerID}/plantStorage`);
   const { data: plants }: any = useSWR("/api/plants");

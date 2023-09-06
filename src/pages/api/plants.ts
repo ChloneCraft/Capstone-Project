@@ -1,5 +1,4 @@
 import dbConnect from "../../../db/connect";
-import User from "../../../db/models/User";
 import Plant from "../../../db/models/Plant";
 
 export default async function handler(req: any, res: any) {

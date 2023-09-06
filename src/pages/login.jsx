@@ -25,6 +25,8 @@ export default Login;
 export const getServerSideProps = async (context) => {
   const session = await getSession(context);
   if (session) {
+    console.log(session);
+    setTimeout(() => {}, 2000);
     return {
       redirect: {
         destination: "/",

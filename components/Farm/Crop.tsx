@@ -53,12 +53,6 @@ export default function Crop({
   };
   const handlePlantingSeed: MouseEventHandler<HTMLButtonElement> = (e) => {
     setWantsToSelectSeed(true);
-
-    //open list of seeds from userstorage
-    //update farm in user in database
-    //close plant window
-    //deselect plot
-    //remove seed from storage
   };
   const image = farm[index].image.img;
   const image_hover = farm[index].image.hover;
