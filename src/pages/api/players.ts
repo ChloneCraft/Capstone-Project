@@ -16,15 +16,6 @@ export default async function handler(
 
     return res.status(200).json(players);
   } else if (req.method === "POST") {
-    const { name: nameInSession } = req.body;
-    const find = await Player.find({ username: nameInSession });
-    if (find.length === 0) {
-      console.log("you created a new profile");
-      const player = new Player({ username: nameInSession });
-      await player.save();
-    } else {
-      console.log("you have a profile");
-    }
     // console.log("PLAYERS APIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII  POst", req.body);
 
     // Player.create();
