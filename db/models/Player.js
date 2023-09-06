@@ -6,10 +6,11 @@ const { Schema } = mongoose;
 export const playerSchema = new Schema(
   {
     username: { type: String, default: "NewUser", required: true },
+    user: { type: Schema.Types.ObjectId, required: true },
     lastLogin: { type: Date, default: new Date() },
     location: {
-      type: { x: Number, y: Number },
-      default: { x: 0, y: 0 },
+      type: { latitude: Number, longitude: Number },
+      default: { latitude: 0, longitude: 0 },
       required: true,
     },
     totalMoney: { type: Number, default: 1000, required: true },
