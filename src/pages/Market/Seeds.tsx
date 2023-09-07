@@ -12,7 +12,6 @@ export default function Seeds() {
   if (!plants) {
     return <div>loading...</div>;
   }
-  console.log("query", query);
 
   function handleSearchInput(e: any, fullStorage: any): void {
     if (e.target.value.toLowerCase()) {
