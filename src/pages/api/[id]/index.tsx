@@ -1,24 +1,24 @@
 import dbConnect from "../../../../db/connect";
-import Player from "../../../../db/models/Player";
+import User from "../../../../db/models/User";
 import { ObjectId } from "mongoose";
 
 export default async function handler(req: any, res: any) {
   await dbConnect();
-  const { id: nameOfPlayer } = req.query;
+  const { id: nameOfUser } = req.query;
 
   if (req.method === "GET") {
-    const player = await Player.findOne({ username: nameOfPlayer });
+    const user = await User.findOne({ username: nameOfUser });
 
-    if (player) {
-      return res.status(200).json(player._id);
+    if (user) {
+      return res.status(200).json(user);
     } else {
       return res.status(200).json("error");
     }
   } else if (req.method === "PUT") {
     try {
-      const player = await Player.updateOne(
-        { username: nameOfPlayer },
-        { $set: { lastLogin: req.body } }
+      const user = await User.updateOne(
+        { username: nameOfUser },
+        { $set: req.body }
       );
       return res.status(200).json("success");
     } catch (e) {

@@ -8,6 +8,10 @@ const plantSchema = new Schema({
   decayTime: { type: Number, required: true },
   waterCapacity: { type: Number, required: true },
   growthTime: { type: Number, required: true },
+  image: {
+    img: { type: String, required: true },
+    hover: { type: String, required: true },
+  },
   sellers: {
     type: [{ sellerId: Schema.Types.ObjectId, amount: Number, listDate: Date }],
     required: true,

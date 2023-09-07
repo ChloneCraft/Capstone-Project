@@ -1,3 +1,8 @@
+:root {
+  --primary-color: rgb(216, 151, 12);
+  --secondary-color: green;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -91,13 +96,14 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 150px;
 }
 .farm {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  width: 600px;
-  height: 600px;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  width: 700px;
+  height: 875px;
   background-color: rgb(172, 99, 31);
   transform: rotate3d(1, 0, 1, 45deg);
   border-radius: 30px;
@@ -132,8 +138,8 @@ a {
   display: flex;
   position: relative;
   /* border: solid 1px black; */
-  height: 150px;
-  width: 150px;
+  height: 165px;
+  width: 165px;
   border: none;
   align-items: center;
   justify-content: center;
@@ -147,10 +153,10 @@ a {
   border: solid 3px black;
   border-radius: 10px;
   position: absolute;
-  width: 200px;
-  height: 250px;
+  width: 350px;
+  height: 400px;
   background-color: rgb(182, 140, 84);
-  right: 140px;
+  right: 100px;
   transform: rotate3d(0, 1, 1, -45deg);
   z-index: 2;
 }
@@ -370,8 +376,103 @@ nav a {
 .close:hover {
   transform: scale(1.1);
 }
-/* .divider {
-  border-bottom: solid 2px black;
-  width: 90%;
-  margin: 10px;
-} */
+
+/*welcome page*/
+.welcomeMain {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  max-width: 100vw;
+  gap: 30px;
+  font-size: 30px;
+}
+.welcomeMain p {
+  text-decoration: underline;
+}
+.regionButton {
+  width: 20%;
+  height: 10%;
+  border-radius: 20px;
+  border: solid 3px black;
+  background-color: green;
+  font-size: 28px;
+  text-decoration: none;
+  color: rgb(19, 8, 70);
+}
+.regionButton:hover {
+  transform: scale(1.2);
+  background-color: rgb(3, 197, 3);
+}
+/*Unlock Plot*/
+.unlockPlot {
+  border: solid 3px black;
+  border-radius: 10px;
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  background-color: rgb(190, 181, 168);
+  right: 140px;
+  transform: rotate3d(0, 1, 1, -45deg);
+  z-index: 3;
+}
+.lockedPlot {
+  background-color: rgba(0, 0, 0, 0.459);
+  justify-self: center;
+  align-self: center;
+  display: flex;
+  position: relative;
+  height: 165px;
+  width: 165px;
+  border: none;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.lockedPlot:hover {
+  outline: solid 5px rgb(255, 255, 255);
+  border-radius: 10px;
+}
+.killPlant {
+  background-color: rgba(255, 0, 0, 0.555);
+  border: solid 3px black;
+  color: black;
+  border-radius: 10px;
+  width: 110px;
+  height: 50px;
+  position: absolute;
+  font-size: 22px;
+  font-weight: bold;
+  bottom: 10px;
+}
+.cropInfoMain {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+.cropInfoMain__wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
+  height: 50px;
+}
+.cropInfoMain__wrapper span {
+  font-size: 25px;
+}
+.noKill {
+  height: 350px;
+}
+.green {
+  color: green;
+}
+.red {
+  color: red;
+}
+.yellow {
+  color: yellow;
+}
