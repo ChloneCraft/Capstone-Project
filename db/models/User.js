@@ -5,8 +5,6 @@ const { Schema } = mongoose;
 
 export const userSchema = new Schema(
   {
-    username: { type: String, default: "NewUser", required: true },
-    user: { type: Schema.Types.ObjectId, required: true },
     lastLogin: { type: Date, default: new Date() },
     region: {
       type: String,
@@ -42,24 +40,114 @@ export const userSchema = new Schema(
       required: true,
     },
     farm: {
-      type: [{ type: Schema.Types.ObjectId }],
+      type: [
+        {
+          plant: { type: mongoose.Schema.Types.ObjectId, ref: "Plant" },
+          growthStatus: { type: Number },
+          waterCapacity: { type: Number },
+        },
+      ],
       default: [
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
-        "64f200084b47dbcee3b7fe46",
+        {
+          plant: "64f98d290a507798d951f7f4",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f98d290a507798d951f7f4",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f98d290a507798d951f7f4",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f98d290a507798d951f7f4",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f98d290a507798d951f7f4",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f98d290a507798d951f7f4",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f98d290a507798d951f7f4",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f98d290a507798d951f7f4",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f98d290a507798d951f7f4",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f98d290a507798d951f7f4",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f98d290a507798d951f7f4",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f98d290a507798d951f7f4",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f994400a507798d951f7f9",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f994400a507798d951f7f9",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f994400a507798d951f7f9",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f994400a507798d951f7f9",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f994400a507798d951f7f9",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f994400a507798d951f7f9",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f994400a507798d951f7f9",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
+        {
+          plant: "64f994400a507798d951f7f9",
+          growthStatus: 0,
+          waterCapacity: 0,
+        },
       ],
       ref: "Plant",
       required: true,

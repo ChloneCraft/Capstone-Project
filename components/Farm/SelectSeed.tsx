@@ -2,10 +2,8 @@ import mongoose from "mongoose";
 import Image from "next/image";
 import useSWRMutation from "swr/mutation";
 import useSWR from "swr";
-import { useEffect } from "react";
-import { useState } from "react";
 import { useSession } from "next-auth/react";
-
+import { mutate } from "swr";
 export async function sendRequest(url: any, { arg }: any) {
   const response = await fetch(url, {
     method: "PUT",
@@ -31,7 +29,7 @@ export default function SelectSeed({
 }: any) {
   const session = useSession();
   let userId: String = "";
-  console.log("session", session);
+  // console.log("session", session);
 
   if (session.data) {
     userId = session?.data?.user?.id;
@@ -49,7 +47,7 @@ export default function SelectSeed({
   }
   let seedsInStorage: any;
   if (storage) {
-    console.log("STORAGE EXISTS", storage);
+    // console.log("STORAGE EXISTS", storage);
 
     seedsInStorage = storage.filter(
       (storageItem: any) => storageItem.plant.type === "seed"
@@ -59,36 +57,60 @@ export default function SelectSeed({
     e.stopPropagation();
   }
 
-  function findPlantFromSeed(seed: mongoose.Types.ObjectId, collection: any) {
-    return collection.find(
+  async function findPlantFromSeed(
+    seed: mongoose.Types.ObjectId,
+    collection: any
+  ) {
+    const plant = await collection.find(
       (collectionElement: any) =>
         collectionElement.plantID === seed && collectionElement.type !== "seed"
     );
+    console.log("finding plant", plant);
+
+    return {
+      plant: plant,
+      growthStatus: plant.growthTime,
+      waterCapacity: plant.waterCapacity,
+    };
   }
 
   async function handleSeedSelection(id: mongoose.Types.ObjectId) {
-    const { amount, ...rest } = storage.find(
-      (storageItem: any) => storageItem._id === id
-    );
+    console.log("id", id);
+    console.log("storage:", storage);
+
+    const { amount, ...rest } = storage.find((storageItem: any) => {
+      console.log("storageItem", storageItem);
+
+      return storageItem.plant._id === id;
+    });
     if (amount === 0) {
       alert(`you have no ${rest.plant.name} seeds.`);
       return;
     }
     const updatedSeedStack = { ...rest, amount: amount - 1 };
     const updatedStorage = storage.map((item: any) => {
-      return item._id === id ? updatedSeedStack : item;
+      return item.plant._id === id ? updatedSeedStack : item;
     });
+    console.log("updatedSeedStack:", updatedSeedStack);
+    console.log("updatedStorage:", updatedStorage);
 
     await trigger(updatedStorage);
 
     //update farm
 
     const { plant } = rest;
-    const correspondingPlant = findPlantFromSeed(plant.plantID, plants);
+    console.log("plant", plant);
+    console.log("plants", plants);
+
+    const correspondingPlant = await findPlantFromSeed(plant.plantID, plants);
+    console.log("correspondingPlant", correspondingPlant);
+
     const arg = farm.map((farmEntry: any, farmIndex: number) =>
       farmIndex === index ? correspondingPlant : farmEntry
     );
-    console.log("what do you mean undefined?", id);
+    console.log("updated farm", arg);
+
+    // console.log("what do you mean undefined?", id);
 
     const response = await fetch(`/api/${userId}/farm`, {
       method: "PUT",
@@ -97,16 +119,12 @@ export default function SelectSeed({
         "Content-Type": "application/json",
       },
     }).then((response) => response.json());
-    // if (response.ok) {
-    console.log("mutated:", response.farm);
+    console.log("response:", response);
+    if (response) {
+      setFarm(response.farm);
+    }
     // farm.mutate();
-    setFarm(response.farm);
-
-    // }
   }
-  // useEffect(() => {
-  //   setFarm(selectedSeed);
-  // }, [selectedSeed]);
   if (!farm || !storage || !plants) {
     return <div>loading...</div>;
   }
@@ -129,9 +147,9 @@ export default function SelectSeed({
         {seedsInStorage.map((storageItem: any) => {
           return (
             <li
-              key={storageItem._id}
+              key={storageItem.plant._id}
               className="selectSeed__list__item"
-              onClick={() => handleSeedSelection(storageItem._id)}
+              onClick={() => handleSeedSelection(storageItem.plant._id)}
             >
               <aside className="selectSeed__list__item__content">
                 <h3>{storageItem.plant.name}</h3>

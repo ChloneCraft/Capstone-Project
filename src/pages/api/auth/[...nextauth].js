@@ -11,7 +11,7 @@ export const authOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       profile(profile) {
-        console.log("profile", profile);
+        // console.log("profile", profile);
         return {
           id: profile.sub,
           email: profile.email,
@@ -51,22 +51,106 @@ export const authOptions = {
             },
           ],
           farm: [
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
-            "64f200084b47dbcee3b7fe46",
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f994400a507798d951f7f9",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f994400a507798d951f7f9",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f994400a507798d951f7f9",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f994400a507798d951f7f9",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f994400a507798d951f7f9",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f994400a507798d951f7f9",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f994400a507798d951f7f9",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f994400a507798d951f7f9",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
           ],
         };
       },
