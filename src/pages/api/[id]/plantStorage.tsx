@@ -11,7 +11,7 @@ export default async function handler(req: any, res: any) {
       path: "plantStorage.plant",
       model: "Plant",
     });
-    console.log("plantStorage api user", user);
+    // console.log("plantStorage api user", user);
 
     const { plantStorage } = user;
 

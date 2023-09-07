@@ -65,7 +65,7 @@ export default function SelectSeed({
       (collectionElement: any) =>
         collectionElement.plantID === seed && collectionElement.type !== "seed"
     );
-    console.log("finding plant", plant);
+    // console.log("finding plant", plant);
 
     return {
       plant: plant,
@@ -75,11 +75,11 @@ export default function SelectSeed({
   }
 
   async function handleSeedSelection(id: mongoose.Types.ObjectId) {
-    console.log("id", id);
-    console.log("storage:", storage);
+    // console.log("id", id);
+    // console.log("storage:", storage);
 
     const { amount, ...rest } = storage.find((storageItem: any) => {
-      console.log("storageItem", storageItem);
+      // console.log("storageItem", storageItem);
 
       return storageItem.plant._id === id;
     });
@@ -91,24 +91,24 @@ export default function SelectSeed({
     const updatedStorage = storage.map((item: any) => {
       return item.plant._id === id ? updatedSeedStack : item;
     });
-    console.log("updatedSeedStack:", updatedSeedStack);
-    console.log("updatedStorage:", updatedStorage);
+    // console.log("updatedSeedStack:", updatedSeedStack);
+    // console.log("updatedStorage:", updatedStorage);
 
     await trigger(updatedStorage);
 
     //update farm
 
     const { plant } = rest;
-    console.log("plant", plant);
-    console.log("plants", plants);
+    // console.log("plant", plant);
+    // console.log("plants", plants);
 
     const correspondingPlant = await findPlantFromSeed(plant.plantID, plants);
-    console.log("correspondingPlant", correspondingPlant);
+    // console.log("correspondingPlant", correspondingPlant);
 
     const arg = farm.map((farmEntry: any, farmIndex: number) =>
       farmIndex === index ? correspondingPlant : farmEntry
     );
-    console.log("updated farm", arg);
+    // console.log("updated farm", arg);
 
     // console.log("what do you mean undefined?", id);
 
@@ -119,7 +119,7 @@ export default function SelectSeed({
         "Content-Type": "application/json",
       },
     }).then((response) => response.json());
-    console.log("response:", response);
+    // console.log("response:", response);
     if (response) {
       setFarm(response.farm);
     }

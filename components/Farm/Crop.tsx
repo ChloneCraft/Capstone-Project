@@ -3,6 +3,7 @@ import { MouseEventHandler } from "react";
 import { useState } from "react";
 import SelectSeed from "./SelectSeed";
 import UnlockPlot from "./UnlockPlot";
+import CropInfo from "./CropInfo";
 
 interface storageItem {
   plant: {
@@ -48,7 +49,7 @@ export default function Crop({
   const onMouseLeaveEmptyPlot: MouseEventHandler<HTMLButtonElement> = (e) => {
     setHasMouseOver(false);
   };
-  const handleClickEmptyPlot: MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleClickPlot: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
     setIsClicked(true);
   };
@@ -59,7 +60,7 @@ export default function Crop({
     e.stopPropagation();
     setWantsToUnlockPlot(true);
   };
-  console.log("crop.farm", farm);
+  // console.log("crop.farm", farm);
 
   const image = farm[index].plant.image?.img;
   const image_hover = farm[index].plant.image?.hover;
@@ -72,7 +73,7 @@ export default function Crop({
         className="emptyPlot"
         onMouseEnter={onMouseEnterEmptyPlot}
         onMouseLeave={onMouseLeaveEmptyPlot}
-        onClick={handleClickEmptyPlot}
+        onClick={handleClickPlot}
       >
         {isClicked && (
           <button className="plantSeedButton" onClick={handlePlantingSeed}>
@@ -95,7 +96,7 @@ export default function Crop({
         className="lockedPlot"
         onMouseEnter={onMouseEnterEmptyPlot}
         onMouseLeave={onMouseLeaveEmptyPlot}
-        onClick={handleClickEmptyPlot}
+        onClick={handleClickPlot}
       >
         {isClicked && (
           <button className="plantSeedButton" onClick={handleUnlockingPlot}>
@@ -114,23 +115,41 @@ export default function Crop({
     );
   } else {
     return (
-      <div
+      <aside
         className="crop"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onClick={handleClickPlot}
       >
         <Image
           src={hasMouseOver ? image_hover : image}
-          alt="potato"
+          alt="Plant"
           width={250}
           height={250}
           className="cropImage"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         />
-        {hasMouseOver && <div className="cropInfo" />}
-        {isClicked && <div className="cropClickedInfo" />}
-      </div>
+        {hasMouseOver && (
+          <CropInfo
+            className="cropInfo"
+            setWantsToUnlockPlot={setWantsToUnlockPlot}
+            setIsClicked={setIsClicked}
+            index={index}
+            setFarm={setFarm}
+          />
+        )}
+        {isClicked && (
+          <CropInfo
+            className="cropInfo"
+            setWantsToUnlockPlot={setWantsToUnlockPlot}
+            setIsClicked={setIsClicked}
+            isClicked={isClicked}
+            index={index}
+            setFarm={setFarm}
+          />
+        )}
+      </aside>
     );
   }
 }

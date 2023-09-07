@@ -25,7 +25,7 @@ export default function Farm() {
       // console.log("farm is empty", farmData);
       setFarm(farmData);
     }
-    console.log("farm", farm);
+    // console.log("farm", farm);
 
     if (farm.length !== 0) {
       return (
