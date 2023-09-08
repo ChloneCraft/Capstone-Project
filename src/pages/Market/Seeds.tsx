@@ -4,7 +4,7 @@ import Image from "next/image";
 import { getSession, useSession } from "next-auth/react";
 import { useState } from "react";
 import mongoose from "mongoose";
-import { UserType } from "../../../db/models/User";
+// import { UserType } from "../../../db/models/User";
 import NumberInput from "../../../components/general/NumberInput";
 
 export default function Seeds() {
@@ -12,16 +12,14 @@ export default function Seeds() {
   const [filteredSeeds, setFilteredSeeds] = useState([]);
   const [buyingButton, setBuyingButton] = useState(0);
   const { data: plants } = useSWR("/api/plants");
-  if (!plants) {
-    return <div>loading...</div>;
-  }
+
   const session = useSession();
   // if (!session.data) {
   //   return <div>loading...</div>;
   // }
   const id = session.data?.user?.id;
   const { data: userStorage } = useSWR(`/api/${id}/plantStorage`);
-  const { data: currentMoney } = useSWR(`/api/${id}/money`);
+  const { data } = useSWR(`/api/${id}/money`);
 
   function findSeedStackById(array: any, id: mongoose.Schema.Types.ObjectId) {
     return array.find((item: any) => item.plant._id === id);
@@ -30,14 +28,33 @@ export default function Seeds() {
   async function addSeedsToInventory(
     userStorage: any,
     seedId: mongoose.Schema.Types.ObjectId,
-    amountToAdd: Number
+    amountToAdd: number
   ) {
+    console.log("seedId", seedId);
+    console.log("amountToAdd", amountToAdd);
+    console.log("userStorage", userStorage);
+
     const stackInStorage = findSeedStackById(userStorage, seedId);
+    console.log("stack in storage:", stackInStorage);
+
     const { amount: amountInStorage } = stackInStorage;
-    const updatedStorage = {
-      amount: amountInStorage + amountToAdd,
-      ...stackInStorage,
+    console.log("amount in storage:", amountInStorage);
+
+    const amountInStorageNumber = parseFloat(amountInStorage);
+    const newAmount = amountInStorageNumber + amountToAdd;
+    console.log("newAmount", newAmount);
+
+    const updatedStack = {
+      amount: newAmount,
+      plant: stackInStorage.plant,
+      decayStatus: stackInStorage.decayStatus,
     };
+    console.log("updated Stack", updatedStack);
+
+    const updatedStorage = userStorage.map((item: any) => {
+      return item.plant._id === seedId ? updatedStack : item;
+    });
+    console.log("updated storage:", updatedStorage);
     await fetch(`/api/${id}/plantStorage`, {
       method: "PUT",
       body: JSON.stringify(updatedStorage),
@@ -46,6 +63,11 @@ export default function Seeds() {
       },
     });
   }
+  if (!data) {
+    return <div>loading</div>;
+  }
+
+  const { currentMoney } = data;
 
   async function calculateUserBalance(
     amount: number,
@@ -54,20 +76,28 @@ export default function Seeds() {
   ) {
     let updatedMoney = null;
     if (operator === "add") {
+      console.log("adding");
       updatedMoney = currentMoney + amount;
     } else if (operator === "subtract") {
+      console.log("subtracting");
+
       updatedMoney = currentMoney - amount;
     }
     if (updatedMoney) {
+      console.log("money updated", updatedMoney);
+
       try {
-        const result = await fetch(`/api/${id}/plantStorage`, {
+        const result = await fetch(`/api/${id}/money`, {
           method: "PUT",
           body: JSON.stringify(updatedMoney),
           headers: {
             "Content-Type": "application/json",
           },
         });
-        return result;
+        if (result.ok) {
+          await result.json();
+          return result;
+        }
       } catch (error) {
         console.error(error);
 
@@ -95,14 +125,25 @@ export default function Seeds() {
     setBuyingButton(buttonId);
   }
 
-  function handleBuy(
+  async function handleBuy(
     seedId: mongoose.Schema.Types.ObjectId,
     amountToAdd: number
   ) {
     setBuyingButton(0);
-    calculateUserBalance(100, "subtract", currentMoney);
+    const newCurrentMoney = await calculateUserBalance(
+      amountToAdd * 100,
+      "subtract",
+      currentMoney
+    );
+
+    console.log("newCurrentMoney", newCurrentMoney);
+
     addSeedsToInventory(userStorage, seedId, amountToAdd);
     console.log("you bought a seed");
+  }
+
+  if (!plants) {
+    return <div>loading...</div>;
   }
 
   if (session.data) {
@@ -128,7 +169,7 @@ export default function Seeds() {
                 onChange={(e) => handleSearchInput(e, listOfSeeds)}
               />
             </form>
-            <p>Money: 1355$</p>
+            <p>Money: {currentMoney}</p>
           </section>
           <section className="storageList">
             <nav className="storageTableNav">
@@ -152,10 +193,10 @@ export default function Seeds() {
                     </div>
                     <h3>100$</h3>
                     <div>
-                      {buyingButton !== index && (
-                        <button onClick={() => clickBuy(index)}>buy</button>
+                      {buyingButton !== index + 1 && (
+                        <button onClick={() => clickBuy(index + 1)}>buy</button>
                       )}
-                      {buyingButton === index && (
+                      {buyingButton === index + 1 && (
                         <NumberInput
                           id={storageItem._id}
                           handleBuy={handleBuy}

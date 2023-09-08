@@ -27,7 +27,8 @@
     "src/pages/api/auth/[...nextauth].js",
     "src/pages/login.jsx",
     "src/pages/_app.tsx",
-    "components/Farm/Farm.tsx"
+    "components/Farm/Farm.tsx",
+    "db/models/User.js"
   ],
   "exclude": ["node_modules"]
 }

@@ -6,8 +6,9 @@ export default function NumberInput({ handleBuy, id }: any) {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
     console.log("dataaa", data);
+    const amountToAdd = data.amountInput as string;
 
-    // handleBuy(id);
+    handleBuy(id, parseFloat(amountToAdd));
   }
   return (
     <form className="numberInputSelectAmountForm" onSubmit={handleSubmit}>
