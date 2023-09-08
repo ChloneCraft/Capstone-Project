@@ -1,6 +1,5 @@
 import dbConnect from "../../../../db/connect";
 import User from "../../../../db/models/User";
-import Plant from "../../../../db/models/Plant";
 
 export default async function handler(req: any, res: any) {
   await dbConnect();
@@ -8,23 +7,30 @@ export default async function handler(req: any, res: any) {
 
   if (req.method === "GET") {
     try {
-      const user = await User.findById(id).populate({
-        path: "plantStorage.plant",
-        model: "Plant",
-      });
+      const user = await User.findById(id);
       // console.log("plantStorage api user", user);
 
-      const { plantStorage } = user;
+      const { totalMoney, currentMoney } = user;
 
-      return res.status(200).json(plantStorage);
+      return res
+        .status(200)
+        .json({ totalMoney: totalMoney, currentMoney: currentMoney });
     } catch (error) {
       return res.statis(400).json(error);
     }
   } else if (req.method === "PUT") {
-    const user = await User.findByIdAndUpdate(id, {
-      $set: { plantStorage: req.body },
-    });
-    return res.status(200).json("success");
+    try {
+      const user = await User.findByIdAndUpdate(
+        id,
+        {
+          $set: { currentMoney: req.body },
+        },
+        { new: true }
+      );
+      return res.status(200).json(user);
+    } catch (e) {
+      return res.status(400).json(e);
+    }
   } else {
     return res.status(400).json({ error: "something went wrong" });
   }

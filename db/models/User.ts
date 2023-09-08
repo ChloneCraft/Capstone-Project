@@ -3,6 +3,8 @@ import Plant from "./Plant";
 
 const { Schema } = mongoose;
 
+export type UserType = InferSchemaType<typeof userSchema>;
+
 export const userSchema = new Schema(
   {
     lastLogin: { type: Date, default: new Date() },
