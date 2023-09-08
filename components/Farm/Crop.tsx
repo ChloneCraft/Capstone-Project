@@ -30,6 +30,7 @@ export default function Crop({
   setFarm: any;
   farm: any;
 }) {
+  // console.log("crop", farm);
   const [hasMouseOver, setHasMouseOver] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [wantsToSelectSeed, setWantsToSelectSeed] = useState(false);
@@ -65,9 +66,7 @@ export default function Crop({
   function calcGrowth() {
     if (farm[index].plant.type) {
       return (
-        ((farm[index].growthStatus - farm[index].plant.growthTime) *
-          farm[index].plant.growthTime) /
-        100
+        100 - (farm[index].growthStatus * 100) / farm[index].plant.growthTime
       );
     } else {
       return -1;
@@ -76,17 +75,22 @@ export default function Crop({
 
   let image;
   let image_hover;
-  if (calcGrowth() === -1) {
-  } else if (calcGrowth() <= 50) {
-    image = farm[index].plant.image?.stage1;
-    image_hover = farm[index].plant.image?.stage1_hover;
-  } else if (calcGrowth() < 100) {
-    image = farm[index].plant.image?.stage2;
-    image_hover = farm[index].plant.image?.stage2_hover;
-  } else {
-    image = farm[index].plant.image?.img;
-    image_hover = farm[index].plant.image?.hover;
+  const growth = calcGrowth();
+  index === 5 && console.log("crop growth", growth);
+  if (growth !== -1) {
+    if (growth <= 50) {
+      image = farm[index].plant.image?.stage1;
+      image_hover = farm[index].plant.image?.stage1_hover;
+    } else if (growth < 100) {
+      image = farm[index].plant.image?.stage2;
+      image_hover = farm[index].plant.image?.stage2_hover;
+    } else {
+      image = farm[index].plant.image?.img;
+      image_hover = farm[index].plant.image?.hover;
+    }
   }
+
+  index === 5 && console.log("crop image", image);
 
   // if (farm[index].plant.type) {
   //   console.log("plot plant", farm[index]);

@@ -18,7 +18,7 @@ export default async function handler(req: any, res: any) {
 
       return res.status(200).json(plantStorage);
     } catch (error) {
-      return res.statis(400).json(error);
+      return res.status(400).json(error);
     }
   } else if (req.method === "PUT") {
     const user = await User.findByIdAndUpdate(id, {
