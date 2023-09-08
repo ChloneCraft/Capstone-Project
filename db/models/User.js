@@ -1,7 +1,9 @@
 import mongoose, { InferSchemaType } from "mongoose";
-import Plant from "./Plant";
+import Plant from "./Plant.js";
 
 const { Schema } = mongoose;
+
+// export type UserType = InferSchemaType<typeof userSchema>;
 
 export const userSchema = new Schema(
   {
