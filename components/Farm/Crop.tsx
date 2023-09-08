@@ -62,10 +62,35 @@ export default function Crop({
   };
   // console.log("crop.farm", farm);
 
-  const image = farm[index].plant.image?.img;
-  const image_hover = farm[index].plant.image?.hover;
+  function calcGrowth() {
+    if (farm[index].plant.type) {
+      return (
+        ((farm[index].growthStatus - farm[index].plant.growthTime) *
+          farm[index].plant.growthTime) /
+        100
+      );
+    } else {
+      return -1;
+    }
+  }
 
-  // console.log("plantID", content.plant.plantID);
+  let image;
+  let image_hover;
+  if (calcGrowth() === -1) {
+  } else if (calcGrowth() <= 50) {
+    image = farm[index].plant.image?.stage1;
+    image_hover = farm[index].plant.image?.stage1_hover;
+  } else if (calcGrowth() < 100) {
+    image = farm[index].plant.image?.stage2;
+    image_hover = farm[index].plant.image?.stage2_hover;
+  } else {
+    image = farm[index].plant.image?.img;
+    image_hover = farm[index].plant.image?.hover;
+  }
+
+  // if (farm[index].plant.type) {
+  //   console.log("plot plant", farm[index]);
+  // }
 
   if (content.plant.plantID == 0) {
     return (

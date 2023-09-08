@@ -74,7 +74,11 @@ export default function Storage() {
                         height={60}
                       />
                     </div>
-                    <h3>{storageItem.decayStatus}</h3>
+                    {storageItem.decayStatus === 0 ? (
+                      <h3>-</h3>
+                    ) : (
+                      <h3>{storageItem.decayStatus}h</h3>
+                    )}
                     <h3>{storageItem.amount}</h3>
                     <div>
                       {storageItem.plant.type !== "seed" && (

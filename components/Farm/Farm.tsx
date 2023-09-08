@@ -38,7 +38,7 @@ export default function Farm() {
                   farm={farm}
                   setFarm={setFarm}
                   index={index}
-                  key={uid()}
+                  key={plot._id}
                 />
               );
             })}

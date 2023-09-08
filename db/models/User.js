@@ -26,7 +26,7 @@ export const userSchema = new Schema(
           _id: { type: mongoose.Types.ObjectId },
           plant: { type: Schema.Types.ObjectId, ref: "Plant" },
           amount: Number,
-          decayStatus: String,
+          decayStatus: Number,
         },
       ],
       default: [

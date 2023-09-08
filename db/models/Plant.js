@@ -11,6 +11,8 @@ const plantSchema = new Schema({
   image: {
     img: { type: String, required: true },
     hover: { type: String, required: true },
+    stage1: { type: String, required: true },
+    stage2: { type: String, required: true },
   },
   sellers: {
     type: [{ sellerId: Schema.Types.ObjectId, amount: Number, listDate: Date }],
