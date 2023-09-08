@@ -11,13 +11,13 @@ export default function Seeds() {
   const [query, setQuery] = useState("");
   const [filteredSeeds, setFilteredSeeds] = useState([]);
   const [buyingButton, setBuyingButton] = useState(0);
+  const [displayedMoney, setDisplayedMoney] = useState(-1);
   const { data: plants } = useSWR("/api/plants");
 
+  console.log("render", displayedMoney);
+
   const session = useSession();
-  // if (!session.data) {
-  //   return <div>loading...</div>;
-  // }
-  const id = session.data?.user?.id;
+  const id = session?.data?.user?.id;
   const { data: userStorage } = useSWR(`/api/${id}/plantStorage`);
   const { data } = useSWR(`/api/${id}/money`);
 
@@ -66,8 +66,11 @@ export default function Seeds() {
   if (!data) {
     return <div>loading</div>;
   }
-
   const { currentMoney } = data;
+
+  if (displayedMoney === -1) {
+    setDisplayedMoney(currentMoney);
+  }
 
   async function calculateUserBalance(
     amount: number,
@@ -95,8 +98,10 @@ export default function Seeds() {
           },
         });
         if (result.ok) {
-          await result.json();
-          return result;
+          const returnValue = await result.json();
+          console.log("result is ok", returnValue);
+
+          return returnValue;
         }
       } catch (error) {
         console.error(error);
@@ -135,11 +140,11 @@ export default function Seeds() {
       "subtract",
       currentMoney
     );
-
+    setDisplayedMoney(newCurrentMoney);
     console.log("newCurrentMoney", newCurrentMoney);
 
     addSeedsToInventory(userStorage, seedId, amountToAdd);
-    console.log("you bought a seed");
+    console.log("you bought a seed", displayedMoney);
   }
 
   if (!plants) {
@@ -169,7 +174,7 @@ export default function Seeds() {
                 onChange={(e) => handleSearchInput(e, listOfSeeds)}
               />
             </form>
-            <p>Money: {currentMoney}</p>
+            <p>Money: {displayedMoney}</p>
           </section>
           <section className="storageList">
             <nav className="storageTableNav">

@@ -27,7 +27,7 @@ export default async function handler(req: any, res: any) {
         },
         { new: true }
       );
-      return res.status(200).json(user);
+      return res.status(200).json(user.currentMoney);
     } catch (e) {
       return res.status(400).json(e);
     }
