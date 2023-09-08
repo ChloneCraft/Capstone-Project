@@ -14,8 +14,6 @@ export default function Seeds() {
   const [displayedMoney, setDisplayedMoney] = useState(-1);
   const { data: plants } = useSWR("/api/plants");
 
-  console.log("render", displayedMoney);
-
   const session = useSession();
   const id = session?.data?.user?.id;
   const { data: userStorage } = useSWR(`/api/${id}/plantStorage`);
@@ -30,31 +28,22 @@ export default function Seeds() {
     seedId: mongoose.Schema.Types.ObjectId,
     amountToAdd: number
   ) {
-    console.log("seedId", seedId);
-    console.log("amountToAdd", amountToAdd);
-    console.log("userStorage", userStorage);
-
     const stackInStorage = findSeedStackById(userStorage, seedId);
-    console.log("stack in storage:", stackInStorage);
 
     const { amount: amountInStorage } = stackInStorage;
-    console.log("amount in storage:", amountInStorage);
 
     const amountInStorageNumber = parseFloat(amountInStorage);
     const newAmount = amountInStorageNumber + amountToAdd;
-    console.log("newAmount", newAmount);
 
     const updatedStack = {
       amount: newAmount,
       plant: stackInStorage.plant,
       decayStatus: stackInStorage.decayStatus,
     };
-    console.log("updated Stack", updatedStack);
 
     const updatedStorage = userStorage.map((item: any) => {
       return item.plant._id === seedId ? updatedStack : item;
     });
-    console.log("updated storage:", updatedStorage);
     await fetch(`/api/${id}/plantStorage`, {
       method: "PUT",
       body: JSON.stringify(updatedStorage),
@@ -79,16 +68,11 @@ export default function Seeds() {
   ) {
     let updatedMoney = null;
     if (operator === "add") {
-      console.log("adding");
       updatedMoney = currentMoney + amount;
     } else if (operator === "subtract") {
-      console.log("subtracting");
-
       updatedMoney = currentMoney - amount;
     }
     if (updatedMoney) {
-      console.log("money updated", updatedMoney);
-
       try {
         const result = await fetch(`/api/${id}/money`, {
           method: "PUT",
@@ -99,7 +83,6 @@ export default function Seeds() {
         });
         if (result.ok) {
           const returnValue = await result.json();
-          console.log("result is ok", returnValue);
 
           return returnValue;
         }
@@ -141,10 +124,8 @@ export default function Seeds() {
       currentMoney
     );
     setDisplayedMoney(newCurrentMoney);
-    console.log("newCurrentMoney", newCurrentMoney);
 
     addSeedsToInventory(userStorage, seedId, amountToAdd);
-    console.log("you bought a seed", displayedMoney);
   }
 
   if (!plants) {
@@ -203,6 +184,7 @@ export default function Seeds() {
                       )}
                       {buyingButton === index + 1 && (
                         <NumberInput
+                          userBalance={displayedMoney}
                           id={storageItem._id}
                           handleBuy={handleBuy}
                         />

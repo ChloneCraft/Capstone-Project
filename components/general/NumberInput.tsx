@@ -1,6 +1,8 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 
-export default function NumberInput({ handleBuy, id }: any) {
+export default function NumberInput({ handleBuy, id, userBalance }: any) {
+  const [isDisabled, setIsDisabled] = useState(false);
+
   function handleSubmit(e: any) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -10,21 +12,44 @@ export default function NumberInput({ handleBuy, id }: any) {
 
     handleBuy(id, parseFloat(amountToAdd));
   }
+  function handleChange(e: any) {
+    console.log(e.target.value);
+
+    if (userBalance - e.target.value * 100 < 0) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }
   return (
-    <form className="numberInputSelectAmountForm" onSubmit={handleSubmit}>
-      <label>Amount:</label>
-      <input
-        type="number"
-        className="numberInputSelectAmountInput"
-        min="1"
-        name="amountInput"
-      ></input>
-      <input
-        type="submit"
-        className="numberInputSelectAmountBuyButton"
-        value="Buy"
-      />
-    </form>
+    <div style={{ position: "relative" }}>
+      <form className="numberInputSelectAmountForm" onSubmit={handleSubmit}>
+        <label>Amount: </label>
+        <input
+          type="number"
+          className="numberInputSelectAmountInput"
+          min="1"
+          onChange={handleChange}
+          name="amountInput"
+        ></input>
+        {!isDisabled && (
+          <input
+            type="submit"
+            className="numberInputSelectAmountBuyButton"
+            value="Buy"
+            disabled={isDisabled}
+          />
+        )}
+      </form>
+      {isDisabled && (
+        <p
+          className="red"
+          style={{ fontSize: "15px", position: "absolute", top: "25px" }}
+        >
+          insufficiant account balance!
+        </p>
+      )}
+    </div>
   );
 }
 
