@@ -3,41 +3,45 @@ import { uid } from "uid";
 import useSWR from "swr";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const interval = 3000;
 
 export default function Farm() {
   const [farm, setFarm]: [[any] | [], any] = useState([]);
+  const [timoutId, setTimeoutId] = useState();
   const session = useSession();
-  // console.log("session", session);
-  function updateFarm() {
-    setTimeout(() => {
-      console.log(farm);
 
-      const newFarm = farm.map((crop: any) => {
-        if (!crop.plant.type) {
-          return crop;
-        } else {
-          let newGrowthStatus = crop.growthStatus - interval / 1000;
-          console.log("newGrowthStatus", newGrowthStatus);
-          if (newGrowthStatus <= 0) {
-            newGrowthStatus = 0;
-          }
-
-          return {
-            growthStatus: newGrowthStatus,
-            plant: crop.plant,
-            waterCapacity: crop.waterCapacity,
-          };
-        }
-      });
-      console.log("newFarm", newFarm);
-
-      setFarm(newFarm);
-      updateFarm();
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      updateFarm(farm);
     }, interval);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  function updateFarm(farm: any) {
+    const newFarm = farm.map((crop: any) => {
+      if (!crop.plant.type) {
+        return crop;
+      } else {
+        let newGrowthStatus = crop.growthStatus - interval / 1000;
+        console.log("newGrowthStatus", newGrowthStatus);
+        if (newGrowthStatus <= 0) {
+          newGrowthStatus = 0;
+        }
+
+        return {
+          growthStatus: newGrowthStatus,
+          plant: crop.plant,
+          waterCapacity: crop.waterCapacity,
+        };
+      }
+    });
+    console.log("newFarm", newFarm);
+    setFarm(newFarm);
   }
-  updateFarm();
 
   if (session.data) {
     const id = session.data?.user?.id;
