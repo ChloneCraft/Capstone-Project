@@ -3,7 +3,6 @@ import Image from "next/image";
 import useSWRMutation from "swr/mutation";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
-import { mutate } from "swr";
 export async function sendRequest(url: any, { arg }: any) {
   const response = await fetch(url, {
     method: "PUT",

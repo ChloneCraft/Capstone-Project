@@ -55,7 +55,7 @@ export default function Farm() {
 
   //----------------------------------------------------------------------------
 
-  function updateFarm() {
+  async function updateFarm() {
     const newFarm = farm.map((crop) => {
       if (!crop.plant.type) {
         return crop;
@@ -73,6 +73,19 @@ export default function Farm() {
         };
       }
     });
+    const response = await fetch(`/api/${id}/farm`, {
+      method: "PUT",
+      body: JSON.stringify(newFarm),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      const result = await response.json();
+      console.log("result from fetch", result);
+    } else {
+      console.error(`Error: ${response.status}`);
+    }
     console.log("newFarm", newFarm);
     setFarm(newFarm);
     return newFarm;
