@@ -13,17 +13,11 @@ export default function Farm() {
 
   const id = session?.data?.user?.id;
   const { data: farmData, isLoading, error } = useSWR(`/api/${id}/farm`);
-  // if (farm.length !== 0 && !growthId) {
-  // setGrowthId("intervalId");
   useInterval(() => {
     updateFarm();
     setCount(count + 1);
   }, interval);
-  // repeatTimeout();
-  // }
   if (isLoading || !farmData) {
-    // useRef();
-    // useEffect(() => {}, []);
     return <div>loading...</div>;
   }
   if (error) {
@@ -61,17 +55,7 @@ export default function Farm() {
 
   //----------------------------------------------------------------------------
 
-  // function repeatTimeout() {
-  //   setTimeout(() => {
-  //     updateFarm();
-  //     repeatTimeout();
-  //   }, interval);
-  // }
-
-  // clearInterval(intervalId);
-
   function updateFarm() {
-    // const farmState = farmToGrow();
     const newFarm = farm.map((crop) => {
       if (!crop.plant.type) {
         return crop;
@@ -93,8 +77,6 @@ export default function Farm() {
     setFarm(newFarm);
     return newFarm;
   }
-
-  // console.log("farm", farm);
 
   if (farm.length !== 0) {
     return (
