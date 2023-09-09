@@ -98,32 +98,7 @@ export const authOptions = {
               waterCapacity: 0,
             },
             {
-              plant: "64f98d290a507798d951f7f4",
-              growthStatus: 0,
-              waterCapacity: 0,
-            },
-            {
-              plant: "64f98d290a507798d951f7f4",
-              growthStatus: 0,
-              waterCapacity: 0,
-            },
-            {
-              plant: "64f98d290a507798d951f7f4",
-              growthStatus: 0,
-              waterCapacity: 0,
-            },
-            {
-              plant: "64f98d290a507798d951f7f4",
-              growthStatus: 0,
-              waterCapacity: 0,
-            },
-            {
-              plant: "64f98d290a507798d951f7f4",
-              growthStatus: 0,
-              waterCapacity: 0,
-            },
-            {
-              plant: "64f98d290a507798d951f7f4",
+              plant: "64f994400a507798d951f7f9",
               growthStatus: 0,
               waterCapacity: 0,
             },
@@ -148,12 +123,37 @@ export const authOptions = {
               waterCapacity: 0,
             },
             {
-              plant: "64f994400a507798d951f7f9",
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
               growthStatus: 0,
               waterCapacity: 0,
             },
             {
               plant: "64f994400a507798d951f7f9",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
+              growthStatus: 0,
+              waterCapacity: 0,
+            },
+            {
+              plant: "64f98d290a507798d951f7f4",
               growthStatus: 0,
               waterCapacity: 0,
             },
