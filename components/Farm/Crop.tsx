@@ -27,13 +27,11 @@ export default function Crop({
   index,
   setFarm,
   farm,
-  plantId,
 }: {
   content: any;
   index: number;
   setFarm: any;
   farm: any;
-  plantId: mongoose.Schema.Types.ObjectId;
 }) {
   // console.log("crop", farm);
   const [hasMouseOver, setHasMouseOver] = useState(false);
@@ -44,8 +42,8 @@ export default function Crop({
 
   const id = session?.data?.user?.id;
 
-  function harvestCrop() {
-    // killCrop();
+  async function harvestCrop() {
+    // await killCrop();
     // if (id) {
 
     const cropId = content.plant._id;
@@ -70,7 +68,10 @@ export default function Crop({
       growthStatus: 0,
       waterCapacity: 0,
     };
-    // sendRequest(`/api/${id}/addToStorage`, emptyPlot);
+    const plotId = content.plant._id;
+    sendRequest(`/api/${id}/addToStorage`, {
+      arg: { newPlot: emptyPlot, plotId: plotId },
+    });
   }
 
   const handleMouseEnter: MouseEventHandler<HTMLImageElement> = (e) => {

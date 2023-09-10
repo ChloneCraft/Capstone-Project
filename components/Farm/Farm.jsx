@@ -90,7 +90,7 @@ export default function Farm() {
     setFarm(newFarm);
     return newFarm;
   }
-
+  console.log("farm", farm);
   if (farm.length !== 0) {
     return (
       <section className="farmContainer">
@@ -102,7 +102,7 @@ export default function Farm() {
                 farm={farm}
                 setFarm={setFarm}
                 index={index}
-                plantId={farm[index].plant._}
+                // plantId={farm[index].plant._id}
                 key={plot._id}
               />
             );
