@@ -20,16 +20,32 @@ export default async function handler(req: any, res: any) {
     } catch (error) {
       return res.status(400).json(error);
     }
-  }
-  //   else if (req.method === "PUT") {
-  //       const plantId = req.body.plantId;
-  //     //   const plantToChange = User.plantStorage.find((item)=>item._id === plantId)
-  //     const user = await User.findByIdAndUpdate(id, {
-  //       $set: { plantStorage: req.body.newAmount },
-  //     });
-  //     return res.status(200).json("success");
-  //   }
-  else {
+  } else if (req.method === "PUT") {
+    const date = new Date();
+    const today = date.getDate();
+    const currentMonth = date.getMonth();
+
+    console.log("TODAYYY!!", today);
+    console.log("currentMonth!!", currentMonth);
+    const user = await User.findById(id);
+    const plantId = req.body;
+    console.log("plantId", plantId);
+
+    const newPlant = await Plant.findById(plantId);
+
+    user.plantStorage.push({ plant: newPlant, amount: 1, decayStatus: 99 });
+    user.save();
+    // const plantToChange = user.plantStorage.find((item:any)=> {
+    //   return item._id === plantId
+
+    //   })
+    //    const index = user.plantStorage.indexOf(plantToChange)
+    //    user.plantStorage[index]
+    // const user = await User.findByIdAndUpdate(id, {
+    //   $set: { plantStorage: req.body.newAmount },
+    // });
+    return res.status(200).json("success");
+  } else {
     return res.status(400).json({ error: "something went wrong" });
   }
 }

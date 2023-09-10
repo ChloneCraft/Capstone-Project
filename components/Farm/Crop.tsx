@@ -6,6 +6,7 @@ import UnlockPlot from "./UnlockPlot";
 import CropInfo from "./CropInfo";
 import mongoose from "mongoose";
 import { useSession } from "next-auth/react";
+import { sendRequest } from "./SelectSeed";
 
 interface storageItem {
   plant: {
@@ -26,11 +27,13 @@ export default function Crop({
   index,
   setFarm,
   farm,
+  plantId,
 }: {
   content: any;
   index: number;
   setFarm: any;
   farm: any;
+  plantId: mongoose.Schema.Types.ObjectId;
 }) {
   // console.log("crop", farm);
   const [hasMouseOver, setHasMouseOver] = useState(false);
@@ -43,14 +46,23 @@ export default function Crop({
 
   function harvestCrop() {
     // killCrop();
-    if (id) {
-      // addItemToInventory(id);
-    } else {
-      console.log("addItemToinventory error");
-    }
+    // if (id) {
+
+    const cropId = content.plant._id;
+    // if (crop) console.log(crop);
+    // else console.log("errorr");
+
+    addItemToInventory(cropId);
+    //   } else {
+    //     console.log("addItemToinventory error");
+    //   }
   }
 
-  function addItemToInventory(id: mongoose.Schema.Types.ObjectId) {}
+  function addItemToInventory(plantId: mongoose.Schema.Types.ObjectId) {
+    console.log("id!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", plantId);
+
+    sendRequest(`/api/${id}/addToStorage`, { arg: plantId });
+  }
 
   function killCrop() {
     const emptyPlot = {
@@ -58,7 +70,7 @@ export default function Crop({
       growthStatus: 0,
       waterCapacity: 0,
     };
-    //missing
+    // sendRequest(`/api/${id}/addToStorage`, emptyPlot);
   }
 
   const handleMouseEnter: MouseEventHandler<HTMLImageElement> = (e) => {
@@ -104,7 +116,7 @@ export default function Crop({
   let image;
   let image_hover;
   const growth = calcGrowth();
-  index === 5 && console.log("crop growth", growth);
+  // index === 5 && console.log("crop growth", growth);
   if (growth !== -1) {
     if (growth <= 50) {
       image = farm[index].plant.image?.stage1;
@@ -118,7 +130,7 @@ export default function Crop({
     }
   }
 
-  index === 5 && console.log("crop image", image);
+  // index === 5 && console.log("crop image", image);
 
   // if (farm[index].plant.type) {
   //   console.log("plot plant", farm[index]);
