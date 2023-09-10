@@ -4,6 +4,8 @@ import { useState } from "react";
 import SelectSeed from "./SelectSeed";
 import UnlockPlot from "./UnlockPlot";
 import CropInfo from "./CropInfo";
+import mongoose from "mongoose";
+import { useSession } from "next-auth/react";
 
 interface storageItem {
   plant: {
@@ -35,6 +37,29 @@ export default function Crop({
   const [isClicked, setIsClicked] = useState(false);
   const [wantsToSelectSeed, setWantsToSelectSeed] = useState(false);
   const [wantsToUnlockPlot, setWantsToUnlockPlot] = useState(false);
+  const session = useSession();
+
+  const id = session?.data?.user?.id;
+
+  function harvestCrop() {
+    // killCrop();
+    if (id) {
+      // addItemToInventory(id);
+    } else {
+      console.log("addItemToinventory error");
+    }
+  }
+
+  function addItemToInventory(id: mongoose.Schema.Types.ObjectId) {}
+
+  function killCrop() {
+    const emptyPlot = {
+      plant: "64f98d290a507798d951f7f4",
+      growthStatus: 0,
+      waterCapacity: 0,
+    };
+    //missing
+  }
 
   const handleMouseEnter: MouseEventHandler<HTMLImageElement> = (e) => {
     e.stopPropagation();
@@ -53,6 +78,9 @@ export default function Crop({
   const handleClickPlot: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
     setIsClicked(true);
+    if (content.growthStatus === 0) {
+      harvestCrop();
+    }
   };
   const handlePlantingSeed: MouseEventHandler<HTMLButtonElement> = (e) => {
     setWantsToSelectSeed(true);
