@@ -23,8 +23,10 @@ export default function Farm() {
   if (error) {
     console.error("errorrrrr", error);
   }
-  if (farm.length === 0 && farmData) {
-    setFarm(farmData);
+  if (farm) {
+    if (farm.length === 0 && farmData) {
+      setFarm(farmData);
+    }
   }
 
   //-------------------------custom hook from internet -> https://overreacted.io/making-setinterval-declarative-with-react-hooks/
@@ -90,7 +92,7 @@ export default function Farm() {
     setFarm(newFarm);
     return newFarm;
   }
-  console.log("farm", farm);
+  // console.log("farm", farm);
   if (farm.length !== 0) {
     return (
       <section className="farmContainer">
@@ -103,7 +105,7 @@ export default function Farm() {
                 setFarm={setFarm}
                 index={index}
                 // plantId={farm[index].plant._id}
-                key={plot._id}
+                key={index}
               />
             );
           })}

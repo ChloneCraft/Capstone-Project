@@ -43,35 +43,30 @@ export default function Crop({
   const id = session?.data?.user?.id;
 
   async function harvestCrop() {
-    // await killCrop();
-    // if (id) {
-
+    killCrop();
     const cropId = content.plant._id;
-    // if (crop) console.log(crop);
-    // else console.log("errorr");
-
     addItemToInventory(cropId);
-    //   } else {
-    //     console.log("addItemToinventory error");
-    //   }
   }
 
   function addItemToInventory(plantId: mongoose.Schema.Types.ObjectId) {
-    console.log("id!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", plantId);
-
     sendRequest(`/api/${id}/addToStorage`, { arg: plantId });
   }
 
-  function killCrop() {
+  async function killCrop() {
     const emptyPlot = {
       plant: "64f98d290a507798d951f7f4",
       growthStatus: 0,
       waterCapacity: 0,
     };
-    const plotId = content.plant._id;
-    sendRequest(`/api/${id}/addToStorage`, {
-      arg: { newPlot: emptyPlot, plotId: plotId },
+    const newFarm = farm.map((item: any, indexHere: Number) => {
+      return indexHere === index ? emptyPlot : item;
     });
+    const response = await sendRequest(`/api/${id}/killCrop`, {
+      arg: newFarm,
+    });
+    if (response) {
+      setFarm(response);
+    }
   }
 
   const handleMouseEnter: MouseEventHandler<HTMLImageElement> = (e) => {
@@ -90,9 +85,12 @@ export default function Crop({
   };
   const handleClickPlot: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
-    setIsClicked(true);
-    if (content.growthStatus === 0) {
+    if (content.growthStatus === 0 && content.plant.type) {
       harvestCrop();
+      setIsClicked(false);
+      setWantsToSelectSeed(false);
+    } else {
+      setIsClicked(true);
     }
   };
   const handlePlantingSeed: MouseEventHandler<HTMLButtonElement> = (e) => {
