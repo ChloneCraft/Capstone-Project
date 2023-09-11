@@ -77,8 +77,7 @@ export default function SelectSeed({
   }
 
   async function handleSeedSelection(id: mongoose.Types.ObjectId) {
-    // console.log("id", id);
-    // console.log("storage:", storage);
+    setIsClicked(false);
 
     const { amount, ...rest } = storage.find((storageItem: any) => {
       // console.log("storageItem", storageItem);

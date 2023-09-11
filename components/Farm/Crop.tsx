@@ -66,6 +66,8 @@ export default function Crop({
     });
     if (response) {
       setFarm(response);
+      setIsClicked(false);
+      setWantsToSelectSeed(false);
     }
   }
 
@@ -87,8 +89,6 @@ export default function Crop({
     e.stopPropagation();
     if (content.growthStatus === 0 && content.plant.type) {
       harvestCrop();
-      setIsClicked(false);
-      setWantsToSelectSeed(false);
     } else {
       setIsClicked(true);
     }
@@ -201,20 +201,20 @@ export default function Crop({
         {hasMouseOver && (
           <CropInfo
             className="cropInfo"
-            setWantsToUnlockPlot={setWantsToUnlockPlot}
             setIsClicked={setIsClicked}
             index={index}
-            setFarm={setFarm}
+            killCrop={killCrop}
+            setHasMouseOver={setHasMouseOver}
           />
         )}
         {isClicked && (
           <CropInfo
             className="cropInfo"
-            setWantsToUnlockPlot={setWantsToUnlockPlot}
             setIsClicked={setIsClicked}
             isClicked={isClicked}
             index={index}
-            setFarm={setFarm}
+            killCrop={killCrop}
+            setHasMouseOver={setHasMouseOver}
           />
         )}
       </aside>

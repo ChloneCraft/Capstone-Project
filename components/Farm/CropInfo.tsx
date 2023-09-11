@@ -5,10 +5,10 @@ const growthRate = 100;
 
 export default function CropInfo({
   index,
-  setFarm,
-  setWantsToUnlockPlot,
   setIsClicked,
   isClicked,
+  killCrop,
+  setHasMouseOver,
 }: any) {
   const session = useSession();
   function handleClick(e: any) {
@@ -19,6 +19,8 @@ export default function CropInfo({
   }
   function handleKillingPlant(): void {
     setIsClicked(false);
+    setHasMouseOver(false);
+    killCrop();
   }
   // if (session.data) {
   const userId = session?.data?.user?.id;
