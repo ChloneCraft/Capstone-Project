@@ -61,7 +61,7 @@ export default function Farm() {
         return crop;
       } else {
         let newGrowthStatus = crop.growthStatus - interval / 1000;
-        console.log("newGrowthStatus", newGrowthStatus);
+        // console.log("newGrowthStatus", newGrowthStatus);
         if (newGrowthStatus <= 0) {
           newGrowthStatus = 0;
         }
@@ -82,15 +82,15 @@ export default function Farm() {
     });
     if (response.ok) {
       const result = await response.json();
-      console.log("result from fetch", result);
+      // console.log("result from fetch", result);
     } else {
       console.error(`Error: ${response.status}`);
     }
-    console.log("newFarm", newFarm);
+    // console.log("newFarm", newFarm);
     setFarm(newFarm);
     return newFarm;
   }
-
+  console.log("farm", farm);
   if (farm.length !== 0) {
     return (
       <section className="farmContainer">
@@ -102,6 +102,7 @@ export default function Farm() {
                 farm={farm}
                 setFarm={setFarm}
                 index={index}
+                // plantId={farm[index].plant._id}
                 key={plot._id}
               />
             );
