@@ -11,7 +11,7 @@ import { findSeedStackById } from "@/pages/Market/Seeds";
 export default function Storage() {
   const [query, setQuery] = useState("");
   const [filteredStorage, setFilteredStorage] = useState([]);
-  const [wantsToChooseAmount, setWantsToChooseAmount] = useState(false);
+  const [wantsToChooseAmount, setWantsToChooseAmount] = useState(-1);
   const [displayedMoney, setDisplayedMoney] = useState(-1);
   const session = useSession();
   const id = session?.data?.user?.id;
@@ -56,6 +56,7 @@ export default function Storage() {
         "Content-Type": "application/json",
       },
     });
+    return updatedStorage;
   }
 
   async function handleSelling(
@@ -64,16 +65,6 @@ export default function Storage() {
     price: number
   ) {
     const { plantId, decayStatus } = args;
-    console.log(
-      "amount",
-      amount,
-      "currentMoney",
-      currentMoney,
-      "id",
-      id,
-      "price",
-      price
-    );
 
     const newCurrentMoney = await calculateUserBalance(
       amount,
@@ -83,7 +74,14 @@ export default function Storage() {
       price
     );
     setDisplayedMoney(newCurrentMoney);
-    removeFromInventory(userStorage, plantId, amount, decayStatus);
+    const updatedStorage = await removeFromInventory(
+      userStorage,
+      plantId,
+      amount,
+      decayStatus
+    );
+    setWantsToChooseAmount(-1);
+    setFilteredStorage(updatedStorage);
   }
 
   function handleSearchInput(e: any, fullStorage: any): void {
@@ -134,7 +132,7 @@ export default function Storage() {
             <h2>sell</h2>
           </nav>
           <ul className="listStorageItems">
-            {filteredStorage.map((storageItem: any) => {
+            {filteredStorage.map((storageItem: any, index: number) => {
               return (
                 <li key={storageItem.plant._id} className="storageItem">
                   <h3>{storageItem.plant.name}</h3>
@@ -154,10 +152,10 @@ export default function Storage() {
                   <h3>{storageItem.amount}</h3>
                   <div>
                     {storageItem.plant.type !== "seed" &&
-                      !wantsToChooseAmount && (
+                      wantsToChooseAmount === -1 && (
                         <button
                           className="sellButton"
-                          onClick={() => setWantsToChooseAmount(true)}
+                          onClick={() => setWantsToChooseAmount(index)}
                         >
                           sell for{" "}
                           {storageItem.plant.name === "Potato" && "200$"}
@@ -167,7 +165,7 @@ export default function Storage() {
                           {storageItem.plant.name === "Teak Tree" && "300$"}
                         </button>
                       )}
-                    {wantsToChooseAmount && (
+                    {wantsToChooseAmount === index && (
                       <NumberInput
                         handler={handleSelling}
                         price={storageItem.plant.price}
