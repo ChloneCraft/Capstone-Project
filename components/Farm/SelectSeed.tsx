@@ -3,6 +3,8 @@ import Image from "next/image";
 import useSWRMutation from "swr/mutation";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
+// import { ObjectId } from "mongodb";
+
 export async function sendRequest(url: any, { arg }: any) {
   const response = await fetch(url, {
     method: "PUT",
@@ -12,9 +14,10 @@ export async function sendRequest(url: any, { arg }: any) {
     },
   });
   if (response.ok) {
-    await response.json();
+    return await response.json();
   } else {
     console.error(`Error: ${response.status}`);
+    return "error";
   }
 }
 
@@ -74,8 +77,7 @@ export default function SelectSeed({
   }
 
   async function handleSeedSelection(id: mongoose.Types.ObjectId) {
-    // console.log("id", id);
-    // console.log("storage:", storage);
+    setIsClicked(false);
 
     const { amount, ...rest } = storage.find((storageItem: any) => {
       // console.log("storageItem", storageItem);
@@ -104,9 +106,16 @@ export default function SelectSeed({
     const correspondingPlant = await findPlantFromSeed(plant.plantID, plants);
     // console.log("correspondingPlant", correspondingPlant);
 
-    const arg = farm.map((farmEntry: any, farmIndex: number) =>
-      farmIndex === index ? correspondingPlant : farmEntry
-    );
+    const arg = farm.map((farmEntry: any, farmIndex: number) => {
+      if (farmIndex === index) {
+        farmEntry.plant = correspondingPlant.plant._id;
+        farmEntry.growthStatus = correspondingPlant.plant.growthTime;
+
+        return farmEntry;
+      } else {
+        return farmEntry;
+      }
+    });
     // console.log("updated farm", arg);
 
     // console.log("what do you mean undefined?", id);
@@ -119,7 +128,7 @@ export default function SelectSeed({
       },
     }).then((response) => response.json());
     // console.log("response:", response);
-    if (response) {
+    if (response.farm) {
       setFarm(response.farm);
     }
     // farm.mutate();
