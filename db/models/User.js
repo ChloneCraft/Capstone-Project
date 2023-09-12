@@ -1,5 +1,5 @@
 import mongoose, { InferSchemaType } from "mongoose";
-import Plant from "./Plant.js";
+import Plant from "./Plant.ts";
 
 const { Schema } = mongoose;
 

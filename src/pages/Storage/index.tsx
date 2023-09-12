@@ -7,6 +7,7 @@ import NumberInput from "../../../components/general/NumberInput";
 import mongoose from "mongoose";
 import { calculateUserBalance } from "@/pages/Market/Seeds";
 import { findSeedStackById } from "@/pages/Market/Seeds";
+import { sendRequest } from "../../../components/Farm/SelectSeed";
 
 export default function Storage() {
   const [query, setQuery] = useState("");
@@ -27,6 +28,7 @@ export default function Storage() {
   if (displayedMoney === -1) {
     setDisplayedMoney(currentMoney);
   }
+
   async function removeFromInventory(
     userStorage: any,
     plantId: mongoose.Schema.Types.ObjectId,
@@ -84,6 +86,27 @@ export default function Storage() {
     setFilteredStorage(updatedStorage);
   }
 
+  async function handleListing(
+    args: { plantId: mongoose.Schema.Types.ObjectId; decayStatus: number },
+    amount: number,
+    price: number
+  ) {
+    const { plantId, decayStatus } = args;
+    sendRequest(`/api/${id}/listItemOnMarket`, {
+      arg: { plantId: plantId, amount: amount },
+    });
+    //reduce number in storage
+    const updatedStorage = await removeFromInventory(
+      userStorage,
+      plantId,
+      amount,
+      decayStatus
+    );
+    //----------
+    setWantsToChooseAmount(-1);
+    setFilteredStorage(updatedStorage);
+  }
+
   function handleSearchInput(e: any, fullStorage: any): void {
     if (e.target.value.toLowerCase()) {
       setQuery(e.target.value.toLowerCase());
@@ -129,7 +152,8 @@ export default function Storage() {
             <h2>Image</h2>
             <h2>expires in</h2>
             <h2>amount</h2>
-            <h2>sell</h2>
+            <h2>Quick Sell</h2>
+            <h2>Sell on Market</h2>
           </nav>
           <ul className="listStorageItems">
             {filteredStorage.map((storageItem: any, index: number) => {
@@ -157,7 +181,7 @@ export default function Storage() {
                           className="sellButton"
                           onClick={() => setWantsToChooseAmount(index)}
                         >
-                          sell for{" "}
+                          quick sell for{" "}
                           {storageItem.plant.name === "Potato" && "200$"}
                           {storageItem.plant.name === "Pumpkin" && "180$"}
                           {storageItem.plant.name === "Blueberry" && "210$"}
@@ -168,6 +192,34 @@ export default function Storage() {
                     {wantsToChooseAmount === index && (
                       <NumberInput
                         handler={handleSelling}
+                        price={storageItem.plant.price}
+                        isSelling={true}
+                        handlerArgs={{
+                          plantId: storageItem.plant._id,
+                          decayStatus: storageItem.decayStatus,
+                        }}
+                        comparer={storageItem.amount}
+                      />
+                    )}
+                    {storageItem.plant.type === "seed" && (
+                      <button className="sellButton" disabled>
+                        can't sell seeds
+                      </button>
+                    )}
+                  </div>
+                  <div>
+                    {storageItem.plant.type !== "seed" &&
+                      wantsToChooseAmount === -1 && (
+                        <button
+                          className="sellButton"
+                          onClick={() => setWantsToChooseAmount(index)}
+                        >
+                          list on market
+                        </button>
+                      )}
+                    {wantsToChooseAmount === index && (
+                      <NumberInput
+                        handler={handleListing}
                         price={storageItem.plant.price}
                         isSelling={true}
                         handlerArgs={{

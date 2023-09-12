@@ -2,6 +2,13 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
+interface Market {
+  sellerId: mongoose.Schema.Types.ObjectId;
+  amount: Number;
+  active: Boolean;
+  listDate: Date;
+}
+
 const plantSchema = new Schema({
   name: { type: String, default: "empty", required: true },
   type: { type: String, default: "", required: true },
@@ -16,12 +23,15 @@ const plantSchema = new Schema({
     stage1: { type: String, default: "", required: true },
     stage2: { type: String, default: "", required: true },
   },
-  sellers: {
-    type: [{ sellerId: Schema.Types.ObjectId, amount: Number, listDate: Date }],
-    required: true,
-  },
-  history: {
-    type: [{ price: Number, amount: Number, Timestamp: Date }],
+  market: {
+    type: [
+      {
+        sellerId: Schema.Types.ObjectId,
+        amount: Number,
+        active: Boolean,
+        listDate: Date,
+      },
+    ],
     required: true,
   },
 });

@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "db/models/Plant.js",
+    "db/models/Plant.ts",
     "db/models/Player.js",
     "src/pages/api/auth/[...nextauth].js",
     "src/pages/login.jsx",
