@@ -1,13 +1,16 @@
-import mongoose from "mongoose";
+import mongoose, { InferSchemaType } from "mongoose";
 
 const { Schema } = mongoose;
 
-interface Market {
+export interface Market {
   sellerId: mongoose.Schema.Types.ObjectId;
-  amount: Number;
+  amount: number;
   active: Boolean;
   listDate: Date;
 }
+export interface Markets extends Array<Market> {}
+
+export type PlantType = InferSchemaType<typeof plantSchema>;
 
 const plantSchema = new Schema({
   name: { type: String, default: "empty", required: true },
