@@ -1,4 +1,42 @@
 import Navbar from "../../../components/general/Navbar";
+
+export async function calculateUserBalance(
+  amount: number,
+  operator: String,
+  currentMoney: number,
+  id: mongoose.Schema.Types.ObjectId,
+  price: number
+) {
+  let updatedMoney = null;
+  if (operator === "add") {
+    updatedMoney = currentMoney + amount * price;
+  } else if (operator === "subtract") {
+    updatedMoney = currentMoney - amount;
+  }
+  if (updatedMoney) {
+    try {
+      const result = await fetch(`/api/${id}/money`, {
+        method: "PUT",
+        body: JSON.stringify(updatedMoney),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (result.ok) {
+        const returnValue = await result.json();
+
+        return returnValue;
+      }
+    } catch (error) {
+      console.error(error);
+
+      return "error";
+    }
+  } else {
+    return "error: updated money does not exist";
+  }
+}
+
 import useSWR from "swr";
 import Image from "next/image";
 import { getSession, useSession } from "next-auth/react";
@@ -6,6 +44,16 @@ import { useState } from "react";
 import mongoose from "mongoose";
 // import { UserType } from "../../../db/models/User";
 import NumberInput from "../../../components/general/NumberInput";
+
+export function findSeedStackById(
+  array: any,
+  id: mongoose.Schema.Types.ObjectId,
+  decayStatus: number
+) {
+  return array.find(
+    (item: any) => item.plant._id === id && item.decayStatus === decayStatus
+  );
+}
 
 export default function Seeds() {
   const [query, setQuery] = useState("");
@@ -19,16 +67,12 @@ export default function Seeds() {
   const { data: userStorage } = useSWR(`/api/${id}/plantStorage`);
   const { data } = useSWR(`/api/${id}/money`);
 
-  function findSeedStackById(array: any, id: mongoose.Schema.Types.ObjectId) {
-    return array.find((item: any) => item.plant._id === id);
-  }
-
   async function addSeedsToInventory(
     userStorage: any,
     seedId: mongoose.Schema.Types.ObjectId,
     amountToAdd: number
   ) {
-    const stackInStorage = findSeedStackById(userStorage, seedId);
+    const stackInStorage = findSeedStackById(userStorage, seedId, 0);
 
     const { amount: amountInStorage } = stackInStorage;
 
@@ -61,41 +105,6 @@ export default function Seeds() {
     setDisplayedMoney(currentMoney);
   }
 
-  async function calculateUserBalance(
-    amount: number,
-    operator: String,
-    currentMoney: number
-  ) {
-    let updatedMoney = null;
-    if (operator === "add") {
-      updatedMoney = currentMoney + amount;
-    } else if (operator === "subtract") {
-      updatedMoney = currentMoney - amount;
-    }
-    if (updatedMoney) {
-      try {
-        const result = await fetch(`/api/${id}/money`, {
-          method: "PUT",
-          body: JSON.stringify(updatedMoney),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (result.ok) {
-          const returnValue = await result.json();
-
-          return returnValue;
-        }
-      } catch (error) {
-        console.error(error);
-
-        return "error";
-      }
-    } else {
-      return "error: updated money does not exist";
-    }
-  }
-
   function handleSearchInput(e: any, fullStorage: any): void {
     if (e.target.value.toLowerCase()) {
       setQuery(e.target.value.toLowerCase());
@@ -119,9 +128,11 @@ export default function Seeds() {
   ) {
     setBuyingButton(0);
     const newCurrentMoney = await calculateUserBalance(
-      amountToAdd * 100,
+      amountToAdd,
       "subtract",
-      currentMoney
+      currentMoney,
+      id,
+      100
     );
     setDisplayedMoney(newCurrentMoney);
 
@@ -184,9 +195,10 @@ export default function Seeds() {
                       )}
                       {buyingButton === index + 1 && (
                         <NumberInput
-                          userBalance={displayedMoney}
-                          id={storageItem._id}
-                          handleBuy={handleBuy}
+                          comparer={displayedMoney}
+                          handlerArgs={storageItem._id}
+                          isSelling={false}
+                          handler={handleBuy}
                         />
                       )}
                     </div>

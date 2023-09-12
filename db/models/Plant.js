@@ -9,6 +9,7 @@ const plantSchema = new Schema({
   decayTime: { type: Number, default: 0, required: true },
   waterCapacity: { type: Number, default: 0, required: true },
   growthTime: { type: Number, default: 0, required: true },
+  price: { type: Number },
   image: {
     img: { type: String, default: "", required: true },
     hover: { type: String, default: "", required: true },

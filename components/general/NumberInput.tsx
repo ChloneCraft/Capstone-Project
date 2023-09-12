@@ -1,6 +1,12 @@
 import { FormEvent, useState } from "react";
 
-export default function NumberInput({ handleBuy, id, userBalance }: any) {
+export default function NumberInput({
+  handler,
+  handlerArgs,
+  isSelling,
+  comparer,
+  price,
+}: any) {
   const [isDisabled, setIsDisabled] = useState(false);
 
   function handleSubmit(e: any) {
@@ -8,18 +14,32 @@ export default function NumberInput({ handleBuy, id, userBalance }: any) {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
     console.log("dataaa", data);
-    const amountToAdd = data.amountInput as string;
+    const amount = data.amountInput as string;
 
-    handleBuy(id, parseFloat(amountToAdd));
+    handler(handlerArgs, parseFloat(amount), price);
   }
   function handleChange(e: any) {
     console.log(e.target.value);
 
-    if (userBalance - e.target.value * 100 < 0) {
-      setIsDisabled(true);
+    if (!isSelling) {
+      if (comparer - e.target.value * 100 < 0) {
+        setIsDisabled(true);
+      } else {
+        setIsDisabled(false);
+      }
     } else {
-      setIsDisabled(false);
+      if (comparer - e.target.value < 0) {
+        setIsDisabled(true);
+      } else {
+        setIsDisabled(false);
+      }
     }
+  }
+  let buySell = "";
+  if (isSelling) {
+    buySell = "sell";
+  } else {
+    buySell = "buy";
   }
   return (
     <div style={{ position: "relative" }}>
@@ -36,7 +56,7 @@ export default function NumberInput({ handleBuy, id, userBalance }: any) {
           <input
             type="submit"
             className="numberInputSelectAmountBuyButton"
-            value="Buy"
+            value={buySell}
             disabled={isDisabled}
           />
         )}
@@ -46,7 +66,8 @@ export default function NumberInput({ handleBuy, id, userBalance }: any) {
           className="red"
           style={{ fontSize: "15px", position: "absolute", top: "25px" }}
         >
-          insufficiant account balance!
+          {!isSelling && "insufficiant account balance!"}
+          {isSelling && "not enough in storage!"}
         </p>
       )}
     </div>
