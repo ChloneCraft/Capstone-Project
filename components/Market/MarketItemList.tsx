@@ -2,12 +2,14 @@ import useSWR from "swr";
 import Navbar from "../general/Navbar";
 import Image from "next/image";
 import NumberInput from "../general/NumberInput";
-import { Markets, PlantType } from "../../db/models/Plant";
+import { MarketType, MarketsType, PlantType } from "../../db/models/Plant";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import mongoose from "mongoose";
-import { calculateUserBalance, findSeedStackById } from "@/pages/Market/Seeds";
+import { findSeedStackById } from "@/pages/Market/Seeds";
 import { PlantsService } from "@/services/PlantsService";
+import { MoneyService } from "@/services/MoneyService";
+import { MarketService } from "@/services/MarketService";
 
 export default function MarketItemList() {
   const [marketPlace, setMarketPlace] = useState([]);
@@ -35,19 +37,27 @@ export default function MarketItemList() {
   if (!plants) {
     return <div>loading</div>;
   }
-  console.log("plants", plants);
 
   if (!data) {
     return <div>loading</div>;
   }
   const { currentMoney } = data;
 
-  async function addSeedsToInventory(
+  async function addItemToInventory(
     userStorage: any,
-    seedId: mongoose.Schema.Types.ObjectId,
+    itemId: any,
     amountToAdd: number
   ) {
-    const stackInStorage = findSeedStackById(userStorage, seedId, 0);
+    const plant = plants.find((item: PlantType) => item._id === itemId);
+    const stackInStorage = findSeedStackById(
+      userStorage,
+      itemId,
+      plant.decayTime
+    );
+
+    // if (!stackInStorage) {
+    //   //create new stack
+    // }
 
     const { amount: amountInStorage } = stackInStorage;
 
@@ -61,7 +71,7 @@ export default function MarketItemList() {
     };
 
     const updatedStorage = userStorage.map((item: any) => {
-      return item.plant._id === seedId ? updatedStack : item;
+      return item.plant._id === itemId ? updatedStack : item;
     });
     await fetch(`/api/${id}/plantStorage`, {
       method: "PUT",
@@ -91,22 +101,100 @@ export default function MarketItemList() {
   function clickBuy(buttonId: number) {
     setBuyingButton(buttonId);
   }
+
   async function handleBuy(
-    seedId: mongoose.Schema.Types.ObjectId,
-    amountToAdd: number
+    plantId: mongoose.Schema.Types.ObjectId,
+    amount: number,
+    price: number
   ) {
     setBuyingButton(0);
-    const newCurrentMoney = await calculateUserBalance(
-      amountToAdd,
+    const newCurrentMoney = await MoneyService.calculateUserBalance(
+      amount,
       "subtract",
       currentMoney,
       id,
-      100
+      price
     );
+    //find sellers
+
+    //find markeet of plant
+    const market = PlantsService.getOneMarket(plants, plantId).filter(
+      (item: any) => item.active
+    );
+
+    // //-------------
+    //sort by date - oldest first
+    const entriesByOldest = market.sort((entry1: any, entry2: any) => {
+      entry1.listDate < entry2.listDate ? 1 : -1;
+    });
+
+    let amountLeft = amount;
+    for (let i = 0; i < entriesByOldest.length; i++) {
+      const fetchReturn = await fetch(
+        `/api/${entriesByOldest[i].sellerId}/money`
+      );
+      const moneyData = await fetchReturn.json();
+      const { currentMoney: sellerMoney } = moneyData;
+
+      if (entriesByOldest[i].amount >= amountLeft) {
+        //subtract amountLeft from entry and decide if still active
+        const buyAmountLeft = entriesByOldest[i].amount - amountLeft;
+        const isEntryEmpty = buyAmountLeft === 0 ? true : false;
+        MarketService.subtractFromMarketEntry(
+          amountLeft,
+          entriesByOldest[i]._id,
+          !isEntryEmpty,
+          plantId
+        );
+        //add amount that was subtracted times price to user balance
+
+        await MoneyService.calculateUserBalance(
+          amountLeft,
+          "add",
+          sellerMoney,
+          entriesByOldest[i].sellerId,
+          price
+        );
+        amountLeft = 0;
+        return;
+      } else {
+        //set entry amount to 0 and active to false
+        MarketService.subtractFromMarketEntry(
+          entriesByOldest[i].amount,
+          entriesByOldest[i]._id,
+          false,
+          plantId
+        );
+
+        await MoneyService.calculateUserBalance(
+          entriesByOldest[i].amount,
+          "add",
+          sellerMoney,
+          entriesByOldest[i].sellerId,
+          price
+        );
+        amountLeft -= entriesByOldest[i].amount;
+      }
+    }
+    //find oldest entry and "buy" from there
+    //repeat until amount of needed items is met
+
+    // await MoneyService.calculateUserBalance(
+    //   amount,
+    //   "add",
+    //   currentMoney,
+    //   i,
+    //   price
+    // );
     setDisplayedMoney(newCurrentMoney);
 
-    addSeedsToInventory(userStorage, seedId, amountToAdd);
+    addItemToInventory(userStorage, plantId, amount);
   }
+
+  // function handleBuyFromMarket(
+  //   itemId: mongoose.Schema.Types.ObjectId,
+  //   amount: number
+  // );
   // const listOfPlants = plants.filter((plant: any) => {
   //   return plant.type === "plant";
   // });
@@ -114,15 +202,6 @@ export default function MarketItemList() {
   // if (typeof marketPlace === "undefined" || marketPlace.length === 0) {
   //   setMarketPlace(listOfPlants);
   // }
-
-  function getAvailableItems(market: Markets) {
-    const result = market
-      .filter((item) => item.active)
-      .map((item) => item.amount)
-      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
-    return result;
-  }
 
   return (
     <>
@@ -163,9 +242,14 @@ export default function MarketItemList() {
                       height={60}
                     />
                   </div>
-                  <h3>???$</h3>
-                  {/*calculated price here*/}
-                  <h3>{getAvailableItems(marketItem.market)}</h3>
+                  <h3>
+                    {PlantsService.calcMarketPrice(plants, marketItem._id)}$
+                  </h3>
+                  <h3>
+                    {PlantsService.getNumberOfItemsOnOneMarket(
+                      marketItem.market
+                    )}
+                  </h3>
 
                   <div>
                     {buyingButton !== index + 1 && (
@@ -177,6 +261,10 @@ export default function MarketItemList() {
                         handlerArgs={marketItem._id}
                         isSelling={false}
                         handler={handleBuy}
+                        price={PlantsService.calcMarketPrice(
+                          plants,
+                          marketItem._id
+                        )}
                       />
                     )}
                   </div>

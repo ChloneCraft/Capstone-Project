@@ -5,7 +5,7 @@ import { getSession, useSession } from "next-auth/react";
 import { useState } from "react";
 import NumberInput from "../../../components/general/NumberInput";
 import mongoose from "mongoose";
-import { calculateUserBalance } from "@/pages/Market/Seeds";
+import { MoneyService } from "@/services/MoneyService";
 import { findSeedStackById } from "@/pages/Market/Seeds";
 import { sendRequest } from "../../../components/Farm/SelectSeed";
 
@@ -68,7 +68,7 @@ export default function Storage() {
   ) {
     const { plantId, decayStatus } = args;
 
-    const newCurrentMoney = await calculateUserBalance(
+    const newCurrentMoney = await MoneyService.calculateUserBalance(
       amount,
       "add",
       currentMoney,
@@ -203,7 +203,7 @@ export default function Storage() {
                     )}
                     {storageItem.plant.type === "seed" && (
                       <button className="sellButton" disabled>
-                        can't sell seeds
+                        {"can&apos;t sell seeds"}
                       </button>
                     )}
                   </div>
@@ -231,7 +231,7 @@ export default function Storage() {
                     )}
                     {storageItem.plant.type === "seed" && (
                       <button className="sellButton" disabled>
-                        can't sell seeds
+                        {"can&apos;t sell seeds"}
                       </button>
                     )}
                   </div>

@@ -1,41 +1,5 @@
 import Navbar from "../../../components/general/Navbar";
-
-export async function calculateUserBalance(
-  amount: number,
-  operator: String,
-  currentMoney: number,
-  id: mongoose.Schema.Types.ObjectId,
-  price: number
-) {
-  let updatedMoney = null;
-  if (operator === "add") {
-    updatedMoney = currentMoney + amount * price;
-  } else if (operator === "subtract") {
-    updatedMoney = currentMoney - amount;
-  }
-  if (updatedMoney) {
-    try {
-      const result = await fetch(`/api/${id}/money`, {
-        method: "PUT",
-        body: JSON.stringify(updatedMoney),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (result.ok) {
-        const returnValue = await result.json();
-
-        return returnValue;
-      }
-    } catch (error) {
-      console.error(error);
-
-      return "error";
-    }
-  } else {
-    return "error: updated money does not exist";
-  }
-}
+import { MoneyService } from "@/services/MoneyService";
 
 import useSWR from "swr";
 import Image from "next/image";
@@ -127,7 +91,7 @@ export default function Seeds() {
     amountToAdd: number
   ) {
     setBuyingButton(0);
-    const newCurrentMoney = await calculateUserBalance(
+    const newCurrentMoney = await MoneyService.calculateUserBalance(
       amountToAdd,
       "subtract",
       currentMoney,
