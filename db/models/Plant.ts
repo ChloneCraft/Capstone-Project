@@ -1,6 +1,16 @@
-import mongoose from "mongoose";
+import mongoose, { InferSchemaType } from "mongoose";
 
 const { Schema } = mongoose;
+
+export interface Market {
+  sellerId: mongoose.Schema.Types.ObjectId;
+  amount: number;
+  active: Boolean;
+  listDate: Date;
+}
+export interface Markets extends Array<Market> {}
+
+export type PlantType = InferSchemaType<typeof plantSchema>;
 
 const plantSchema = new Schema({
   name: { type: String, default: "empty", required: true },
@@ -9,18 +19,22 @@ const plantSchema = new Schema({
   decayTime: { type: Number, default: 0, required: true },
   waterCapacity: { type: Number, default: 0, required: true },
   growthTime: { type: Number, default: 0, required: true },
+  price: { type: Number },
   image: {
     img: { type: String, default: "", required: true },
     hover: { type: String, default: "", required: true },
     stage1: { type: String, default: "", required: true },
     stage2: { type: String, default: "", required: true },
   },
-  sellers: {
-    type: [{ sellerId: Schema.Types.ObjectId, amount: Number, listDate: Date }],
-    required: true,
-  },
-  history: {
-    type: [{ price: Number, amount: Number, Timestamp: Date }],
+  market: {
+    type: [
+      {
+        sellerId: Schema.Types.ObjectId,
+        amount: Number,
+        active: Boolean,
+        listDate: Date,
+      },
+    ],
     required: true,
   },
 });
