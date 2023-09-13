@@ -4,22 +4,20 @@ import { ObjectId } from "mongoose";
 
 export default async function handler(req: any, res: any) {
   await dbConnect();
-  const { id: nameOfUser } = req.query;
+  const { id } = req.query;
 
   if (req.method === "GET") {
-    const user = await User.findOne({ username: nameOfUser });
+    const user = await User.findById(id);
 
-    if (user) {
-      return res.status(200).json(user);
-    } else {
-      return res.status(200).json("error");
-    }
+    return res.status(200).json(user);
+    // } else {
+    //   return res.status(200).json("error");
+    // }
   } else if (req.method === "PUT") {
     try {
-      const user = await User.updateOne(
-        { username: nameOfUser },
-        { $set: req.body }
-      );
+      const user = await User.findByIdAndUpdate(id, {
+        region: req.body,
+      });
       return res.status(200).json("success");
     } catch (e) {
       return res.status(400).json("error:", e);
