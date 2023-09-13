@@ -15,7 +15,7 @@ export default async function handler(req: any, res: any) {
       // console.log("plantStorage api user", user);
 
       const { plantStorage } = user;
-      console.log("plantStorage", plantStorage);
+      // console.log("plantStorage", plantStorage);
 
       return res.status(200).json(plantStorage);
     } catch (error) {

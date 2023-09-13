@@ -4,25 +4,29 @@ import { PlantType } from "../../db/models/Plant";
 import { PlantsService } from "./PlantsService";
 
 export const MarketService = {
-  subtractFromMarketEntry(
+  async subtractFromMarketEntry(
     amountBought: number,
     entryId: mongoose.Schema.Types.ObjectId,
     stillActive: boolean,
-    money: number,
     plantId: mongoose.Schema.Types.ObjectId
   ) {
-    sendRequest(`/api/${plantId}/market`, {
-      active: stillActive,
-      amount: amountBought,
-      id: entryId,
+    const res = await sendRequest(`/api/${plantId}/market`, {
+      arg: {
+        active: stillActive,
+        amount: amountBought,
+        entryId: entryId,
+      },
     });
+    console.log("response", res);
   },
 
-  findUserByEntryId(
-    entryId: mongoose.Schema.Types.ObjectId,
-    plants: PlantType[],
-    plantID: mongoose.Schema.Types.ObjectId
-  ) {
-    const markets = PlantsService.getOneMarket(plants, plantID);
-  },
+  //   findUserByEntryId(
+  //     entryId: mongoose.Schema.Types.ObjectId,
+  //     plants: PlantType[],
+  //     plantID: mongoose.Schema.Types.ObjectId
+  //   ) {
+  //     const market = PlantsService.getOneMarket(plants, plantID);
+  //     const entry = market.find((entry: any) => entry._id === entryId);
+  //     return entry.sellerId;
+  //   },
 };

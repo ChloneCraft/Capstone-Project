@@ -133,34 +133,50 @@ export default function MarketItemList() {
 
     let amountLeft = amount;
     for (let i = 0; i < entriesByOldest.length; i++) {
+      const fetchReturn = await fetch(
+        `/api/${entriesByOldest[i].sellerId}/money`
+      );
+      const moneyData = await fetchReturn.json();
+      const { currentMoney: sellerMoney } = moneyData;
+
       if (entriesByOldest[i].amount >= amountLeft) {
-        //subtract amountLeft from entry
-        //if amount in entry is 0 turn active off
+        //subtract amountLeft from entry and decide if still active
+        const buyAmountLeft = entriesByOldest[i].amount - amountLeft;
+        const isEntryEmpty = buyAmountLeft === 0 ? true : false;
+        MarketService.subtractFromMarketEntry(
+          amountLeft,
+          entriesByOldest[i]._id,
+          !isEntryEmpty,
+          plantId
+        );
         //add amount that was subtracted times price to user balance
-        // return;
+
+        await MoneyService.calculateUserBalance(
+          amountLeft,
+          "add",
+          sellerMoney,
+          entriesByOldest[i].sellerId,
+          price
+        );
+        amountLeft = 0;
+        return;
       } else {
         //set entry amount to 0 and active to false
-        // MarketService.subtractFromMarketEntry(
-        //   entriesByOldest[i].amount,
-        //   entriesByOldest[i]._id,
-        //   false,
-        //   entriesByOldest[i].amount * price,
-        //   plantId
-        // );
-        console.log("sellerId", entriesByOldest[i].sellerId);
-        return;
-        // MarketService.findUserByEntryId(
-        //   entriesByOldest[i]._id,
-        //   plants,
-        //   plantId
-        // );
-        // await MoneyService.calculateUserBalance(
-        //   entriesByOldest[i].amount,
-        //   "add",
-        //   currentMoney,
-        //   i,
-        //   price
-        // );
+        MarketService.subtractFromMarketEntry(
+          entriesByOldest[i].amount,
+          entriesByOldest[i]._id,
+          false,
+          plantId
+        );
+
+        await MoneyService.calculateUserBalance(
+          entriesByOldest[i].amount,
+          "add",
+          sellerMoney,
+          entriesByOldest[i].sellerId,
+          price
+        );
+        amountLeft -= entriesByOldest[i].amount;
       }
     }
     //find oldest entry and "buy" from there

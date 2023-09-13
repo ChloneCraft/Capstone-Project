@@ -1,5 +1,5 @@
 import dbConnect from "../../../../db/connect";
-import Plant from "../../../../db/models/User";
+import Plant from "../../../../db/models/Plant";
 
 export default async function handler(req: any, res: any) {
   await dbConnect();
@@ -17,10 +17,18 @@ export default async function handler(req: any, res: any) {
       return res.statis(400).json(error);
     }
   } else if (req.method === "PUT") {
-    const { active, amount, id } = req.body;
+    console.log("reqbody", req.body);
+
+    const { active, amount, entryId } = req.body;
     try {
       const plant = await Plant.findById(id);
-      const entryToAlter = plant.market.find((item: any) => item._id === id);
+      console.log("plant", plant);
+
+      const entryToAlter = plant.market.find(
+        (item: any) => item._id == entryId
+      );
+      console.log("entryToAlter", entryToAlter);
+
       entryToAlter.active = active;
       entryToAlter.amount -= amount;
       plant.save();
