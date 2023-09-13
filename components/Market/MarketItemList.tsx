@@ -114,6 +114,7 @@ export default function MarketItemList() {
   // if (typeof marketPlace === "undefined" || marketPlace.length === 0) {
   //   setMarketPlace(listOfPlants);
   // }
+  console.log("marketPlace", marketPlace);
 
   return (
     <>
@@ -154,14 +155,14 @@ export default function MarketItemList() {
                       height={60}
                     />
                   </div>
-                  <h3>???$</h3>
-                  {/*calculated price here*/}
+                  <h3>
+                    {PlantsService.calcMarketPrice(plants, marketItem._id)}$
+                  </h3>
                   <h3>
                     {PlantsService.getNumberOfItemsOnOneMarket(
                       marketItem.market
                     )}
                   </h3>
-                  <h3>{PlantsService.testFunction(3, 10)}</h3>
 
                   <div>
                     {buyingButton !== index + 1 && (
