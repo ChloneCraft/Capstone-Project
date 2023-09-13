@@ -8,7 +8,6 @@ export default async function handler(req: any, res: any) {
   if (req.method === "GET") {
     try {
       const plant = await Plant.findById(id);
-      // console.log("plantStorage api user", user);
 
       const { market } = plant;
 
@@ -17,17 +16,13 @@ export default async function handler(req: any, res: any) {
       return res.statis(400).json(error);
     }
   } else if (req.method === "PUT") {
-    console.log("reqbody", req.body);
-
     const { active, amount, entryId } = req.body;
     try {
       const plant = await Plant.findById(id);
-      console.log("plant", plant);
 
       const entryToAlter = plant.market.find(
         (item: any) => item._id == entryId
       );
-      console.log("entryToAlter", entryToAlter);
 
       entryToAlter.active = active;
       entryToAlter.amount -= amount;

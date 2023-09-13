@@ -17,7 +17,6 @@ export const MarketService = {
         entryId: entryId,
       },
     });
-    console.log("response", res);
   },
 
   //   findUserByEntryId(

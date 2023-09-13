@@ -37,7 +37,6 @@ export default function MarketItemList() {
   if (!plants) {
     return <div>loading</div>;
   }
-  console.log("plants", plants);
 
   if (!data) {
     return <div>loading</div>;
@@ -122,14 +121,12 @@ export default function MarketItemList() {
     const market = PlantsService.getOneMarket(plants, plantId).filter(
       (item: any) => item.active
     );
-    console.log("markets", market);
 
     // //-------------
     //sort by date - oldest first
     const entriesByOldest = market.sort((entry1: any, entry2: any) => {
       entry1.listDate < entry2.listDate ? 1 : -1;
     });
-    console.log("sortedMarkets", entriesByOldest);
 
     let amountLeft = amount;
     for (let i = 0; i < entriesByOldest.length; i++) {
@@ -205,7 +202,6 @@ export default function MarketItemList() {
   // if (typeof marketPlace === "undefined" || marketPlace.length === 0) {
   //   setMarketPlace(listOfPlants);
   // }
-  console.log("marketPlace", marketPlace);
 
   return (
     <>
