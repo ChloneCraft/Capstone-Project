@@ -2,12 +2,14 @@ import useSWR from "swr";
 import Navbar from "../general/Navbar";
 import Image from "next/image";
 import NumberInput from "../general/NumberInput";
-import { Markets, PlantType } from "../../db/models/Plant";
+import { MarketType, MarketsType, PlantType } from "../../db/models/Plant";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import mongoose from "mongoose";
-import { calculateUserBalance, findSeedStackById } from "@/pages/Market/Seeds";
+import { findSeedStackById } from "@/pages/Market/Seeds";
 import { PlantsService } from "@/services/PlantsService";
+import { MoneyService } from "@/services/MoneyService";
+import { MarketService } from "@/services/MarketService";
 
 export default function MarketItemList() {
   const [marketPlace, setMarketPlace] = useState([]);
@@ -42,12 +44,21 @@ export default function MarketItemList() {
   }
   const { currentMoney } = data;
 
-  async function addSeedsToInventory(
+  async function addItemToInventory(
     userStorage: any,
-    seedId: mongoose.Schema.Types.ObjectId,
+    itemId: any,
     amountToAdd: number
   ) {
-    const stackInStorage = findSeedStackById(userStorage, seedId, 0);
+    const plant = plants.find((item: PlantType) => item._id === itemId);
+    const stackInStorage = findSeedStackById(
+      userStorage,
+      itemId,
+      plant.decayTime
+    );
+
+    // if (!stackInStorage) {
+    //   //create new stack
+    // }
 
     const { amount: amountInStorage } = stackInStorage;
 
@@ -61,7 +72,7 @@ export default function MarketItemList() {
     };
 
     const updatedStorage = userStorage.map((item: any) => {
-      return item.plant._id === seedId ? updatedStack : item;
+      return item.plant._id === itemId ? updatedStack : item;
     });
     await fetch(`/api/${id}/plantStorage`, {
       method: "PUT",
@@ -91,22 +102,86 @@ export default function MarketItemList() {
   function clickBuy(buttonId: number) {
     setBuyingButton(buttonId);
   }
+
   async function handleBuy(
-    seedId: mongoose.Schema.Types.ObjectId,
-    amountToAdd: number
+    plantId: mongoose.Schema.Types.ObjectId,
+    amount: number,
+    price: number
   ) {
     setBuyingButton(0);
-    const newCurrentMoney = await calculateUserBalance(
-      amountToAdd,
+    const newCurrentMoney = await MoneyService.calculateUserBalance(
+      amount,
       "subtract",
       currentMoney,
       id,
-      100
+      price
     );
+    //find sellers
+
+    //find markeet of plant
+    const market = PlantsService.getOneMarket(plants, plantId).filter(
+      (item: any) => item.active
+    );
+    console.log("markets", market);
+
+    // //-------------
+    //sort by date - oldest first
+    const entriesByOldest = market.sort((entry1: any, entry2: any) => {
+      entry1.listDate < entry2.listDate ? 1 : -1;
+    });
+    console.log("sortedMarkets", entriesByOldest);
+
+    let amountLeft = amount;
+    for (let i = 0; i < entriesByOldest.length; i++) {
+      if (entriesByOldest[i].amount >= amountLeft) {
+        //subtract amountLeft from entry
+        //if amount in entry is 0 turn active off
+        //add amount that was subtracted times price to user balance
+        // return;
+      } else {
+        //set entry amount to 0 and active to false
+        // MarketService.subtractFromMarketEntry(
+        //   entriesByOldest[i].amount,
+        //   entriesByOldest[i]._id,
+        //   false,
+        //   entriesByOldest[i].amount * price,
+        //   plantId
+        // );
+        console.log("sellerId", entriesByOldest[i].sellerId);
+        return;
+        // MarketService.findUserByEntryId(
+        //   entriesByOldest[i]._id,
+        //   plants,
+        //   plantId
+        // );
+        // await MoneyService.calculateUserBalance(
+        //   entriesByOldest[i].amount,
+        //   "add",
+        //   currentMoney,
+        //   i,
+        //   price
+        // );
+      }
+    }
+    //find oldest entry and "buy" from there
+    //repeat until amount of needed items is met
+
+    // await MoneyService.calculateUserBalance(
+    //   amount,
+    //   "add",
+    //   currentMoney,
+    //   i,
+    //   price
+    // );
     setDisplayedMoney(newCurrentMoney);
 
-    addSeedsToInventory(userStorage, seedId, amountToAdd);
+    addItemToInventory(userStorage, plantId, amount);
   }
+
+  // function handleBuyFromMarket(
+  //   itemId: mongoose.Schema.Types.ObjectId,
+  //   amount: number
+  // );
   // const listOfPlants = plants.filter((plant: any) => {
   //   return plant.type === "plant";
   // });
@@ -174,6 +249,10 @@ export default function MarketItemList() {
                         handlerArgs={marketItem._id}
                         isSelling={false}
                         handler={handleBuy}
+                        price={PlantsService.calcMarketPrice(
+                          plants,
+                          marketItem._id
+                        )}
                       />
                     )}
                   </div>
