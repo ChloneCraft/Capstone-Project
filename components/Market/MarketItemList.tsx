@@ -115,15 +115,6 @@ export default function MarketItemList() {
   //   setMarketPlace(listOfPlants);
   // }
 
-  function getAvailableItems(market: Markets) {
-    const result = market
-      .filter((item) => item.active)
-      .map((item) => item.amount)
-      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
-    return result;
-  }
-
   return (
     <>
       <header>
@@ -165,7 +156,12 @@ export default function MarketItemList() {
                   </div>
                   <h3>???$</h3>
                   {/*calculated price here*/}
-                  <h3>{getAvailableItems(marketItem.market)}</h3>
+                  <h3>
+                    {PlantsService.getNumberOfItemsOnOneMarket(
+                      marketItem.market
+                    )}
+                  </h3>
+                  <h3>{PlantsService.testFunction(3, 10)}</h3>
 
                   <div>
                     {buyingButton !== index + 1 && (
