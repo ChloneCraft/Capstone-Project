@@ -3,6 +3,7 @@ import Image from "next/image";
 import useSWRMutation from "swr/mutation";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 // import { ObjectId } from "mongodb";
 
 export async function sendRequest(url: any, { arg }: any) {
@@ -30,7 +31,7 @@ export default function SelectSeed({
   setIsClicked,
 }: any) {
   const session = useSession();
-  let userId: String = "";
+  let userId: any;
   // console.log("session", session);
 
   if (session.data) {
