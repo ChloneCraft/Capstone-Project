@@ -8,7 +8,7 @@ declare module "next-auth" {
   interface Session {
     user: {
       /** The user's postal address. */
-      id: String;
+      id: mongoose.Schema.Types.ObjectId;
     } & DefaultSession["user"];
   }
 }
