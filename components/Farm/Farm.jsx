@@ -2,26 +2,37 @@ import Crop from "./Crop";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
+import { PlantsService } from "@/services/PlantsService";
 
 const interval = 3000;
 
 export default function Farm() {
   const [farm, setFarm] = useState([]);
-  const [growthId, setGrowthId] = useState();
   let [count, setCount] = useState(0);
+  const [unlockedFields, setUnlockedFields] = useState(0);
   const session = useSession();
 
   const id = session?.data?.user?.id;
   const { data: farmData, isLoading, error } = useSWR(`/api/${id}/farm`);
+  const {
+    data: unlockedFieldsData,
+    isLoadingUnFi,
+    errorUnFi,
+  } = useSWR(`/api/${id}/unlockedFields`);
+  useEffect(() => {
+    setUnlockedFields(unlockedFieldsData);
+  }, [unlockedFieldsData]);
   useInterval(() => {
     updateFarm();
     setCount(count + 1);
   }, interval);
-  if (isLoading || !farmData) {
+  if (isLoading || !farmData || isLoadingUnFi || !unlockedFieldsData) {
     return <div>loading...</div>;
   }
-  if (error) {
-    console.error("errorrrrr", error);
+  if (error || errorUnFi) {
+    error
+      ? console.error("errorrrrr", error)
+      : console.error("errorrrrr", errorUnFi);
   }
   if (farm) {
     if (farm.length === 0 && farmData) {
@@ -92,6 +103,9 @@ export default function Farm() {
     setFarm(newFarm);
     return newFarm;
   }
+  const priceNewPlot = PlantsService.getPlotPrice(unlockedFields);
+  console.log(priceNewPlot?.plant1);
+
   // console.log("farm", farm);
   if (farm.length !== 0) {
     return (
@@ -99,14 +113,17 @@ export default function Farm() {
         <div className="farm">
           {farm.map((plot, index) => {
             return (
-              <Crop
-                content={plot}
-                farm={farm}
-                setFarm={setFarm}
-                index={index}
-                // plantId={farm[index].plant._id}
-                key={index}
-              />
+              <>
+                {/* <div>{PlantsService.getPlotPrice(unlockedFields).money}</div> */}
+                <Crop
+                  content={plot}
+                  farm={farm}
+                  setFarm={setFarm}
+                  index={index}
+                  // plantId={farm[index].plant._id}
+                  key={index}
+                />
+              </>
             );
           })}
         </div>
