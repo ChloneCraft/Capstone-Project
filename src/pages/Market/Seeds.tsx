@@ -90,6 +90,9 @@ export default function Seeds() {
     seedId: mongoose.Schema.Types.ObjectId,
     amountToAdd: number
   ) {
+    if (!id) {
+      return;
+    }
     setBuyingButton(0);
     const newCurrentMoney = await MoneyService.calculateUserBalance(
       amountToAdd,
