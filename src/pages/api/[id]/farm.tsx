@@ -18,7 +18,7 @@ export default async function handler(req: any, res: any) {
 
     return res.status(200).json(farm);
   } else if (req.method === "PUT") {
-    // console.log("requestbody", req.body);
+    console.log("requestbody", req.body);
 
     try {
       const player = await User.findByIdAndUpdate(
@@ -32,7 +32,7 @@ export default async function handler(req: any, res: any) {
         model: "Plant",
       });
       // console.log("pppplayerrrrrrrrrrrrrrrrrrrr", player);
-      return res.status(200).json(player);
+      return res.status(200).json(player.farm);
     } catch (error) {
       console.error("ERRRROR", error);
       return res.status(400).json("error");

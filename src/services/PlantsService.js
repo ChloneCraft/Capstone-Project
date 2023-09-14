@@ -2,6 +2,9 @@ export const PlantsService = {
   getListOfPlants(plants) {
     return plants.filter((plant) => plant.type === "plant");
   },
+  getPlantById(plants, id) {
+    return plants.find((plant) => plant._id == id);
+  },
 
   getAllMarkets(plants) {
     const plantMarkets = this.getListOfPlants(plants).map(
@@ -127,7 +130,7 @@ export const PlantsService = {
         return {
           plant1: { id: "64f8b238ec1cbef6647a818d", amount: 5 },
           money: 8000,
-          plant2: { id: "64f6e73232e5ea1ee8540236", amount: 10 },
+          plant2: { id: "64ec84e797da227ff2d81c96", amount: 10 },
           plant3: { id: "", amount: 0 },
         };
       case 16:

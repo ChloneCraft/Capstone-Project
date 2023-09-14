@@ -22,10 +22,14 @@ export default async function handler(req: any, res: any) {
       return res.status(400).json(error);
     }
   } else if (req.method === "PUT") {
-    const user = await User.findByIdAndUpdate(id, {
-      $set: { plantStorage: req.body },
-    });
-    return res.status(200).json("success");
+    const user = await User.findByIdAndUpdate(
+      id,
+      {
+        $set: { plantStorage: req.body },
+      },
+      { new: true }
+    );
+    return res.status(200).json(user.plantStorage);
   } else {
     return res.status(400).json({ error: "something went wrong" });
   }

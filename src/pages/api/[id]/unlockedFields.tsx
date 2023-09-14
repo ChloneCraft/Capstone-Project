@@ -17,29 +17,22 @@ export default async function handler(req: any, res: any) {
     } catch (error) {
       return res.status(400).json(error);
     }
-  }
-  //   else if (req.method === "PUT") {
-  //     console.log("set money api");
-  //     const { currentMoney, totalMoney } = req.body;
-  //     console.log("money", currentMoney, totalMoney);
-
-  //     try {
-  //       const user = await User.findByIdAndUpdate(
-  //         id,
-  //         {
-  //           $set: {
-  //             currentMoney: currentMoney,
-  //             totalMoney: totalMoney,
-  //           },
-  //         },
-  //         { new: true }
-  //       );
-  //       return res.status(200).json(user.currentMoney);
-  //     } catch (e) {
-  //       return res.status(400).json(e);
-  //     }
-  //   }
-  else {
+  } else if (req.method === "PUT") {
+    try {
+      const user = await User.findByIdAndUpdate(
+        id,
+        {
+          $set: {
+            unlockedFields: req.body,
+          },
+        },
+        { new: true }
+      );
+      return res.status(200).json(user.unlockedFields);
+    } catch (e) {
+      return res.status(400).json(e);
+    }
+  } else {
     return res.status(400).json({ error: "something went wrong" });
   }
 }
