@@ -27,7 +27,7 @@ export const getServerSideProps = async (context) => {
   if (session) {
     return {
       redirect: {
-        destination: "/welcome",
+        destination: process.env.NEXTAUTH_URL + "/welcome",
       },
     };
   }
