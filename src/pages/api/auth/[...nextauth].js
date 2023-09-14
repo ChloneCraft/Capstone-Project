@@ -27,57 +27,57 @@ export const authOptions = {
             {
               // potato seed
               plant: "64ef2a7633734c4025ee8e9e",
-              amount: 15,
+              amount: 0,
               decayStatus: 0,
             },
             {
               plant: "64f6e73232e5ea1ee8540236",
-              amount: 15,
+              amount: 0,
               decayStatus: 0,
             },
             {
               plant: "64f8b24fec1cbef6647a818e",
-              amount: 15,
+              amount: 0,
               decayStatus: 0,
             },
             {
               plant: "64f8b201ec1cbef6647a818c",
-              amount: 10,
+              amount: 0,
               decayStatus: 0,
             },
             {
               plant: "64f8b2a0ec1cbef6647a818f",
-              amount: 10,
+              amount: 0,
               decayStatus: 0,
             },
             {
               //maple tree
               plant: "64f8b2dcec1cbef6647a8190",
-              amount: 10,
+              amount: 0,
               decayStatus: 30,
             },
             {
               //blueberry
               plant: "64f8b238ec1cbef6647a818d",
-              amount: 10,
+              amount: 0,
               decayStatus: 2,
             },
             {
               //pumpkin
               plant: "64ec84e797da227ff2d81c96",
-              amount: 10,
+              amount: 0,
               decayStatus: 3,
             },
             {
               //oak tree
               plant: "64ec850497da227ff2d81c97",
-              amount: 10,
+              amount: 0,
               decayStatus: 25,
             },
             {
               // potato
               plant: "64ec81c397da227ff2d81c8d",
-              amount: 10,
+              amount: 0,
               decayStatus: 6,
             },
           ],
