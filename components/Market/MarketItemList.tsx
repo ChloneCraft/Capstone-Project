@@ -107,6 +107,9 @@ export default function MarketItemList() {
     amount: number,
     price: number
   ) {
+    if (!id) {
+      return;
+    }
     setBuyingButton(0);
     const newCurrentMoney = await MoneyService.calculateUserBalance(
       amount,
