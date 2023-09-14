@@ -68,6 +68,9 @@ export default function Storage() {
   ) {
     const { plantId, decayStatus } = args;
 
+    if (!id) {
+      return;
+    }
     const newCurrentMoney = await MoneyService.calculateUserBalance(
       amount,
       "add",
