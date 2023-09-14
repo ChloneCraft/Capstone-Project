@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import { MoneyService } from "@/services/MoneyService";
 import { findSeedStackById } from "@/pages/Market/Seeds";
 import { sendRequest } from "./SelectSeed";
+import { useEffect } from "react";
 
 export default function Storage() {
   const [query, setQuery] = useState("");
@@ -18,12 +19,17 @@ export default function Storage() {
   const id = session?.data?.user?.id;
   const { data: moneyData } = useSWR(`/api/${id}/money`);
   const { data: userStorage } = useSWR(`/api/${id}/plantStorage`);
+
+  useEffect(() => {
+    if (userStorage) {
+      setFilteredStorage(userStorage);
+    }
+  }, [userStorage]);
+
   if (!moneyData || !userStorage) {
     return <div>loading</div>;
   }
   const { currentMoney } = moneyData;
-
-  console.log("userStorage", userStorage);
 
   if (displayedMoney === -1) {
     setDisplayedMoney(currentMoney);
@@ -123,15 +129,15 @@ export default function Storage() {
     }
   }
 
-  if (
-    typeof filteredStorage === "undefined" ||
-    (filteredStorage.length === 0 && !query)
-  ) {
-    console.log("its happening");
+  // if (
+  //   typeof filteredStorage === "undefined" ||
+  //   (filteredStorage.length === 0 && !query)
+  // ) {
+  //   console.log("its happening");
 
-    setFilteredStorage(userStorage);
-  }
-  console.log("filtered storage", filteredStorage);
+  //   setFilteredStorage(userStorage);
+  // }
+  // console.log("filtered storage", filteredStorage);
 
   return (
     <>
