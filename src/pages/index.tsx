@@ -12,26 +12,6 @@ import { useEffect } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  // console.log("name", name);
-
-  // console.log("player before effect", player);
-
-  // useEffect(() => {
-  // console.log("player:", player);
-  // if (!player) {
-  // fetch("http://localhost:3000/api/players", {
-  //   method: "POST",
-  //   body: JSON.stringify({
-  //     username: name,
-  //     date: new Date(),
-  //     location: userCoords,
-  //   }),
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // });
-  // }
-  // }, []);
   return (
     <>
       <Head>
@@ -45,8 +25,6 @@ export default function Home() {
       </header>
       <main className="buttonContainer">
         <MoneyDisplay />
-        <br />
-        <BuyLand />
         {/* <p>username: {data.username}</p> */}
         <Farm />
         <Link className="storageLink" href="/Storage">

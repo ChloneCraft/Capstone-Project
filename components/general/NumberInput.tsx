@@ -13,16 +13,15 @@ export default function NumberInput({
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-    console.log("dataaa", data);
     const amount = data.amountInput as string;
 
     handler(handlerArgs, parseFloat(amount), price);
   }
   function handleChange(e: any) {
-    console.log(e.target.value);
-
     if (!isSelling) {
-      if (comparer - e.target.value * 100 < 0) {
+      console.log("price and amount", e.target.value, price, comparer);
+
+      if (comparer - e.target.value * price < 0) {
         setIsDisabled(true);
       } else {
         setIsDisabled(false);

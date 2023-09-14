@@ -19,9 +19,9 @@ export const authOptions = {
           image: profile.avatar_url,
           lastLogin: new Date(),
           region: "none",
-          totalMoney: 1000,
-          currentMoney: 1000,
-          unlockedFields: 16,
+          totalMoney: 500,
+          currentMoney: 500,
+          unlockedFields: 12,
           plantsCollected: [],
           plantStorage: [
             {

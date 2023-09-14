@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 // import { UserType } from "../../../db/models/User";
 import NumberInput from "../../../components/general/NumberInput";
 import { PlantsService } from "@/services/PlantsService";
+import MoneyDisplay from "../../../components/general/MoneyDisplay";
 
 export function findSeedStackById(
   array: any,
@@ -65,7 +66,7 @@ export default function Seeds() {
   if (!data) {
     return <div>loading</div>;
   }
-  const { currentMoney } = data;
+  const { currentMoney, totalMoney } = data;
 
   if (displayedMoney === -1) {
     setDisplayedMoney(currentMoney);
@@ -100,6 +101,7 @@ export default function Seeds() {
       amountToAdd,
       "subtract",
       currentMoney,
+      totalMoney,
       id,
       100
     );
@@ -136,7 +138,7 @@ export default function Seeds() {
                 onChange={(e) => handleSearchInput(e, listOfSeeds)}
               />
             </form>
-            <p>Money: {displayedMoney}</p>
+            <MoneyDisplay />
           </section>
           <section className="storageList">
             <nav className="storageTableNav">
