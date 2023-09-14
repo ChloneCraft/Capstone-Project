@@ -64,6 +64,36 @@ export const PlantsService = {
             (plant.name === "Blueberry" || plant.name === "Teak Tree") &&
             plant.type === "plant"
         );
+      case "Katara":
+        return plants.filter(
+          (plant) =>
+            (plant.name === "Blueberry" || plant.name === "Teak Tree") &&
+            plant.type === "plant"
+        );
+      case "Katara":
+        return plants.filter(
+          (plant) =>
+            (plant.name === "Blueberry" || plant.name === "Teak Tree") &&
+            plant.type === "plant"
+        );
+      case "Katara":
+        return plants.filter(
+          (plant) =>
+            (plant.name === "Blueberry" || plant.name === "Teak Tree") &&
+            plant.type === "plant"
+        );
+      case "Katara":
+        return plants.filter(
+          (plant) =>
+            (plant.name === "Blueberry" || plant.name === "Teak Tree") &&
+            plant.type === "plant"
+        );
+      case "Katara":
+        return plants.filter(
+          (plant) =>
+            (plant.name === "Blueberry" || plant.name === "Teak Tree") &&
+            plant.type === "plant"
+        );
     }
   },
 };
