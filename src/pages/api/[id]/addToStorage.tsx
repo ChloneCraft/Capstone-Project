@@ -30,7 +30,6 @@ export default async function handler(req: any, res: any) {
 
     if (stackfromToday) {
       user.plantStorage[user.plantStorage.indexOf(stackfromToday)].amount++;
-      user.save();
     } else {
       user.plantStorage.push({
         plant: newPlant,
@@ -41,7 +40,7 @@ export default async function handler(req: any, res: any) {
 
     user.save();
 
-    return res.status(200).json("success");
+    return res.status(200).json(user.plantStorage);
   } else {
     return res.status(400).json({ error: "something went wrong" });
   }
