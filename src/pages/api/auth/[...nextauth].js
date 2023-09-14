@@ -198,7 +198,7 @@ export const authOptions = {
     },
     async session({ session, user }) {
       if (session?.user) {
-        if (typeof user.id !== "number") throw new Error("id should a number");
+        // if (typeof user.id !== "number") throw new Error("id should a number");
         session.user.id = user.id;
 
         //creating a new player if necessary------------
