@@ -18,7 +18,7 @@ export default function Welcome() {
     push("/");
   }
   const { data: user, isLoading } = useSWR(`/api/${userId}`);
-  if (isLoading) {
+  if (isLoading || !user) {
     return <div>loading...</div>;
   }
   console.log("user", user);
