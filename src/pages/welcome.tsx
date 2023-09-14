@@ -66,5 +66,7 @@ export default function Welcome() {
         </button>
       </main>
     );
+  } else {
+    push("/");
   }
 }
