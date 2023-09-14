@@ -55,4 +55,15 @@ export const PlantsService = {
       return (500 + 2 * factor).toFixed();
     }
   },
+
+  filterPlantsByRegion(plants, region) {
+    switch (region) {
+      case "Katara":
+        return plants.filter(
+          (plant) =>
+            (plant.name === "Blueberry" || plant.name === "Teak Tree") &&
+            plant.type === "plant"
+        );
+    }
+  },
 };
