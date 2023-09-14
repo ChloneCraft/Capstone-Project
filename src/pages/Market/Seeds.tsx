@@ -8,6 +8,7 @@ import { useState } from "react";
 import mongoose from "mongoose";
 // import { UserType } from "../../../db/models/User";
 import NumberInput from "../../../components/general/NumberInput";
+import { PlantsService } from "@/services/PlantsService";
 
 export function findSeedStackById(
   array: any,
@@ -28,6 +29,7 @@ export default function Seeds() {
 
   const session = useSession();
   const id = session?.data?.user?.id;
+  const { data: userData } = useSWR(`/api/${id}`);
   const { data: userStorage } = useSWR(`/api/${id}/plantStorage`);
   const { data } = useSWR(`/api/${id}/money`);
 
@@ -111,9 +113,10 @@ export default function Seeds() {
   }
 
   if (session.data) {
-    const listOfSeeds = plants.filter((plant: any) => {
-      return plant.type === "seed";
-    });
+    const listOfSeeds = PlantsService.filterPlantsByRegion(
+      plants,
+      userData.region
+    );
 
     if (filteredSeeds.length === 0 && !query) {
       setFilteredSeeds(listOfSeeds);

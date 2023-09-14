@@ -61,38 +61,42 @@ export const PlantsService = {
       case "Katara":
         return plants.filter(
           (plant) =>
-            (plant.name === "Blueberry" || plant.name === "Teak Tree") &&
-            plant.type === "plant"
+            (plant.name === "Oak Tree Seed" || plant.name === "Potato Seed") &&
+            plant.type === "seed"
         );
-      case "Katara":
+      case "Bray Island":
         return plants.filter(
           (plant) =>
-            (plant.name === "Blueberry" || plant.name === "Teak Tree") &&
-            plant.type === "plant"
+            (plant.name === "Pumpkin Seed" ||
+              plant.name === "Blueberry Seed") &&
+            plant.type === "seed"
         );
-      case "Katara":
+      case "Hanimaadhoo":
         return plants.filter(
           (plant) =>
-            (plant.name === "Blueberry" || plant.name === "Teak Tree") &&
-            plant.type === "plant"
+            (plant.name === "Pumpkin Seed" ||
+              plant.name === "Teak Tree Seed") &&
+            plant.type === "seed"
         );
-      case "Katara":
+      case "Tortuga":
         return plants.filter(
           (plant) =>
-            (plant.name === "Blueberry" || plant.name === "Teak Tree") &&
-            plant.type === "plant"
+            (plant.name === "Potato Seed" || plant.name === "Teak Tree Seed") &&
+            plant.type === "seed"
         );
-      case "Katara":
+      case "Kontcha":
         return plants.filter(
           (plant) =>
-            (plant.name === "Blueberry" || plant.name === "Teak Tree") &&
-            plant.type === "plant"
+            (plant.name === "Blueberry Seed" ||
+              plant.name === "Pumpkin Seed") &&
+            plant.type === "seed"
         );
-      case "Katara":
+      case "Torsgard":
         return plants.filter(
           (plant) =>
-            (plant.name === "Blueberry" || plant.name === "Teak Tree") &&
-            plant.type === "plant"
+            (plant.name === "Blueberry Seed" ||
+              plant.name === "Oak Tree Seed") &&
+            plant.type === "seed"
         );
     }
   },

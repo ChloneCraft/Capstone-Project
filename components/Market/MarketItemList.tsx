@@ -213,6 +213,15 @@ export default function MarketItemList() {
       </header>
       <main className="storageMain">
         <section className="storageSearchbarSection">
+          <button
+            onClick={() => {
+              console.log(
+                PlantsService.filterPlantsByRegion(plants, "Bray Island")
+              );
+            }}
+          >
+            click me for testing
+          </button>
           <form className="storageForm">
             <input
               type="text"
