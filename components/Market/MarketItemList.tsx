@@ -10,6 +10,7 @@ import { findSeedStackById } from "@/pages/Market/Seeds";
 import { PlantsService } from "@/services/PlantsService";
 import { MoneyService } from "@/services/MoneyService";
 import { MarketService } from "@/services/MarketService";
+import MoneyDisplay from "../general/MoneyDisplay";
 
 export default function MarketItemList() {
   const [marketPlace, setMarketPlace] = useState([]);
@@ -22,17 +23,16 @@ export default function MarketItemList() {
   const { data: userStorage } = useSWR(`/api/${id}/plantStorage`);
   const { data } = useSWR(`/api/${id}/money`);
 
-  // function getListOfPlants(plants: any) {
-  //   return plants.filter((plant: any) => {
-  //     return plant.type === "plant";
-  //   });
-  // }
-
   useEffect(() => {
     if (plants) {
       setMarketPlace(PlantsService.getListOfPlants(plants));
     }
   }, [plants]);
+  useEffect(() => {
+    if (data) {
+      setDisplayedMoney(data.currentMoney);
+    }
+  }, [data]);
 
   if (!plants) {
     return <div>loading</div>;
@@ -41,7 +41,7 @@ export default function MarketItemList() {
   if (!data) {
     return <div>loading</div>;
   }
-  const { currentMoney } = data;
+  const { currentMoney, totalMoney } = data;
 
   async function addItemToInventory(
     userStorage: any,
@@ -54,10 +54,6 @@ export default function MarketItemList() {
       itemId,
       plant.decayTime
     );
-
-    // if (!stackInStorage) {
-    //   //create new stack
-    // }
 
     const { amount: amountInStorage } = stackInStorage;
 
@@ -94,9 +90,9 @@ export default function MarketItemList() {
       setMarketPlace(fullStorage);
     }
   }
-  if (displayedMoney === -1) {
-    setDisplayedMoney(currentMoney);
-  }
+  // if (displayedMoney === -1) {
+  //   setDisplayedMoney(currentMoney);
+  // }
 
   function clickBuy(buttonId: number) {
     setBuyingButton(buttonId);
@@ -115,6 +111,7 @@ export default function MarketItemList() {
       amount,
       "subtract",
       currentMoney,
+      totalMoney,
       id,
       price
     );
@@ -132,32 +129,39 @@ export default function MarketItemList() {
     });
 
     let amountLeft = amount;
+    // let moneyData;
     for (let i = 0; i < entriesByOldest.length; i++) {
       const fetchReturn = await fetch(
         `/api/${entriesByOldest[i].sellerId}/money`
       );
+
       const moneyData = await fetchReturn.json();
-      const { currentMoney: sellerMoney } = moneyData;
+
+      console.log("test1", moneyData);
+      const { currentMoney: sellerMoney, totalMoney: sellerTotal } = moneyData;
 
       if (entriesByOldest[i].amount >= amountLeft) {
         //subtract amountLeft from entry and decide if still active
         const buyAmountLeft = entriesByOldest[i].amount - amountLeft;
         const isEntryEmpty = buyAmountLeft === 0 ? true : false;
+        console.log("test2");
         MarketService.subtractFromMarketEntry(
           amountLeft,
           entriesByOldest[i]._id,
           !isEntryEmpty,
           plantId
         );
+        console.log("test3");
         //add amount that was subtracted times price to user balance
-
         await MoneyService.calculateUserBalance(
           amountLeft,
           "add",
           sellerMoney,
+          sellerTotal,
           entriesByOldest[i].sellerId,
           price
         );
+        console.log("test4");
         amountLeft = 0;
         return;
       } else {
@@ -168,43 +172,22 @@ export default function MarketItemList() {
           false,
           plantId
         );
-
+        console.log("test5");
         await MoneyService.calculateUserBalance(
           entriesByOldest[i].amount,
           "add",
           sellerMoney,
+          sellerTotal,
           entriesByOldest[i].sellerId,
           price
         );
         amountLeft -= entriesByOldest[i].amount;
       }
     }
-    //find oldest entry and "buy" from there
-    //repeat until amount of needed items is met
-
-    // await MoneyService.calculateUserBalance(
-    //   amount,
-    //   "add",
-    //   currentMoney,
-    //   i,
-    //   price
-    // );
     setDisplayedMoney(newCurrentMoney);
 
     addItemToInventory(userStorage, plantId, amount);
   }
-
-  // function handleBuyFromMarket(
-  //   itemId: mongoose.Schema.Types.ObjectId,
-  //   amount: number
-  // );
-  // const listOfPlants = plants.filter((plant: any) => {
-  //   return plant.type === "plant";
-  // });
-
-  // if (typeof marketPlace === "undefined" || marketPlace.length === 0) {
-  //   setMarketPlace(listOfPlants);
-  // }
 
   return (
     <>
@@ -222,7 +205,7 @@ export default function MarketItemList() {
               }
             />
           </form>
-          <p>Money: {displayedMoney}</p>
+          <MoneyDisplay />
         </section>
         <section className="storageList">
           <nav className="storageTableNav">

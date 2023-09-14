@@ -9,6 +9,7 @@ import { MoneyService } from "@/services/MoneyService";
 import { findSeedStackById } from "@/pages/Market/Seeds";
 import { sendRequest } from "./SelectSeed";
 import { useEffect } from "react";
+import MoneyDisplay from "../general/MoneyDisplay";
 
 export default function Storage() {
   const [query, setQuery] = useState("");
@@ -29,7 +30,7 @@ export default function Storage() {
   if (!moneyData || !userStorage) {
     return <div>loading</div>;
   }
-  const { currentMoney } = moneyData;
+  const { currentMoney, totalMoney } = moneyData;
 
   if (displayedMoney === -1) {
     setDisplayedMoney(currentMoney);
@@ -81,6 +82,7 @@ export default function Storage() {
       amount,
       "add",
       currentMoney,
+      totalMoney,
       id,
       price
     );
@@ -153,7 +155,7 @@ export default function Storage() {
               onChange={(e) => handleSearchInput(e, userStorage)}
             />
           </form>
-          <p>Money: {displayedMoney}</p>
+          <MoneyDisplay />
         </section>
         <section className="storageList">
           <nav className="storageTableNav">
