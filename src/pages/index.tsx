@@ -22,7 +22,7 @@ export default function Home() {
       <header>
         <Navbar pageTitle="Farmstock" />
       </header>
-      <main className="buttonContainer">
+      <main className="farmMain">
         <MoneyDisplay />
         {/* <p>username: {data.username}</p> */}
         <Farm />

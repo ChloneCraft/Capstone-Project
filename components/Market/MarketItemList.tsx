@@ -25,7 +25,17 @@ export default function MarketItemList() {
 
   useEffect(() => {
     if (plants) {
-      setMarketPlace(PlantsService.getListOfPlants(plants));
+      setMarketPlace(
+        PlantsService.getListOfPlants(plants).sort((item1: any, item2: any) => {
+          const amountPlant1 = PlantsService.getNumberOfItemsOnOneMarket(
+            item1.market
+          );
+          const amountPlant2 = PlantsService.getNumberOfItemsOnOneMarket(
+            item2.market
+          );
+          return amountPlant2 - amountPlant1;
+        })
+      );
     }
   }, [plants]);
   useEffect(() => {
@@ -222,7 +232,7 @@ export default function MarketItemList() {
                   <h3>{marketItem.name}</h3>
                   <div className="imageContainer">
                     <Image
-                      src={marketItem.image.img}
+                      src={marketItem.image.item}
                       alt="plantImage"
                       width={40}
                       height={60}

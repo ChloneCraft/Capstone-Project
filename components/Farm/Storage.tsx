@@ -23,7 +23,13 @@ export default function Storage() {
 
   useEffect(() => {
     if (userStorage) {
-      setFilteredStorage(userStorage);
+      let sortedUserStorage = userStorage.sort((item1: any, item2: any) => {
+        return item2.plant.type.length - item1.plant.type.length;
+      });
+      sortedUserStorage = sortedUserStorage.sort((item1: any, item2: any) => {
+        return item2.amount - item1.amount;
+      });
+      setFilteredStorage(sortedUserStorage);
     }
   }, [userStorage]);
 

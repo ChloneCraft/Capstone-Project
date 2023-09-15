@@ -76,14 +76,19 @@ a {
 .mainButton:hover {
   transform: scale(1.2);
 }
-
+.farmMain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
 .buttonContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px;
+  gap: 20%;
   height: 100vh;
-  flex-direction: column;
 }
 .marketButtonContainer {
   display: flex;
@@ -165,11 +170,12 @@ a {
 }
 .plantSeedButton {
   border: outset 2px black;
-  position: absolute;
+  /* position: absolute; */
+  display: inline;
   width: 100px;
   height: 50px;
   background-color: rgb(20, 145, 20);
-  transform: rotate3d(0, 1, 1, -45deg);
+  text-align: center;
   z-index: 2;
   display: flex;
   align-items: center;
@@ -178,13 +184,24 @@ a {
   color: rgb(204, 204, 204);
   font-weight: bolder;
   font-size: 20px;
+  cursor: pointer;
+}
+.plantSeedContainer {
+  transform: rotate3d(0, 1, 1, -45deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 150px;
+  gap: 20px;
 }
 .plantSeedButton:hover {
-  transform: scale(1.1) rotate3d(0, 1, 1, -45deg);
+  transform: scale(1.2);
 }
 .storageLink {
   width: 200px;
   height: 60px;
+  margin-top: 50px;
   display: flex;
   background-color: green;
   position: absolute;
@@ -269,6 +286,7 @@ nav a {
 .storageTableNav * {
   width: 180px;
   display: flex;
+  text-align: center;
   justify-content: center;
   align-items: center;
 }
