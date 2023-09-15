@@ -117,10 +117,10 @@ export default function Seeds() {
   if (session.data) {
     const listOfSeeds = PlantsService.filterPlantsByRegion(
       plants,
-      userData.region
+      userData?.region
     );
 
-    if (filteredSeeds.length === 0 && !query) {
+    if (listOfSeeds && filteredSeeds.length === 0 && !query) {
       setFilteredSeeds(listOfSeeds);
     }
 

@@ -52,7 +52,6 @@ export default async function handler(req: any, res: any) {
         path: "farm.plant",
         model: "Plant",
       });
-      console.log("pppplayerrrrrrrrrrrrrrrrrrrr", player);
       return res.status(200).json(player.farm);
     } catch (error) {
       console.error("ERRRROR", error);

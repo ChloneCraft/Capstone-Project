@@ -2,17 +2,26 @@ import Crop from "./Crop";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
+import { PlantsService } from "@/services/PlantsService";
 
-const interval = 3000;
+const interval = 5000;
 
 export default function Farm() {
   const [farm, setFarm] = useState([]);
-  const [growthId, setGrowthId] = useState();
   let [count, setCount] = useState(0);
+  // const [unlockedFields, setUnlockedFields] = useState(0);
   const session = useSession();
 
   const id = session?.data?.user?.id;
   const { data: farmData, isLoading, error } = useSWR(`/api/${id}/farm`);
+  // const {
+  //   data: unlockedFieldsData,
+  //   isLoadingUnFi,
+  //   errorUnFi,
+  // } = useSWR(`/api/${id}/unlockedFields`);
+  // useEffect(() => {
+  //   setUnlockedFields(unlockedFieldsData);
+  // }, [unlockedFieldsData]);
   useInterval(() => {
     updateFarm();
     setCount(count + 1);
@@ -57,24 +66,26 @@ export default function Farm() {
 
   //----------------------------------------------------------------------------
 
-  async function updateFarm() {
-    const newFarm = farm.map((crop) => {
-      if (!crop.plant.type) {
-        return crop;
-      } else {
-        let newGrowthStatus = crop.growthStatus - interval / 1000;
-        // console.log("newGrowthStatus", newGrowthStatus);
-        if (newGrowthStatus <= 0) {
-          newGrowthStatus = 0;
-        }
+  async function updateFarm(newFarm = null) {
+    if (!newFarm) {
+      newFarm = farm.map((crop) => {
+        if (!crop.plant.type) {
+          return crop;
+        } else {
+          let newGrowthStatus = crop.growthStatus - interval / 1000;
+          // console.log("newGrowthStatus", newGrowthStatus);
+          if (newGrowthStatus <= 0) {
+            newGrowthStatus = 0;
+          }
 
-        return {
-          growthStatus: newGrowthStatus,
-          plant: crop.plant,
-          waterCapacity: crop.waterCapacity,
-        };
-      }
-    });
+          return {
+            growthStatus: newGrowthStatus,
+            plant: crop.plant,
+            waterCapacity: crop.waterCapacity,
+          };
+        }
+      });
+    }
     const response = await fetch(`/api/${id}/farm`, {
       method: "PUT",
       body: JSON.stringify(newFarm),
@@ -92,6 +103,9 @@ export default function Farm() {
     setFarm(newFarm);
     return newFarm;
   }
+  // const priceNewPlot = PlantsService.getPlotPrice(unlockedFields);
+  // console.log(priceNewPlot?.plant1);
+
   // console.log("farm", farm);
   if (farm.length !== 0) {
     return (
@@ -104,7 +118,7 @@ export default function Farm() {
                 farm={farm}
                 setFarm={setFarm}
                 index={index}
-                // plantId={farm[index].plant._id}
+                updateFarm={updateFarm}
                 key={index}
               />
             );

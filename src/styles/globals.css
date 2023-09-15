@@ -16,17 +16,20 @@ body {
 }
 
 body {
-  background-color: rgb(216, 151, 12);
+  background-color: #d8970c;
 }
 main {
   position: relative;
+  padding-top: 50px;
 }
 
 a {
   color: inherit;
   text-decoration: none;
 }
-
+.MoneyDisplay {
+  margin-top: 50px;
+}
 /*login page*/
 .loginContainer {
   display: flex;
@@ -214,7 +217,9 @@ nav a {
 
 .navbar {
   display: flex;
-  position: relative;
+  position: fixed;
+  z-index: 5;
+  width: 100%;
   border-bottom: solid 3px black;
   background-color: rgb(172, 173, 93);
   height: 50px;
