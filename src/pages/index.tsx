@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import MoneyDisplay from "../../components/general/MoneyDisplay";
-import BuyLand from "../../components/Farm/BuyLand";
 import Farm from "../../components/Farm/Farm";
 import Link from "next/link";
 import useSWR from "swr";
