@@ -159,6 +159,7 @@ export default function Crop({
             setIsClicked={setIsClicked}
             index={index}
             setFarm={setFarm}
+            updateFarm={updateFarm}
           />
         )}
       </aside>

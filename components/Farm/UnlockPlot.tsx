@@ -47,11 +47,14 @@ export default function UnlockPlot({
       return plant.amount <= itemStack.amount;
     }
   }
+  function hasEnoughMoney(price: number) {
+    return currentMoney >= price;
+  }
   function doesHaveEnoughMats(price: any) {
     const firstCheck = hasEnoughItems(price.plant1, plantStorage);
     const secondCheck = hasEnoughItems(price.plant2, plantStorage);
     const thirdCheck = hasEnoughItems(price.plant3, plantStorage);
-    const fourthCheck = currentMoney >= price.money;
+    const fourthCheck = hasEnoughMoney(price.money);
 
     return firstCheck && secondCheck && thirdCheck && fourthCheck;
   }
@@ -116,13 +119,27 @@ export default function UnlockPlot({
           </button>
         </nav>
         <h3>Costs:</h3>
-        <h4>{price.money}$</h4>
-        <CostsUnlocking name={plant.name} amount={price.plant1.amount} />
+        <h4 className={hasEnoughMoney(price.money) ? "green" : "red"}>
+          {price.money}$
+        </h4>
+        <CostsUnlocking
+          name={plant.name}
+          amount={price.plant1.amount}
+          hasEnough={hasEnoughItems(price.plant1, plantStorage)}
+        />
         {!!price.plant2.id && (
-          <CostsUnlocking name={plant2.name} amount={price.plant2.amount} />
+          <CostsUnlocking
+            name={plant2.name}
+            amount={price.plant2.amount}
+            hasEnough={hasEnoughItems(price.plant2, plantStorage)}
+          />
         )}
         {!!price.plant3.id && (
-          <CostsUnlocking name={plant3.name} amount={price.plant3.amount} />
+          <CostsUnlocking
+            name={plant3.name}
+            amount={price.plant3.amount}
+            hasEnough={hasEnoughItems(price.plant3, plantStorage)}
+          />
         )}
         {doesHaveEnoughMats(price) ? (
           <button

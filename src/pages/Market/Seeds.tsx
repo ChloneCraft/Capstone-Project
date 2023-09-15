@@ -120,7 +120,7 @@ export default function Seeds() {
       userData?.region
     );
 
-    if (filteredSeeds.length === 0 && !query) {
+    if (listOfSeeds && filteredSeeds.length === 0 && !query) {
       setFilteredSeeds(listOfSeeds);
     }
 

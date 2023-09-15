@@ -51,8 +51,11 @@ export const PlantsService = {
       this.getOneMarket(plants, plantId)
     );
     const deviation = (amountPlant / amountAllPlants - 0.2) * 100;
-    const factor = deviation ** 2;
+    let factor = deviation ** 2;
     if (deviation >= 0) {
+      if (factor >= 380) {
+        factor = 380;
+      }
       return (500 - factor).toFixed();
     } else {
       return (500 + 2 * factor).toFixed();
