@@ -131,16 +131,6 @@ export default function Storage() {
     }
   }
 
-  // if (
-  //   typeof filteredStorage === "undefined" ||
-  //   (filteredStorage.length === 0 && !query)
-  // ) {
-  //   console.log("its happening");
-
-  //   setFilteredStorage(userStorage);
-  // }
-  // console.log("filtered storage", filteredStorage);
-
   return (
     <>
       <header>
@@ -191,6 +181,7 @@ export default function Storage() {
                         <button
                           className="sellButton"
                           onClick={() => setWantsToChooseAmount(index)}
+                          disabled={storageItem.amount > 0 ? false : true}
                         >
                           quick sell for{" "}
                           {storageItem.plant.name === "Potato" && "200$"}
@@ -201,16 +192,21 @@ export default function Storage() {
                         </button>
                       )}
                     {wantsToChooseAmount === index && (
-                      <NumberInput
-                        handler={handleSelling}
-                        price={storageItem.plant.price}
-                        isSelling={true}
-                        handlerArgs={{
-                          plantId: storageItem.plant._id,
-                          decayStatus: storageItem.decayStatus,
-                        }}
-                        comparer={storageItem.amount}
-                      />
+                      <>
+                        <NumberInput
+                          handler={handleSelling}
+                          price={storageItem.plant.price}
+                          isSelling={true}
+                          handlerArgs={{
+                            plantId: storageItem.plant._id,
+                            decayStatus: storageItem.decayStatus,
+                          }}
+                          comparer={storageItem.amount}
+                        />
+                        <button onClick={() => setWantsToChooseAmount(-1)}>
+                          cancel
+                        </button>
+                      </>
                     )}
                     {storageItem.plant.type === "seed" && (
                       <button className="sellButton" disabled>
@@ -223,22 +219,28 @@ export default function Storage() {
                       wantsToChooseAmount === -1 && (
                         <button
                           className="sellButton"
-                          onClick={() => setWantsToChooseAmount(index)}
+                          onClick={() => setWantsToChooseAmount(index + 10)}
+                          disabled={storageItem.amount > 0 ? false : true}
                         >
                           list on market
                         </button>
                       )}
-                    {wantsToChooseAmount === index && (
-                      <NumberInput
-                        handler={handleListing}
-                        price={storageItem.plant.price}
-                        isSelling={true}
-                        handlerArgs={{
-                          plantId: storageItem.plant._id,
-                          decayStatus: storageItem.decayStatus,
-                        }}
-                        comparer={storageItem.amount}
-                      />
+                    {wantsToChooseAmount === index + 10 && (
+                      <>
+                        <NumberInput
+                          handler={handleListing}
+                          price={storageItem.plant.price}
+                          isSelling={true}
+                          handlerArgs={{
+                            plantId: storageItem.plant._id,
+                            decayStatus: storageItem.decayStatus,
+                          }}
+                          comparer={storageItem.amount}
+                        />
+                        <button onClick={() => setWantsToChooseAmount(-1)}>
+                          cancel
+                        </button>
+                      </>
                     )}
                     {storageItem.plant.type === "seed" && (
                       <button className="sellButton" disabled>

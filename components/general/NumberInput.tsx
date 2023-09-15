@@ -74,6 +74,3 @@ export default function NumberInput({
     </div>
   );
 }
-
-//trigger handle buy function
-//reset displaying this component
