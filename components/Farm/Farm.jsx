@@ -3,12 +3,23 @@ import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import { PlantsService } from "@/services/PlantsService";
+import { calcGrowthRate } from "./CropInfo";
 
 const interval = 5000;
 
 export default function Farm() {
   const [farm, setFarm] = useState([]);
   let [count, setCount] = useState(0);
+  const [weather, setWeather] = useState();
+  let weatherStatus = 1;
+
+  async function test() {
+    const weatherData = await PlantsService.getWeather();
+    setWeather(weatherData);
+  }
+  useEffect(() => {
+    test();
+  }, []);
   const session = useSession();
 
   const id = session?.data?.user?.id;
@@ -25,7 +36,7 @@ export default function Farm() {
     updateFarm();
     setCount(count + 1);
   }, interval);
-  if (isLoading || !farmData) {
+  if (isLoading || !farmData || !weather) {
     return <div>loading...</div>;
   }
   if (error) {
@@ -36,6 +47,7 @@ export default function Farm() {
       setFarm(farmData);
     }
   }
+  weatherStatus = PlantsService.getWeatherStatus(weather);
 
   //-------------------------custom hook from internet -> https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 
@@ -71,7 +83,14 @@ export default function Farm() {
         if (!crop.plant.type) {
           return crop;
         } else {
-          let newGrowthStatus = crop.growthStatus - interval / 1000;
+          const decrease =
+            ((interval / 100) * calcGrowthRate(weatherStatus)) / 100;
+          console.log("decrease", decrease);
+          console.log(
+            "calcGrowthRate(weatherStatus)",
+            calcGrowthRate(weatherStatus)
+          );
+          let newGrowthStatus = crop.growthStatus - decrease;
           if (newGrowthStatus <= 0) {
             newGrowthStatus = 0;
           }

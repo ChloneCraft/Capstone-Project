@@ -3,7 +3,18 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-// const growthRate = 100;
+export function calcGrowthRate(weatherStatus: number) {
+  switch (weatherStatus) {
+    case 0:
+      return 80;
+    case 1:
+      return 100;
+    case 2:
+      return 120;
+    default:
+      return 0;
+  }
+}
 
 export default function CropInfo({
   index,
@@ -18,9 +29,10 @@ export default function CropInfo({
     const weatherData = await PlantsService.getWeather();
     setWeather(weatherData);
   }
-  test();
+  useEffect(() => {
+    test();
+  }, []);
 
-  // setWeather(data);
   const session = useSession();
   function handleClick(e: any) {
     e.stopPropagation();
@@ -32,18 +44,6 @@ export default function CropInfo({
     setIsClicked(false);
     setHasMouseOver(false);
     killCrop();
-  }
-  function calcGrowthRate(weatherStatus: number) {
-    switch (weatherStatus) {
-      case 0:
-        return 80;
-      case 1:
-        return 100;
-      case 2:
-        return 120;
-      default:
-        return 0;
-    }
   }
   const userId = session?.data?.user?.id;
   const { data: farm } = useSWR(`/api/${userId}/farm`);
@@ -79,13 +79,13 @@ export default function CropInfo({
           </aside>
           <aside className="cropInfoMain__wrapper">
             <span className="left">Growth Rate:</span>
-            {growthRate === 100 && (
+            {weatherStatus === 2 && (
               <span className="right green">{growthRate}%</span>
             )}
-            {growthRate < 100 && growthRate >= 80 && (
+            {weatherStatus === 1 && growthRate >= 80 && (
               <span className="right yellow">{growthRate}%</span>
             )}
-            {growthRate < 80 && (
+            {weatherStatus === 3 && (
               <span className="right red">{growthRate}%</span>
             )}
           </aside>
