@@ -9,7 +9,6 @@ const interval = 5000;
 export default function Farm() {
   const [farm, setFarm] = useState([]);
   let [count, setCount] = useState(0);
-  // const [unlockedFields, setUnlockedFields] = useState(0);
   const session = useSession();
 
   const id = session?.data?.user?.id;
@@ -73,7 +72,6 @@ export default function Farm() {
           return crop;
         } else {
           let newGrowthStatus = crop.growthStatus - interval / 1000;
-          // console.log("newGrowthStatus", newGrowthStatus);
           if (newGrowthStatus <= 0) {
             newGrowthStatus = 0;
           }
@@ -95,18 +93,12 @@ export default function Farm() {
     });
     if (response.ok) {
       const result = await response.json();
-      // console.log("result from fetch", result);
     } else {
       console.error(`Error: ${response.status}`);
     }
-    // console.log("newFarm", newFarm);
     setFarm(newFarm);
     return newFarm;
   }
-  // const priceNewPlot = PlantsService.getPlotPrice(unlockedFields);
-  // console.log(priceNewPlot?.plant1);
-
-  // console.log("farm", farm);
   if (farm.length !== 0) {
     return (
       <section className="farmContainer">

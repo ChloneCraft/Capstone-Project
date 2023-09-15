@@ -1,7 +1,9 @@
+import { PlantsService } from "@/services/PlantsService";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-const growthRate = 100;
+// const growthRate = 100;
 
 export default function CropInfo({
   index,
@@ -10,6 +12,15 @@ export default function CropInfo({
   killCrop,
   setHasMouseOver,
 }: any) {
+  const [weather, setWeather] = useState();
+
+  async function test() {
+    const weatherData = await PlantsService.getWeather();
+    setWeather(weatherData);
+  }
+  test();
+
+  // setWeather(data);
   const session = useSession();
   function handleClick(e: any) {
     e.stopPropagation();
@@ -22,13 +33,30 @@ export default function CropInfo({
     setHasMouseOver(false);
     killCrop();
   }
-  // if (session.data) {
+  function calcGrowthRate(weatherStatus: number) {
+    switch (weatherStatus) {
+      case 0:
+        return 80;
+      case 1:
+        return 100;
+      case 2:
+        return 120;
+      default:
+        return 0;
+    }
+  }
   const userId = session?.data?.user?.id;
   const { data: farm } = useSWR(`/api/${userId}/farm`);
+
+  if (!weather) {
+    return <div>loading</div>;
+  }
+  const weatherStatus = PlantsService.getWeatherStatus(weather);
+
   if (farm) {
-    // console.log("data", farm);
     const { growthStatus, waterCapacity, plant } = farm[index];
     const { name: plantName } = plant;
+    const growthRate = calcGrowthRate(weatherStatus);
 
     return (
       <div className="cropInfo " onClick={handleClick}>

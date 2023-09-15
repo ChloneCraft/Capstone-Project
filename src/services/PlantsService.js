@@ -17,13 +17,32 @@ export const PlantsService = {
     return plants.find((item) => item._id === plantId).market;
   },
 
-  // testFunction(a, b) {
-  //   const deviation = (a / b - 0.2) * 100;
-  //   const factor = deviation ** 2;
-  //   if (deviation >= 0) {
-  //     return 500 - factor;
-  //   } else return 500 + 2 * factor;
-  // },
+  async getWeather() {
+    const weatherData = await fetch(
+      "https://api.open-meteo.com/v1/forecast?latitude=52.5244&longitude=13.4105&daily=weathercode,rain_sum&current_weather=true&timezone=Europe%2FBerlin&start_date=2023-09-15&end_date=2023-09-18"
+    )
+      .then((res) => res.json())
+      .then((result) => result);
+    // if (weatherData.ok) {
+    //   const result = await weatherData.json();
+    return weatherData;
+    // }
+  },
+
+  getWeatherStatus(weather) {
+    if (!weather) return -1;
+    const weathercode = weather?.current_weather?.weathercode;
+    const rain_sum = weather?.daily?.rain_sum[0];
+    let status = 0;
+    const clearWeatherCodes = [0, 1, 2, 3, 51, 53, 55, 56, 57];
+    if (clearWeatherCodes.includes(weathercode)) {
+      status++;
+    }
+    if (rain_sum > 0.1) {
+      status++;
+    }
+    return status;
+  },
 
   getNumberOfItemsOnOneMarket(market) {
     const result = market

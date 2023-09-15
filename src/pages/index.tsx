@@ -6,7 +6,8 @@ import Link from "next/link";
 import useSWR from "swr";
 import Navbar from "../../components/general/Navbar";
 import { useSession, signOut, getSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { PlantsService } from "@/services/PlantsService";
 
 const inter = Inter({ subsets: ["latin"] });
 
