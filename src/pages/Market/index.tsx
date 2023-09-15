@@ -4,13 +4,17 @@ import Navbar from "../../../components/general/Navbar";
 
 export default function Market() {
   return (
-    <main>
-      <Navbar pageTitle="Market" />
-      <section className="buttonContainer">
-        <Button text="Seeds" destination="/Market/Seeds" />
-        <Button text="Goods" destination="/Market/Goods" />
-      </section>
-    </main>
+    <>
+      <header>
+        <Navbar pageTitle="Market" />
+      </header>
+      <main>
+        <section className="buttonContainer">
+          <Button text="Seeds" destination="/Market/Seeds" />
+          <Button text="Goods" destination="/Market/Goods" />
+        </section>
+      </main>
+    </>
   );
 }
 

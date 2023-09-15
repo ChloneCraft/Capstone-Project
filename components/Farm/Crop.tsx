@@ -7,6 +7,7 @@ import CropInfo from "./CropInfo";
 import mongoose from "mongoose";
 import { useSession } from "next-auth/react";
 import { sendRequest } from "./SelectSeed";
+import Link from "next/link";
 
 interface storageItem {
   plant: {
@@ -149,9 +150,17 @@ export default function Crop({
         onClick={handleClickPlot}
       >
         {isClicked && (
-          <button className="plantSeedButton" onClick={handlePlantingSeed}>
-            plant
-          </button>
+          <div className="plantSeedContainer">
+            <button className="plantSeedButton" onClick={handlePlantingSeed}>
+              plant a seed
+            </button>
+            <Link
+              className="plantSeedButton plantSeedLink"
+              href={"/Market/Seeds"}
+            >
+              buy new seeds
+            </Link>
+          </div>
         )}
         {wantsToSelectSeed && (
           <SelectSeed
