@@ -251,6 +251,9 @@ export default function MarketItemList() {
                           plants,
                           marketItem._id
                         )}
+                        available={PlantsService.getNumberOfItemsOnOneMarket(
+                          marketItem.market
+                        )}
                       />
                     )}
                   </div>

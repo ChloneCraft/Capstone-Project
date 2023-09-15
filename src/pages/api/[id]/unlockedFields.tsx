@@ -6,33 +6,29 @@ export default async function handler(req: any, res: any) {
   const { id } = req.query;
 
   if (req.method === "GET") {
+    console.log("get money api");
     try {
       const user = await User.findById(id);
       // console.log("plantStorage api user", user);
 
-      const { totalMoney, currentMoney } = user;
+      const { unlockedFields } = user;
 
-      return res
-        .status(200)
-        .json({ totalMoney: totalMoney, currentMoney: currentMoney });
+      return res.status(200).json(unlockedFields);
     } catch (error) {
       return res.status(400).json(error);
     }
   } else if (req.method === "PUT") {
-    const { currentMoney, totalMoney } = req.body;
-
     try {
       const user = await User.findByIdAndUpdate(
         id,
         {
           $set: {
-            currentMoney: currentMoney,
-            totalMoney: totalMoney,
+            unlockedFields: req.body,
           },
         },
         { new: true }
       );
-      return res.status(200).json(user.currentMoney);
+      return res.status(200).json(user.unlockedFields);
     } catch (e) {
       return res.status(400).json(e);
     }

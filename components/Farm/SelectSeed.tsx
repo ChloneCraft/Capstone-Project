@@ -3,8 +3,6 @@ import Image from "next/image";
 import useSWRMutation from "swr/mutation";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
-import { Session } from "next-auth";
-// import { ObjectId } from "mongodb";
 
 export async function sendRequest(url: any, { arg }: any) {
   const response = await fetch(url, {
@@ -29,10 +27,10 @@ export default function SelectSeed({
   setFarm,
   setWantsToSelectSeed,
   setIsClicked,
+  updateFarm,
 }: any) {
   const session = useSession();
   let userId: any;
-  // console.log("session", session);
 
   if (session.data) {
     userId = session?.data?.user?.id;
@@ -50,8 +48,6 @@ export default function SelectSeed({
   }
   let seedsInStorage: any;
   if (storage) {
-    // console.log("STORAGE EXISTS", storage);
-
     seedsInStorage = storage.filter(
       (storageItem: any) => storageItem.plant.type === "seed"
     );
@@ -68,7 +64,6 @@ export default function SelectSeed({
       (collectionElement: any) =>
         collectionElement.plantID === seed && collectionElement.type !== "seed"
     );
-    // console.log("finding plant", plant);
 
     return {
       plant: plant,
@@ -81,8 +76,6 @@ export default function SelectSeed({
     setIsClicked(false);
 
     const { amount, ...rest } = storage.find((storageItem: any) => {
-      // console.log("storageItem", storageItem);
-
       return storageItem.plant._id === id;
     });
     if (amount === 0) {
@@ -93,19 +86,14 @@ export default function SelectSeed({
     const updatedStorage = storage.map((item: any) => {
       return item.plant._id === id ? updatedSeedStack : item;
     });
-    // console.log("updatedSeedStack:", updatedSeedStack);
-    // console.log("updatedStorage:", updatedStorage);
 
     await trigger(updatedStorage);
 
     //update farm
 
     const { plant } = rest;
-    // console.log("plant", plant);
-    // console.log("plants", plants);
 
     const correspondingPlant = await findPlantFromSeed(plant.plantID, plants);
-    // console.log("correspondingPlant", correspondingPlant);
 
     const arg = farm.map((farmEntry: any, farmIndex: number) => {
       if (farmIndex === index) {
@@ -117,9 +105,6 @@ export default function SelectSeed({
         return farmEntry;
       }
     });
-    // console.log("updated farm", arg);
-
-    // console.log("what do you mean undefined?", id);
 
     const response = await fetch(`/api/${userId}/farm`, {
       method: "PUT",
@@ -128,11 +113,10 @@ export default function SelectSeed({
         "Content-Type": "application/json",
       },
     }).then((response) => response.json());
-    // console.log("response:", response);
-    if (response.farm) {
-      setFarm(response.farm);
+    if (response) {
+      setFarm(response);
+      updateFarm(response);
     }
-    // farm.mutate();
   }
   if (!farm || !storage || !plants) {
     return <div>loading...</div>;

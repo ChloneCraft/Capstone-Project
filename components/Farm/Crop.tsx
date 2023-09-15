@@ -27,11 +27,13 @@ export default function Crop({
   index,
   setFarm,
   farm,
+  updateFarm,
 }: {
   content: any;
   index: number;
   setFarm: any;
   farm: any;
+  updateFarm: Function;
 }) {
   // console.log("crop", farm);
   const [hasMouseOver, setHasMouseOver] = useState(false);
@@ -134,8 +136,11 @@ export default function Crop({
   // if (farm[index].plant.type) {
   //   console.log("plot plant", farm[index]);
   // }
+  console.log("index", index);
+  console.log("farm", farm);
+  console.log("farm[index]", farm[index]);
 
-  if (content.plant.plantID == 0) {
+  if (farm[index].plant.plantID == 0) {
     return (
       <aside
         className="emptyPlot"
@@ -154,11 +159,12 @@ export default function Crop({
             setIsClicked={setIsClicked}
             index={index}
             setFarm={setFarm}
+            updateFarm={updateFarm}
           />
         )}
       </aside>
     );
-  } else if (content.plant.plantID == -1) {
+  } else if (farm[index].plant.plantID == -1) {
     return (
       <aside
         className="lockedPlot"
@@ -175,8 +181,10 @@ export default function Crop({
           <UnlockPlot
             setWantsToUnlockPlot={setWantsToUnlockPlot}
             setIsClicked={setIsClicked}
+            setHasMouseOver={setHasMouseOver}
             index={index}
             setFarm={setFarm}
+            updateFarm={updateFarm}
           />
         )}
       </aside>

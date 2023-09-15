@@ -6,6 +6,7 @@ export default function NumberInput({
   isSelling,
   comparer,
   price,
+  available,
 }: any) {
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -19,9 +20,10 @@ export default function NumberInput({
   }
   function handleChange(e: any) {
     if (!isSelling) {
-      console.log("price and amount", e.target.value, price, comparer);
-
-      if (comparer - e.target.value * price < 0) {
+      if (
+        comparer - e.target.value * price < 0 ||
+        available - e.target.value < 0
+      ) {
         setIsDisabled(true);
       } else {
         setIsDisabled(false);
@@ -65,7 +67,7 @@ export default function NumberInput({
           className="red"
           style={{ fontSize: "15px", position: "absolute", top: "25px" }}
         >
-          {!isSelling && "insufficiant account balance!"}
+          {/* {!isSelling && "insufficiant account balance!"} */}
           {isSelling && "not enough in storage!"}
         </p>
       )}
