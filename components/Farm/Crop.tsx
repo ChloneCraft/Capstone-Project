@@ -36,7 +36,6 @@ export default function Crop({
   farm: any;
   updateFarm: Function;
 }) {
-  // console.log("crop", farm);
   const [hasMouseOver, setHasMouseOver] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [wantsToSelectSeed, setWantsToSelectSeed] = useState(false);
@@ -103,7 +102,6 @@ export default function Crop({
     e.stopPropagation();
     setWantsToUnlockPlot(true);
   };
-  // console.log("crop.farm", farm);
 
   function calcGrowth() {
     if (farm[index].plant.type) {
@@ -118,7 +116,6 @@ export default function Crop({
   let image;
   let image_hover;
   const growth = calcGrowth();
-  // index === 5 && console.log("crop growth", growth);
   if (growth !== -1) {
     if (growth <= 50) {
       image = farm[index].plant.image?.stage1;
@@ -131,15 +128,6 @@ export default function Crop({
       image_hover = farm[index].plant.image?.hover;
     }
   }
-
-  // index === 5 && console.log("crop image", image);
-
-  // if (farm[index].plant.type) {
-  //   console.log("plot plant", farm[index]);
-  // }
-  console.log("index", index);
-  console.log("farm", farm);
-  console.log("farm[index]", farm[index]);
 
   if (farm[index].plant.plantID == 0) {
     return (

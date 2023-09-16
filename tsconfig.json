@@ -28,7 +28,8 @@
     "src/pages/login.jsx",
     "src/pages/_app.tsx",
     "components/Farm/Farm.jsx",
-    "db/models/User.js"
+    "db/models/User.js",
+    "components/Weather/WeatherComponent.jsx"
   ],
   "exclude": ["node_modules"]
 }
