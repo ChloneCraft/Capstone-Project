@@ -24,14 +24,8 @@ export default function Farm() {
 
   const id = session?.data?.user?.id;
   const { data: farmData, isLoading, error } = useSWR(`/api/${id}/farm`);
-  // const {
-  //   data: unlockedFieldsData,
-  //   isLoadingUnFi,
-  //   errorUnFi,
-  // } = useSWR(`/api/${id}/unlockedFields`);
-  // useEffect(() => {
-  //   setUnlockedFields(unlockedFieldsData);
-  // }, [unlockedFieldsData]);
+  console.log("farmData", farmData);
+
   useInterval(() => {
     updateFarm();
     setCount(count + 1);
@@ -47,6 +41,7 @@ export default function Farm() {
       setFarm(farmData);
     }
   }
+
   weatherStatus = PlantsService.getWeatherStatus(weather);
 
   //-------------------------custom hook from internet -> https://overreacted.io/making-setinterval-declarative-with-react-hooks/
@@ -71,11 +66,7 @@ export default function Farm() {
     }, [delay]);
   }
 
-  //----------------------------------------------------------------------------------------------------
-
   //-------------using custom hook from internet-------------------------------------
-
-  //----------------------------------------------------------------------------
 
   async function updateFarm(newFarm = null) {
     if (!newFarm) {
@@ -84,7 +75,7 @@ export default function Farm() {
           return crop;
         } else {
           const decrease =
-            ((interval / 100) * calcGrowthRate(weatherStatus)) / 100;
+            ((interval / 100) * calcGrowthRate(weatherStatus)) / 50;
           console.log("decrease", decrease);
           console.log(
             "calcGrowthRate(weatherStatus)",

@@ -3,11 +3,8 @@ import { Inter } from "next/font/google";
 import MoneyDisplay from "../../components/general/MoneyDisplay";
 import Farm from "../../components/Farm/Farm";
 import Link from "next/link";
-import useSWR from "swr";
 import Navbar from "../../components/general/Navbar";
-import { useSession, signOut, getSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { PlantsService } from "@/services/PlantsService";
+import { getSession } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +22,6 @@ export default function Home() {
       </header>
       <main className="farmMain">
         <MoneyDisplay />
-        {/* <p>username: {data.username}</p> */}
         <Farm />
         <Link className="storageLink" href="/Storage">
           Storage
