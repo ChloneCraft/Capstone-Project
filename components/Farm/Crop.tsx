@@ -29,12 +29,14 @@ export default function Crop({
   setFarm,
   farm,
   updateFarm,
+  weather,
 }: {
   content: any;
   index: number;
   setFarm: any;
   farm: any;
   updateFarm: Function;
+  weather: any;
 }) {
   const [hasMouseOver, setHasMouseOver] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -115,17 +117,25 @@ export default function Crop({
 
   let image;
   let image_hover;
+  let css_class;
   const growth = calcGrowth();
   if (growth !== -1) {
+    const type =
+      farm[index].plant.plantID === 5 || farm[index].plant.plantID === 3
+        ? 0
+        : 1;
     if (growth <= 50) {
       image = farm[index].plant.image?.stage1;
       image_hover = farm[index].plant.image?.stage1_hover;
+      css_class = type ? "Crop_Stage1" : "Tree_Stage1";
     } else if (growth < 100) {
       image = farm[index].plant.image?.stage2;
       image_hover = farm[index].plant.image?.stage2_hover;
+      css_class = type ? "Crop_Stage2" : "Tree_Stage2";
     } else {
       image = farm[index].plant.image?.img;
       image_hover = farm[index].plant.image?.hover;
+      css_class = farm[index].plant.css_class;
     }
   }
 
@@ -199,7 +209,8 @@ export default function Crop({
           alt="Plant"
           width={250}
           height={250}
-          className="cropImage"
+          className={css_class + " cropImage"}
+          // className="cropImage"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         />
@@ -210,6 +221,7 @@ export default function Crop({
             index={index}
             killCrop={killCrop}
             setHasMouseOver={setHasMouseOver}
+            weather={weather}
           />
         )}
         {isClicked && (
@@ -220,6 +232,7 @@ export default function Crop({
             index={index}
             killCrop={killCrop}
             setHasMouseOver={setHasMouseOver}
+            weather={weather}
           />
         )}
       </aside>

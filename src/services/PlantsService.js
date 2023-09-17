@@ -20,7 +20,7 @@ export const PlantsService = {
   async getWeather() {
     try {
       const weatherData = await fetch(
-        "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=weathercode,rain_sum&timezone=Europe%2FBerlin"
+        "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=rain_sum&current_weather=true&timezone=Europe%2FBerlin"
       )
         .then((res) => res.json())
         .then((result) => result);
@@ -31,15 +31,22 @@ export const PlantsService = {
     }
   },
 
+  checkWeatherCode(weathercode) {
+    const clearWeatherCodes = [0, 1, 2, 3, 51, 53, 55, 56, 57];
+
+    if (clearWeatherCodes.includes(weathercode)) {
+      return 1;
+    } else {
+      return 0;
+    }
+  },
+
   getWeatherStatus(weather) {
     if (!weather) return -1;
     const weathercode = weather?.current_weather?.weathercode;
     const rain_sum = weather?.daily?.rain_sum[0];
     let status = 0;
-    const clearWeatherCodes = [0, 1, 2, 3, 51, 53, 55, 56, 57];
-    if (clearWeatherCodes.includes(weathercode)) {
-      status++;
-    }
+    status += this.checkWeatherCode(weathercode);
     if (rain_sum > 0.1) {
       status++;
     }

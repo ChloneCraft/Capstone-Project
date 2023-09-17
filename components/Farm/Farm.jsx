@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import { PlantsService } from "@/services/PlantsService";
 import { calcGrowthRate } from "./CropInfo";
+import { sendRequest } from "./SelectSeed";
 
 const interval = 5000;
 
@@ -46,7 +47,7 @@ export default function Farm() {
     }
   }
 
-  weatherStatus = PlantsService.getWeatherStatus(weather);
+  // weatherStatus = PlantsService.getWeatherStatus(weather);
 
   //-------------------------custom hook from internet -> https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 
@@ -85,7 +86,7 @@ export default function Farm() {
             "calcGrowthRate(weatherStatus)",
             calcGrowthRate(weatherStatus)
           );
-          let newGrowthStatus = crop.growthStatus - decrease;
+          let newGrowthStatus = crop.growthStatus - decrease * 10;
           if (newGrowthStatus <= 0) {
             newGrowthStatus = 0;
           }
@@ -98,19 +99,8 @@ export default function Farm() {
         }
       });
     }
-    const response = await fetch(`/api/${id}/farm`, {
-      method: "PUT",
-      body: JSON.stringify(newFarm),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.ok) {
-      const result = await response.json();
-    } else {
-      console.error(`Error: ${response.status}`);
-    }
-    setFarm(newFarm);
+    const response = await sendRequest(`/api/${id}/farm`, { arg: newFarm });
+    setFarm(response);
     return newFarm;
   }
   if (farm.length !== 0) {
@@ -126,6 +116,7 @@ export default function Farm() {
                 index={index}
                 updateFarm={updateFarm}
                 key={index}
+                weather={weather}
               />
             );
           })}

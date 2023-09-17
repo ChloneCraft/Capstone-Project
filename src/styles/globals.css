@@ -3,6 +3,7 @@
   --primary-color: #d8970c;
   --primary-color-light: #f7ad0e;
   --secondary-color: #a19800;
+  --secondary-color-hover: #c2b800;
   --tertiary-color: #69940f;
   --tertiary-color-hover: #8dc513;
   --fourth-color: #218b30;
@@ -123,6 +124,7 @@ a {
   transform: rotate3d(1, 0, 1, 45deg);
   border-radius: 30px;
 }
+
 /*-------Farm--------*/
 
 /*-------Market--------*/
@@ -179,7 +181,7 @@ a {
   border-radius: 10px;
   position: absolute;
   width: 350px;
-  height: 400px;
+  height: 450px;
   background-color: rgb(182, 140, 84);
   right: 100px;
   transform: rotate3d(0, 1, 1, -45deg);
@@ -443,9 +445,11 @@ nav a {
   border: solid 3px black;
   border-radius: 10px;
   position: absolute;
-  width: 350px;
-  height: 450px;
-  background-color: rgb(190, 181, 168);
+  width: 450px;
+  height: fit-content;
+  padding-bottom: 20px;
+  background-color: var(--secondary-color);
+  /* background-color: rgb(190, 181, 168); */
   right: 140px;
   transform: rotate3d(0, 1, 1, -45deg);
   z-index: 3;
@@ -454,21 +458,23 @@ nav a {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: 15px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 16px;
   border-bottom: solid 3px black;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .selectSeed__nav h2 {
-  width: 30%;
+  width: 100%;
   text-align: center;
 }
 .selectSeed__list {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
 }
 .selectSeed__list__item {
   display: flex;
@@ -476,16 +482,20 @@ nav a {
   justify-content: center;
   align-items: center;
   border: solid 2px black;
+  width: 80%;
   border-radius: 20px;
-  margin-bottom: 10px;
   margin-left: 5px;
   margin-right: 5px;
-  background-color: rgb(190, 181, 168);
+  font-size: 18px;
+  background-color: var(--secondary-color-hover);
+  /* background-color: rgb(190, 181, 168); */
 }
 .selectSeed__list__item:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
   border-width: 4px;
   font-size: 18px;
+  cursor: pointer;
+  border-color: rgb(245, 245, 245);
 }
 .selectSeed__list__item__content {
   display: flex;
@@ -514,13 +524,17 @@ nav a {
 .close {
   align-self: flex-start;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 8px;
+  right: 8px;
+  transform: scale(1.5);
   background-color: transparent;
-  border-style: none none solid solid;
+  border: none;
+  /* border-style: none none solid solid; */
 }
 .close:hover {
-  transform: scale(1.1);
+  transform: scale(2);
+  text-shadow: 1px 1px 4px black;
+  cursor: pointer;
 }
 
 /*welcome page*/
@@ -593,13 +607,34 @@ nav a {
   font-weight: bold;
   bottom: 10px;
 }
+.killPlant:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  border-color: rgb(223, 223, 223);
+  color: rgb(223, 223, 223);
+}
 .cropInfoMain {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
   margin-top: 20px;
+  height: fit-content;
+}
+.collect {
+  width: 100%;
+  height: 100%;
+  font-size: 30px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+}
+.ready {
+  height: fit-content;
+  padding-bottom: 20px;
+  width: 250px;
 }
 .cropInfoMain__wrapper {
   display: flex;
@@ -609,6 +644,21 @@ nav a {
 }
 .cropInfoMain__wrapper span {
   font-size: 25px;
+}
+.cropInfoExtra {
+  font-size: 20px;
+  font-style: italic;
+  margin-bottom: 20px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 600;
+}
+.plus {
+  color: rgba(30, 128, 30, 0.7);
+}
+.minus {
+  color: rgba(255, 255, 30, 0.7);
 }
 .noKill {
   height: 350px;
@@ -630,3 +680,157 @@ nav a {
 }
 .numberInputSelectAmountBuyButton {
 }
+/*--------clip-path---------*/
+.Blueberry {
+  /* -webkit-clip-path: polygon(
+    43% 99%,
+    33% 95%,
+    26% 89%,
+    23% 78%,
+    13% 67%,
+    14% 57%,
+    20% 30%,
+    30% 23%,
+    46% 24%,
+    54% 32%,
+    78% 32%,
+    90% 60%,
+    89% 74%,
+    80% 85%,
+    67% 99%
+  ); */
+  clip-path: polygon(
+    43% 99%,
+    33% 95%,
+    26% 89%,
+    23% 78%,
+    13% 67%,
+    14% 57%,
+    20% 30%,
+    30% 23%,
+    46% 24%,
+    54% 32%,
+    78% 32%,
+    90% 60%,
+    89% 74%,
+    80% 85%,
+    67% 99%
+  );
+}
+.Potato {
+  /* -webkit-clip-path: polygon(
+    34% 100%,
+    32% 82%,
+    13% 56%,
+    16% 26%,
+    29% 11%,
+    42% 11%,
+    56% 26%,
+    62% 19%,
+    74% 19%,
+    83% 28%,
+    84% 44%,
+    91% 52%,
+    91% 61%,
+    72% 86%,
+    70% 100%
+  ); */
+  clip-path: polygon(
+    34% 100%,
+    32% 82%,
+    13% 56%,
+    16% 26%,
+    29% 11%,
+    42% 11%,
+    56% 26%,
+    62% 19%,
+    74% 19%,
+    83% 28%,
+    84% 44%,
+    91% 52%,
+    91% 61%,
+    72% 86%,
+    70% 100%
+  );
+}
+.Pumpkin {
+  /* -webkit-clip-path: polygon(42% 47%, 58% 48%, 76% 64%, 77% 100%, 21% 100%, 18% 67%, 27% 54%); */
+  clip-path: polygon(
+    42% 47%,
+    58% 48%,
+    76% 64%,
+    77% 100%,
+    21% 100%,
+    18% 67%,
+    27% 54%
+  );
+}
+.Teak_Tree {
+  /* -webkit-clip-path: polygon(33% 100%, 33% 91%, 9% 72%, 5% 47%, 5% 7%, 25% 0, 80% 0, 99% 19%, 99% 36%, 96% 38%, 95% 68%, 71% 100%); */
+  clip-path: polygon(
+    33% 100%,
+    33% 91%,
+    9% 72%,
+    5% 47%,
+    5% 7%,
+    25% 0,
+    80% 0,
+    99% 19%,
+    99% 36%,
+    96% 38%,
+    95% 68%,
+    71% 100%
+  );
+}
+.Oak_Tree {
+  /* -webkit-clip-path: polygon(0 0, 100% 0, 100% 82%, 58% 82%, 58% 100%, 39% 100%, 39% 82%, 0 82%); */
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 82%,
+    58% 82%,
+    58% 100%,
+    39% 100%,
+    39% 82%,
+    0 82%
+  );
+}
+.Crop_Stage1 {
+  /* -webkit-clip-path: polygon(48% 87%, 53% 92%, 53% 100%, 43% 100%, 42% 88%); */
+  clip-path: polygon(48% 87%, 53% 92%, 53% 100%, 43% 100%, 42% 88%);
+}
+.Crop_Stage2 {
+  /* -webkit-clip-path: polygon(45% 100%, 45% 90%, 40% 95%, 32% 95%, 25% 88%, 25% 75%, 34% 57%, 64% 53%, 71% 58%, 71% 93%, 56% 95%, 55% 100%); */
+  clip-path: polygon(
+    45% 100%,
+    45% 90%,
+    40% 95%,
+    32% 95%,
+    25% 88%,
+    25% 75%,
+    34% 57%,
+    64% 53%,
+    71% 58%,
+    71% 93%,
+    56% 95%,
+    55% 100%
+  );
+}
+.Tree_Stage1 {
+  /* -webkit-clip-path: polygon(66% 76%, 66% 92%, 54% 100%, 41% 100%, 30% 93%, 30% 78%); */
+  clip-path: polygon(66% 76%, 66% 92%, 54% 100%, 41% 100%, 30% 93%, 30% 78%);
+}
+.Tree_Stage2 {
+  /* -webkit-clip-path: polygon(43% 25%, 59% 25%, 74% 43%, 74% 66%, 71% 100%, 32% 100%, 28% 66%, 28% 43%); */
+  clip-path: polygon(
+    43% 25%,
+    59% 25%,
+    74% 43%,
+    74% 66%,
+    71% 100%,
+    32% 100%,
+    28% 66%,
+    28% 43%
+  );
+}
+/*--------clip-path---------*/
