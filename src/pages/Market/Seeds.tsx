@@ -127,7 +127,7 @@ export default function Seeds() {
     return (
       <>
         <header>
-          <Navbar pageTitle={"Storage"}>
+          <Navbar>
             <Searchbar
               handleSearchInput={handleSearchInput}
               list={listOfSeeds}
@@ -135,13 +135,13 @@ export default function Seeds() {
           </Navbar>
         </header>
         <main className="storageMain">
-          <section className="storageSearchbarSection"></section>
+          <div className="pageTitle">Seeds</div>
           <section className="storageList">
             <nav className="storageTableNav">
               <h2>Name</h2>
               <h2>Image</h2>
               <h2>Price</h2>
-              <h2>buy</h2>
+              <h2>Buy</h2>
             </nav>
             <ul className="listStorageItems">
               {filteredSeeds.map((storageItem: any, index: number) => {
@@ -156,10 +156,15 @@ export default function Seeds() {
                         height={60}
                       />
                     </div>
-                    <h3>100$</h3>
+                    <h3>100 $</h3>
                     <div>
                       {buyingButton !== index + 1 && (
-                        <button onClick={() => clickBuy(index + 1)}>buy</button>
+                        <button
+                          className="sellButton"
+                          onClick={() => clickBuy(index + 1)}
+                        >
+                          Buy
+                        </button>
                       )}
                       {buyingButton === index + 1 && (
                         <NumberInput

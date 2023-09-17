@@ -202,7 +202,7 @@ export default function MarketItemList() {
   return (
     <>
       <header>
-        <Navbar pageTitle={"Goods"}>
+        <Navbar>
           <Searchbar
             handleSearchInput={handleSearchInput}
             list={PlantsService.getListOfPlants(plants)}
@@ -210,14 +210,14 @@ export default function MarketItemList() {
         </Navbar>
       </header>
       <main className="storageMain">
-        <section className="storageSearchbarSection"></section>
+        <div className="pageTitle">Goods</div>
         <section className="storageList">
           <nav className="storageTableNav">
             <h2>Name</h2>
             <h2>Image</h2>
             <h2>Price</h2>
-            <h2>available</h2>
-            <h2>buy</h2>
+            <h2>Available</h2>
+            <h2>Buy</h2>
           </nav>
           <ul className="listStorageItems">
             {marketPlace.map((marketItem: any, index: number) => {
@@ -243,7 +243,12 @@ export default function MarketItemList() {
 
                   <div>
                     {buyingButton !== index + 1 && (
-                      <button onClick={() => clickBuy(index + 1)}>buy</button>
+                      <button
+                        className="sellButton"
+                        onClick={() => clickBuy(index + 1)}
+                      >
+                        Buy
+                      </button>
                     )}
                     {buyingButton === index + 1 && (
                       <NumberInput

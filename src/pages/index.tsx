@@ -17,7 +17,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header>
-        <Navbar pageTitle="Farmstock" />
+        <Navbar>
+          <></>
+        </Navbar>
       </header>
       <main className="farmMain">
         <Farm />

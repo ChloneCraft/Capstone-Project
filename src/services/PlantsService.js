@@ -18,12 +18,17 @@ export const PlantsService = {
   },
 
   async getWeather() {
-    const weatherData = await fetch(
-      "https://api.open-meteo.com/v1/forecast?latitude=52.5244&longitude=13.4105&daily=weathercode,rain_sum&current_weather=true&timezone=Europe%2FBerlin&start_date=2023-09-15&end_date=2023-09-18"
-    )
-      .then((res) => res.json())
-      .then((result) => result);
-    return weatherData;
+    try {
+      const weatherData = await fetch(
+        "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=weathercode,rain_sum&timezone=Europe%2FBerlin"
+      )
+        .then((res) => res.json())
+        .then((result) => result);
+      console.log("weatherData", weatherData);
+      return weatherData;
+    } catch (error) {
+      console.error("error:", error);
+    }
   },
 
   getWeatherStatus(weather) {

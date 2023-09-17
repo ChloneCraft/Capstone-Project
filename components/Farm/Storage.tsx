@@ -140,14 +140,12 @@ export default function Storage() {
   return (
     <>
       <header>
-        <Navbar pageTitle={"Storage"}>
+        <Navbar>
           <Searchbar handleSearchInput={handleSearchInput} list={userStorage} />
         </Navbar>
       </header>
       <main className="storageMain">
-        {/* <section className="storageSearchbarSection"> */}
-
-        {/* </section> */}
+        <div className="pageTitle">Storage</div>
         <section className="storageList">
           <nav className="storageTableNav">
             <h2>Name</h2>

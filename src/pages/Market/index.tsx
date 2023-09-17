@@ -6,7 +6,9 @@ export default function Market() {
   return (
     <>
       <header>
-        <Navbar pageTitle="Market" />
+        <Navbar>
+          <></>
+        </Navbar>
       </header>
       <main>
         <section className="buttonContainer">

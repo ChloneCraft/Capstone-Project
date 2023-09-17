@@ -8,15 +8,19 @@ export default async function handler(req: any, res: any) {
   // console.log("id", id);
 
   if (req.method === "GET") {
-    const player = await User.findById(id).populate({
-      path: "farm.plant",
-      model: "Plant",
-    });
-    // console.log("pppplayerrrrrrrrrrrrrrrrrrrr", player);
+    try {
+      const player = await User.findById(id).populate({
+        path: "farm.plant",
+        model: "Plant",
+      });
+      console.log("pppplayerrrrrrrrrrrrrrrrrrrr", player);
 
-    const { farm } = player;
-
-    return res.status(200).json(farm);
+      const { farm } = player;
+      return res.status(200).json(farm);
+    } catch (e) {
+      console.log("error in farm api", e);
+      return res.status(400).json(e);
+    }
   } else if (req.method === "PUT") {
     console.log("requestbody", req.body);
 

@@ -2,13 +2,7 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import MoneyDisplay from "./MoneyDisplay";
 
-export default function Navbar({
-  pageTitle,
-  children,
-}: {
-  pageTitle: String;
-  children: any;
-}) {
+export default function Navbar({ children }: { children: any }) {
   return (
     <nav className="navbar">
       <section className="section1">
@@ -27,7 +21,7 @@ export default function Navbar({
         </Link>
       </section>
       <section className="section2">
-        <h1 className="pageTitle">Farmstock</h1>
+        <h1 className="gameTitle">Farmstock</h1>
         <MoneyDisplay />
       </section>
       <section className="section3">

@@ -12,25 +12,29 @@ export default function Farm() {
   let [count, setCount] = useState(0);
   const [weather, setWeather] = useState();
   let weatherStatus = 1;
+  let weatherData = null;
 
   async function test() {
-    const weatherData = await PlantsService.getWeather();
+    weatherData = await PlantsService.getWeather();
     setWeather(weatherData);
   }
   useEffect(() => {
-    // test();
+    if (!weatherData) {
+      test();
+    }
   }, []);
   const session = useSession();
 
   const id = session?.data?.user?.id;
+  console.log("id", id);
   const { data: farmData, isLoading, error } = useSWR(`/api/${id}/farm`);
   console.log("farmData", farmData);
 
-  // useInterval(() => {
-  //   // updateFarm();
-  //   setCount(count + 1);
-  // }, interval);
-  if (isLoading || !farmData || weather) {
+  useInterval(() => {
+    updateFarm();
+    setCount(count + 1);
+  }, interval);
+  if (isLoading || !farmData || !weather) {
     return <div>loading...</div>;
   }
   if (error) {
