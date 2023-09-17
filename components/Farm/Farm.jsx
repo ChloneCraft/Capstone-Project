@@ -18,7 +18,7 @@ export default function Farm() {
     setWeather(weatherData);
   }
   useEffect(() => {
-    test();
+    // test();
   }, []);
   const session = useSession();
 
@@ -26,11 +26,11 @@ export default function Farm() {
   const { data: farmData, isLoading, error } = useSWR(`/api/${id}/farm`);
   console.log("farmData", farmData);
 
-  useInterval(() => {
-    updateFarm();
-    setCount(count + 1);
-  }, interval);
-  if (isLoading || !farmData || !weather) {
+  // useInterval(() => {
+  //   // updateFarm();
+  //   setCount(count + 1);
+  // }, interval);
+  if (isLoading || !farmData || weather) {
     return <div>loading...</div>;
   }
   if (error) {

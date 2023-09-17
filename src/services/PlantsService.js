@@ -23,10 +23,7 @@ export const PlantsService = {
     )
       .then((res) => res.json())
       .then((result) => result);
-    // if (weatherData.ok) {
-    //   const result = await weatherData.json();
     return weatherData;
-    // }
   },
 
   getWeatherStatus(weather) {

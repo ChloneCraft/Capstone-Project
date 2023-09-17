@@ -9,7 +9,7 @@ import { MoneyService } from "@/services/MoneyService";
 import { findSeedStackById } from "@/pages/Market/Seeds";
 import { sendRequest } from "./SelectSeed";
 import { useEffect } from "react";
-import MoneyDisplay from "../general/MoneyDisplay";
+import Searchbar from "../general/Searchbar";
 
 export default function Storage() {
   const [query, setQuery] = useState("");
@@ -140,25 +140,20 @@ export default function Storage() {
   return (
     <>
       <header>
-        <Navbar pageTitle={"Storage"}></Navbar>
+        <Navbar pageTitle={"Storage"}>
+          <Searchbar handleSearchInput={handleSearchInput} list={userStorage} />
+        </Navbar>
       </header>
       <main className="storageMain">
-        <section className="storageSearchbarSection">
-          <form className="storageForm">
-            <input
-              type="text"
-              name="storageSearchbar"
-              onChange={(e) => handleSearchInput(e, userStorage)}
-            />
-          </form>
-          <MoneyDisplay />
-        </section>
+        {/* <section className="storageSearchbarSection"> */}
+
+        {/* </section> */}
         <section className="storageList">
           <nav className="storageTableNav">
             <h2>Name</h2>
             <h2>Image</h2>
-            <h2>expires in</h2>
-            <h2>amount</h2>
+            <h2>Expires in</h2>
+            <h2>Amount</h2>
             <h2>Quick Sell</h2>
             <h2>Sell on Market</h2>
           </nav>
@@ -216,7 +211,7 @@ export default function Storage() {
                     )}
                     {storageItem.plant.type === "seed" && (
                       <button className="sellButton" disabled>
-                        {"can&apos;t sell seeds"}
+                        {"can not sell seeds"}
                       </button>
                     )}
                   </div>
@@ -250,7 +245,7 @@ export default function Storage() {
                     )}
                     {storageItem.plant.type === "seed" && (
                       <button className="sellButton" disabled>
-                        {"can&apos;t sell seeds"}
+                        {"can not sell seeds"}
                       </button>
                     )}
                   </div>

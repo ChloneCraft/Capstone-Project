@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import MoneyDisplay from "../../components/general/MoneyDisplay";
 import Farm from "../../components/Farm/Farm";
 import Link from "next/link";
 import Navbar from "../../components/general/Navbar";
@@ -21,11 +20,7 @@ export default function Home() {
         <Navbar pageTitle="Farmstock" />
       </header>
       <main className="farmMain">
-        <MoneyDisplay />
         <Farm />
-        <Link className="storageLink" href="/Storage">
-          Storage
-        </Link>
       </main>
     </>
   );

@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 // import { UserType } from "../../../db/models/User";
 import NumberInput from "../../../components/general/NumberInput";
 import { PlantsService } from "@/services/PlantsService";
-import MoneyDisplay from "../../../components/general/MoneyDisplay";
+import Searchbar from "../../../components/general/Searchbar";
 
 export function findSeedStackById(
   array: any,
@@ -127,19 +127,15 @@ export default function Seeds() {
     return (
       <>
         <header>
-          <Navbar pageTitle={"Storage"}></Navbar>
+          <Navbar pageTitle={"Storage"}>
+            <Searchbar
+              handleSearchInput={handleSearchInput}
+              list={listOfSeeds}
+            />
+          </Navbar>
         </header>
         <main className="storageMain">
-          <section className="storageSearchbarSection">
-            <form className="storageForm">
-              <input
-                type="text"
-                name="storageSearchbar"
-                onChange={(e) => handleSearchInput(e, listOfSeeds)}
-              />
-            </form>
-            <MoneyDisplay />
-          </section>
+          <section className="storageSearchbarSection"></section>
           <section className="storageList">
             <nav className="storageTableNav">
               <h2>Name</h2>

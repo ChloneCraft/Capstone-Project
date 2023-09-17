@@ -10,7 +10,7 @@ import { findSeedStackById } from "@/pages/Market/Seeds";
 import { PlantsService } from "@/services/PlantsService";
 import { MoneyService } from "@/services/MoneyService";
 import { MarketService } from "@/services/MarketService";
-import MoneyDisplay from "../general/MoneyDisplay";
+import Searchbar from "../general/Searchbar";
 
 export default function MarketItemList() {
   const [marketPlace, setMarketPlace] = useState([]);
@@ -202,21 +202,15 @@ export default function MarketItemList() {
   return (
     <>
       <header>
-        <Navbar pageTitle={"Goods"}></Navbar>
+        <Navbar pageTitle={"Goods"}>
+          <Searchbar
+            handleSearchInput={handleSearchInput}
+            list={PlantsService.getListOfPlants(plants)}
+          />
+        </Navbar>
       </header>
       <main className="storageMain">
-        <section className="storageSearchbarSection">
-          <form className="storageForm">
-            <input
-              type="text"
-              name="storageSearchbar"
-              onChange={(e) =>
-                handleSearchInput(e, PlantsService.getListOfPlants(plants))
-              }
-            />
-          </form>
-          <MoneyDisplay />
-        </section>
+        <section className="storageSearchbarSection"></section>
         <section className="storageList">
           <nav className="storageTableNav">
             <h2>Name</h2>
