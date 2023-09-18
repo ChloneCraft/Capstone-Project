@@ -52,7 +52,11 @@ export default function Crop({
     killCrop();
     const cropId = farm[index].plant._id;
     addItemToInventory(cropId);
-    activatePopup(`Added ${farm[index].plant.name} \n to storage.`);
+    activatePopup(
+      `Added `,
+      ` ${farm[index].plant.name} \n to storage.`,
+      `${farm[index].plant.image.item}`
+    );
   }
 
   function addItemToInventory(plantId: mongoose.Schema.Types.ObjectId) {

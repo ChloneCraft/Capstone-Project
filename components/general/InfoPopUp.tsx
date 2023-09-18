@@ -1,11 +1,22 @@
+import Image from "next/image";
+
 export default function InfoPopUp({
-  message,
+  message1,
+  message2,
+  icon,
   condition,
 }: {
-  message: string;
+  message1: string;
+  message2: string;
+  icon: string;
   condition: Boolean;
 }) {
+  console.log("icon", icon);
+
   return (
-    <div className={condition ? "popupSlide popup" : "popup"}>{message}</div>
+    <div className={condition ? "popupSlide popup" : "popup"}>
+      <p>{message1}</p>
+      <Image src={icon} width={50} height={50} alt="icon" /> <p>{message2}</p>
+    </div>
   );
 }
