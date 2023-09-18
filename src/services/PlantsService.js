@@ -24,7 +24,6 @@ export const PlantsService = {
       )
         .then((res) => res.json())
         .then((result) => result);
-      console.log("weatherData", weatherData);
       return weatherData;
     } catch (error) {
       console.error("error:", error);

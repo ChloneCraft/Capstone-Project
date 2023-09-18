@@ -6,10 +6,8 @@ export default async function handler(req: any, res: any) {
   const { id } = req.query;
 
   if (req.method === "GET") {
-    console.log("get money api");
     try {
       const user = await User.findById(id);
-      // console.log("plantStorage api user", user);
 
       const { unlockedFields } = user;
 

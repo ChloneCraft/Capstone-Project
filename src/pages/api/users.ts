@@ -16,8 +16,6 @@ export default async function handler(
     // Player.create();
     return res.status(200).json("here is a post reqeuest");
   } else {
-    console.log("player api else upsi");
-
     return res.status(400).json({ error: "something went wrong" });
   }
 }

@@ -23,7 +23,6 @@ export default function WeatherComponent() {
   if (!weather) {
     return <div>loading</div>;
   } else {
-    console.log("weather", weather);
     return <h1>{weather.daily.weathercode[0]}</h1>;
   }
 }

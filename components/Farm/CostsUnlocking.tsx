@@ -8,7 +8,7 @@ export default function CostsUnlocking({
   hasEnough: boolean;
 }) {
   return (
-    <aside>
+    <aside className="cost_costs">
       <span className={hasEnough ? "green" : "red"}>{name}</span>
       <span className={hasEnough ? "green" : "red"}>{amount}</span>
     </aside>

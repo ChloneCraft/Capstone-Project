@@ -145,10 +145,10 @@ export default function Crop({
         className="emptyPlot"
         onMouseEnter={onMouseEnterEmptyPlot}
         onMouseLeave={onMouseLeaveEmptyPlot}
-        onClick={handleClickPlot}
+        onClick={handlePlantingSeed}
       >
-        {isClicked && (
-          <div className="plantSeedContainer">
+        {/* {isClicked && (
+          <div className="cropInfo">
             <button className="plantSeedButton" onClick={handlePlantingSeed}>
               plant a seed
             </button>
@@ -159,7 +159,7 @@ export default function Crop({
               buy new seeds
             </Link>
           </div>
-        )}
+        )} */}
         {wantsToSelectSeed && (
           <SelectSeed
             setWantsToSelectSeed={setWantsToSelectSeed}
@@ -177,13 +177,13 @@ export default function Crop({
         className="lockedPlot"
         onMouseEnter={onMouseEnterEmptyPlot}
         onMouseLeave={onMouseLeaveEmptyPlot}
-        onClick={handleClickPlot}
+        onClick={handleUnlockingPlot}
       >
-        {isClicked && (
-          <button className="plantSeedButton" onClick={handleUnlockingPlot}>
-            plant
-          </button>
-        )}
+        {/* {isClicked && (
+          <div className="cropInfo">
+            <button onClick={handleClickPlot}>Unlock</button>
+          </div>
+        )} */}
         {wantsToUnlockPlot && (
           <UnlockPlot
             setWantsToUnlockPlot={setWantsToUnlockPlot}

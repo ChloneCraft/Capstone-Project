@@ -103,6 +103,7 @@ a {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  /* position: relative; */
   height: 100vh;
 }
 .farmContainer {
@@ -143,7 +144,7 @@ a {
   justify-self: center;
   align-self: center;
   display: flex;
-  position: relative;
+  /* position: relative; */
   height: 150px;
   width: 150px;
 }
@@ -155,14 +156,14 @@ a {
   position: absolute;
   justify-self: center;
   align-self: center;
-  transform: rotate3d(0.5, 1, 1, -45deg) translateY(-90px) translateX(-20px);
+  transform: rotate3d(0.5, 1, 1, -45deg) translateY(-130px) translateX(-55px);
 }
 .emptyPlot {
   background-color: transparent;
   justify-self: center;
   align-self: center;
   display: flex;
-  position: relative;
+  /* position: relative; */
   height: 165px;
   width: 165px;
   border: none;
@@ -182,8 +183,10 @@ a {
   position: absolute;
   width: 350px;
   height: 450px;
+  margin-left: 100px;
   background-color: rgb(182, 140, 84);
-  right: 100px;
+  left: -110%;
+  top: 20%;
   transform: rotate3d(0, 1, 1, -45deg);
   z-index: 2;
 }
@@ -583,7 +586,7 @@ nav a {
   justify-self: center;
   align-self: center;
   display: flex;
-  position: relative;
+  /* position: relative; */
   height: 165px;
   width: 165px;
   border: none;
@@ -634,7 +637,9 @@ nav a {
 .ready {
   height: fit-content;
   padding-bottom: 20px;
-  width: 250px;
+  /* width: 250px; */
+  margin-left: 3.7%;
+  margin-top: 3%;
 }
 .cropInfoMain__wrapper {
   display: flex;
@@ -654,6 +659,44 @@ nav a {
   margin-right: auto;
   font-weight: 600;
 }
+.unlockButton {
+  background-color: transparent;
+  border: none;
+}
+.unlock_main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  padding-left: 20px;
+  justify-content: flex-start;
+}
+.cost {
+  display: flex;
+  font-size: 35px;
+  text-decoration: underline;
+}
+.cost_costs {
+  font-size: 25px;
+  font-style: italic;
+}
+.buttonArea {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.unlockButton {
+  border: var(--standard-border);
+  background-color: var(--tertiary-color-hover);
+}
+.unlockButton:disabled {
+  cursor: default;
+  border-color: rgb(124, 124, 124);
+  color: rgb(97, 97, 97);
+  transform: scale(1);
+  box-shadow: inset 0 0 0 1000px rgba(133, 133, 133, 0.507);
+}
 .plus {
   color: rgba(30, 128, 30, 0.7);
 }
@@ -667,7 +710,7 @@ nav a {
   color: green;
 }
 .red {
-  color: red;
+  color: rgba(197, 0, 0, 0.801);
 }
 .yellow {
   color: yellow;

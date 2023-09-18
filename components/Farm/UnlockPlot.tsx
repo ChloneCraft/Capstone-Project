@@ -98,7 +98,6 @@ export default function UnlockPlot({
     const response = await sendRequest(`/api/${userId}/unlockedFields`, {
       arg: unlockedFieldsData + 1,
     });
-    console.log("response", response);
   }
   //--------------------
   let price: any = null;
@@ -111,48 +110,58 @@ export default function UnlockPlot({
     const plant3 = PlantsService.getPlantById(plants, price.plant3.id);
 
     return (
-      <div className="unlockPlot" onClick={handleClick}>
+      <div className="cropInfo" onClick={handleClick}>
         <nav className="selectSeed__nav">
           <h2>Unlock Plot</h2>
           <button className="close" onClick={() => handleClosing()}>
             ❌
           </button>
         </nav>
-        <h3>Costs:</h3>
-        <h4 className={hasEnoughMoney(price.money) ? "green" : "red"}>
-          {price.money}$
-        </h4>
-        <CostsUnlocking
-          name={plant.name}
-          amount={price.plant1.amount}
-          hasEnough={hasEnoughItems(price.plant1, plantStorage)}
-        />
-        {!!price.plant2.id && (
-          <CostsUnlocking
-            name={plant2.name}
-            amount={price.plant2.amount}
-            hasEnough={hasEnoughItems(price.plant2, plantStorage)}
-          />
-        )}
-        {!!price.plant3.id && (
-          <CostsUnlocking
-            name={plant3.name}
-            amount={price.plant3.amount}
-            hasEnough={hasEnoughItems(price.plant3, plantStorage)}
-          />
-        )}
-        {doesHaveEnoughMats(price) ? (
-          <button
-            className="unlockButton"
-            onClick={() => handleUnlocking(price)}
+        <section className="unlock_main">
+          <h3 className="cost">Costs:</h3>
+          <h4
+            className={
+              hasEnoughMoney(price.money)
+                ? "green cost_costs"
+                : "red cost_costs"
+            }
           >
-            unlock
-          </button>
-        ) : (
-          <button className="unlockButton" disabled={true}>
-            unlock
-          </button>
-        )}
+            {price.money}$
+          </h4>
+          <CostsUnlocking
+            name={plant.name}
+            amount={price.plant1.amount}
+            hasEnough={hasEnoughItems(price.plant1, plantStorage)}
+          />
+          {!!price.plant2.id && (
+            <CostsUnlocking
+              name={plant2.name}
+              amount={price.plant2.amount}
+              hasEnough={hasEnoughItems(price.plant2, plantStorage)}
+            />
+          )}
+          {!!price.plant3.id && (
+            <CostsUnlocking
+              name={plant3.name}
+              amount={price.plant3.amount}
+              hasEnough={hasEnoughItems(price.plant3, plantStorage)}
+            />
+          )}
+        </section>
+        <section className="buttonArea">
+          {doesHaveEnoughMats(price) ? (
+            <button
+              className="killPlant unlockButton"
+              onClick={() => handleUnlocking(price)}
+            >
+              Unlock
+            </button>
+          ) : (
+            <button className="killPlant unlockButton" disabled={true}>
+              Unlock
+            </button>
+          )}
+        </section>
       </div>
     );
   }

@@ -147,21 +147,18 @@ export default function MarketItemList() {
 
       const moneyData = await fetchReturn.json();
 
-      console.log("test1", moneyData);
       const { currentMoney: sellerMoney, totalMoney: sellerTotal } = moneyData;
 
       if (entriesByOldest[i].amount >= amountLeft) {
         //subtract amountLeft from entry and decide if still active
         const buyAmountLeft = entriesByOldest[i].amount - amountLeft;
         const isEntryEmpty = buyAmountLeft === 0 ? true : false;
-        console.log("test2");
         MarketService.subtractFromMarketEntry(
           amountLeft,
           entriesByOldest[i]._id,
           !isEntryEmpty,
           plantId
         );
-        console.log("test3");
         //add amount that was subtracted times price to user balance
         await MoneyService.calculateUserBalance(
           amountLeft,
@@ -171,7 +168,6 @@ export default function MarketItemList() {
           entriesByOldest[i].sellerId,
           price
         );
-        console.log("test4");
         amountLeft = 0;
         return;
       } else {
@@ -182,7 +178,6 @@ export default function MarketItemList() {
           false,
           plantId
         );
-        console.log("test5");
         await MoneyService.calculateUserBalance(
           entriesByOldest[i].amount,
           "add",

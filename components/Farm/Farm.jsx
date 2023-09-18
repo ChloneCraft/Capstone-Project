@@ -27,9 +27,7 @@ export default function Farm() {
   const session = useSession();
 
   const id = session?.data?.user?.id;
-  console.log("id", id);
   const { data: farmData, isLoading, error } = useSWR(`/api/${id}/farm`);
-  console.log("farmData", farmData);
 
   useInterval(() => {
     updateFarm();
@@ -81,11 +79,6 @@ export default function Farm() {
         } else {
           const decrease =
             ((interval / 100) * calcGrowthRate(weatherStatus)) / 50;
-          console.log("decrease", decrease);
-          console.log(
-            "calcGrowthRate(weatherStatus)",
-            calcGrowthRate(weatherStatus)
-          );
           let newGrowthStatus = crop.growthStatus - decrease * 10;
           if (newGrowthStatus <= 0) {
             newGrowthStatus = 0;

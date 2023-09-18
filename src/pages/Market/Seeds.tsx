@@ -172,6 +172,7 @@ export default function Seeds() {
                           handlerArgs={storageItem._id}
                           isSelling={false}
                           handler={handleBuy}
+                          price={100}
                         />
                       )}
                     </div>

@@ -12,11 +12,8 @@ export const MoneyService = {
     let updatedMoney = null;
     let updatedTotalMoney = totalMoney;
     if (operator === "add") {
-      console.log("i am adding something now", updatedTotalMoney);
-
       updatedMoney = currentMoney + amount * price;
       updatedTotalMoney = totalMoney + amount * price;
-      console.log("totalmoneyupdate", updatedTotalMoney);
     } else if (operator === "subtract") {
       updatedMoney = currentMoney - amount * price;
     }

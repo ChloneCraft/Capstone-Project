@@ -38,7 +38,6 @@ export default function CropInfo({
       setThisWeather(weather);
     }
   }, [weather]);
-  console.log(thisWeather);
 
   const session = useSession();
   function handleClick(e: any) {
@@ -59,24 +58,25 @@ export default function CropInfo({
   if (!thisWeather) {
     return <div>loading</div>;
   }
-  console.log("thisWeather", thisWeather);
 
   const weatherStatus = PlantsService.getWeatherStatus(thisWeather);
 
   if (farm) {
     const { growthStatus, waterCapacity, plant } = farm[index];
-    console.log("growthStatus", growthStatus);
 
     const growthStatusMin = Math.floor(growthStatus / 20 / 60);
     const growthStatusSec = Math.round((growthStatus / 20) % 60);
     const { name: plantName } = plant;
     const growthRate = calcGrowthRate(weatherStatus);
-    console.log(weatherStatus);
 
     return (
       <div
         className={growthStatus !== 0 ? "cropInfo" : "cropInfo ready"}
         onClick={handleClick}
+        onMouseEnter={() => {
+          setHasMouseOver(true);
+        }}
+        onMouseLeave={() => setHasMouseOver(false)}
       >
         <nav className="selectSeed__nav">
           <h2 className="plantName">{plantName}</h2>
