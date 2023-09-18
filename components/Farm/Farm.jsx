@@ -4,6 +4,8 @@ import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import { PlantsService } from "@/services/PlantsService";
 import { calcGrowthRate } from "./CropInfo";
+import { sendRequest } from "./SelectSeed";
+import InfoPopUp from "../general/InfoPopUp";
 
 const interval = 5000;
 
@@ -11,20 +13,25 @@ export default function Farm() {
   const [farm, setFarm] = useState([]);
   let [count, setCount] = useState(0);
   const [weather, setWeather] = useState();
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popup, setPopup] = useState(false);
+
   let weatherStatus = 1;
+  let weatherData = null;
 
   async function test() {
-    const weatherData = await PlantsService.getWeather();
+    weatherData = await PlantsService.getWeather();
     setWeather(weatherData);
   }
   useEffect(() => {
-    test();
+    if (!weatherData) {
+      test();
+    }
   }, []);
   const session = useSession();
 
   const id = session?.data?.user?.id;
   const { data: farmData, isLoading, error } = useSWR(`/api/${id}/farm`);
-  console.log("farmData", farmData);
 
   useInterval(() => {
     updateFarm();
@@ -42,7 +49,7 @@ export default function Farm() {
     }
   }
 
-  weatherStatus = PlantsService.getWeatherStatus(weather);
+  // weatherStatus = PlantsService.getWeatherStatus(weather);
 
   //-------------------------custom hook from internet -> https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 
@@ -76,12 +83,7 @@ export default function Farm() {
         } else {
           const decrease =
             ((interval / 100) * calcGrowthRate(weatherStatus)) / 50;
-          console.log("decrease", decrease);
-          console.log(
-            "calcGrowthRate(weatherStatus)",
-            calcGrowthRate(weatherStatus)
-          );
-          let newGrowthStatus = crop.growthStatus - decrease;
+          let newGrowthStatus = crop.growthStatus - decrease * 10;
           if (newGrowthStatus <= 0) {
             newGrowthStatus = 0;
           }
@@ -94,24 +96,23 @@ export default function Farm() {
         }
       });
     }
-    const response = await fetch(`/api/${id}/farm`, {
-      method: "PUT",
-      body: JSON.stringify(newFarm),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.ok) {
-      const result = await response.json();
-    } else {
-      console.error(`Error: ${response.status}`);
-    }
-    setFarm(newFarm);
+    const response = await sendRequest(`/api/${id}/farm`, { arg: newFarm });
+    setFarm(response);
     return newFarm;
   }
+  //---------------------------------------
+  function activatePopup(message) {
+    setPopup(true);
+    setPopupMessage(message);
+    setTimeout(() => {
+      setPopup(false);
+    }, 2500);
+  }
+
   if (farm.length !== 0) {
     return (
       <section className="farmContainer">
+        <InfoPopUp message={popupMessage} condition={popup} />
         <div className="farm">
           {farm.map((plot, index) => {
             return (
@@ -122,6 +123,8 @@ export default function Farm() {
                 index={index}
                 updateFarm={updateFarm}
                 key={index}
+                weather={weather}
+                activatePopup={activatePopup}
               />
             );
           })}

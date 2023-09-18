@@ -129,9 +129,8 @@ export default function SelectSeed({
   return (
     <div className="selectSeed" onClick={handleClick}>
       <nav className="selectSeed__nav">
-        <h2>Name</h2>
-        <h2>Image</h2>
-        <h2>amount</h2>
+        <h2>Choose a Seed to plant here!</h2>
+
         <button className="close" onClick={() => handleClosing()}>
           ❌
         </button>
@@ -145,15 +144,15 @@ export default function SelectSeed({
               onClick={() => handleSeedSelection(storageItem.plant._id)}
             >
               <aside className="selectSeed__list__item__content">
-                <h3>{storageItem.plant.name}</h3>
                 <div className="selectSeed__list__item__content__imageContainer">
                   <Image
                     src={storageItem.plant.image.img}
                     alt="Seed_Image"
-                    width={60}
-                    height={60}
+                    width={50}
+                    height={55}
                   />
                 </div>
+                <h3>{storageItem.plant.name}</h3>
                 <h3>{storageItem.amount}</h3>
               </aside>
             </li>

@@ -26,7 +26,6 @@ export default async function handler(req: any, res: any) {
     const stackfromToday = user.plantStorage.find((item: any) => {
       return item.plant == plantId && item.decayStatus === newPlant.decayTime;
     });
-    console.log("stackfromToday", stackfromToday);
 
     if (stackfromToday) {
       user.plantStorage[user.plantStorage.indexOf(stackfromToday)].amount++;

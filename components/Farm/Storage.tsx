@@ -9,7 +9,7 @@ import { MoneyService } from "@/services/MoneyService";
 import { findSeedStackById } from "@/pages/Market/Seeds";
 import { sendRequest } from "./SelectSeed";
 import { useEffect } from "react";
-import MoneyDisplay from "../general/MoneyDisplay";
+import Searchbar from "../general/Searchbar";
 
 export default function Storage() {
   const [query, setQuery] = useState("");
@@ -24,10 +24,10 @@ export default function Storage() {
   useEffect(() => {
     if (userStorage) {
       let sortedUserStorage = userStorage.sort((item1: any, item2: any) => {
-        return item2.plant.type.length - item1.plant.type.length;
+        return item2.amount - item1.amount;
       });
       sortedUserStorage = sortedUserStorage.sort((item1: any, item2: any) => {
-        return item2.amount - item1.amount;
+        return item2.plant.type.length - item1.plant.type.length;
       });
       setFilteredStorage(sortedUserStorage);
     }
@@ -140,25 +140,18 @@ export default function Storage() {
   return (
     <>
       <header>
-        <Navbar pageTitle={"Storage"}></Navbar>
+        <Navbar>
+          <Searchbar handleSearchInput={handleSearchInput} list={userStorage} />
+        </Navbar>
       </header>
       <main className="storageMain">
-        <section className="storageSearchbarSection">
-          <form className="storageForm">
-            <input
-              type="text"
-              name="storageSearchbar"
-              onChange={(e) => handleSearchInput(e, userStorage)}
-            />
-          </form>
-          <MoneyDisplay />
-        </section>
+        <div className="pageTitle">Storage</div>
         <section className="storageList">
           <nav className="storageTableNav">
             <h2>Name</h2>
             <h2>Image</h2>
-            <h2>expires in</h2>
-            <h2>amount</h2>
+            <h2>Expires in</h2>
+            <h2>Amount</h2>
             <h2>Quick Sell</h2>
             <h2>Sell on Market</h2>
           </nav>
@@ -198,7 +191,12 @@ export default function Storage() {
                         </button>
                       )}
                     {wantsToChooseAmount === index && (
-                      <>
+                      <div
+                        style={{
+                          transform: "translateX(90px)",
+                          position: "absolute",
+                        }}
+                      >
                         <NumberInput
                           handler={handleSelling}
                           price={storageItem.plant.price}
@@ -209,14 +207,17 @@ export default function Storage() {
                           }}
                           comparer={storageItem.amount}
                         />
-                        <button onClick={() => setWantsToChooseAmount(-1)}>
-                          cancel
+                        <button
+                          className="sellButton cancel"
+                          onClick={() => setWantsToChooseAmount(-1)}
+                        >
+                          Cancel
                         </button>
-                      </>
+                      </div>
                     )}
                     {storageItem.plant.type === "seed" && (
                       <button className="sellButton" disabled>
-                        {"can&apos;t sell seeds"}
+                        {"can not sell seeds"}
                       </button>
                     )}
                   </div>
@@ -232,7 +233,12 @@ export default function Storage() {
                         </button>
                       )}
                     {wantsToChooseAmount === index + 10 && (
-                      <>
+                      <div
+                        style={{
+                          transform: "translateX(-80px)",
+                          position: "absolute",
+                        }}
+                      >
                         <NumberInput
                           handler={handleListing}
                           price={storageItem.plant.price}
@@ -243,14 +249,17 @@ export default function Storage() {
                           }}
                           comparer={storageItem.amount}
                         />
-                        <button onClick={() => setWantsToChooseAmount(-1)}>
+                        <button
+                          className="sellButton cancel"
+                          onClick={() => setWantsToChooseAmount(-1)}
+                        >
                           cancel
                         </button>
-                      </>
+                      </div>
                     )}
                     {storageItem.plant.type === "seed" && (
                       <button className="sellButton" disabled>
-                        {"can&apos;t sell seeds"}
+                        {"can not sell seeds"}
                       </button>
                     )}
                   </div>

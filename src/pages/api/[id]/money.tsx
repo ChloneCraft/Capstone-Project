@@ -8,7 +8,6 @@ export default async function handler(req: any, res: any) {
   if (req.method === "GET") {
     try {
       const user = await User.findById(id);
-      // console.log("plantStorage api user", user);
 
       const { totalMoney, currentMoney } = user;
 

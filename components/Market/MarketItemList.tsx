@@ -10,7 +10,7 @@ import { findSeedStackById } from "@/pages/Market/Seeds";
 import { PlantsService } from "@/services/PlantsService";
 import { MoneyService } from "@/services/MoneyService";
 import { MarketService } from "@/services/MarketService";
-import MoneyDisplay from "../general/MoneyDisplay";
+import Searchbar from "../general/Searchbar";
 
 export default function MarketItemList() {
   const [marketPlace, setMarketPlace] = useState([]);
@@ -147,21 +147,18 @@ export default function MarketItemList() {
 
       const moneyData = await fetchReturn.json();
 
-      console.log("test1", moneyData);
       const { currentMoney: sellerMoney, totalMoney: sellerTotal } = moneyData;
 
       if (entriesByOldest[i].amount >= amountLeft) {
         //subtract amountLeft from entry and decide if still active
         const buyAmountLeft = entriesByOldest[i].amount - amountLeft;
         const isEntryEmpty = buyAmountLeft === 0 ? true : false;
-        console.log("test2");
         MarketService.subtractFromMarketEntry(
           amountLeft,
           entriesByOldest[i]._id,
           !isEntryEmpty,
           plantId
         );
-        console.log("test3");
         //add amount that was subtracted times price to user balance
         await MoneyService.calculateUserBalance(
           amountLeft,
@@ -171,7 +168,6 @@ export default function MarketItemList() {
           entriesByOldest[i].sellerId,
           price
         );
-        console.log("test4");
         amountLeft = 0;
         return;
       } else {
@@ -182,7 +178,6 @@ export default function MarketItemList() {
           false,
           plantId
         );
-        console.log("test5");
         await MoneyService.calculateUserBalance(
           entriesByOldest[i].amount,
           "add",
@@ -202,28 +197,22 @@ export default function MarketItemList() {
   return (
     <>
       <header>
-        <Navbar pageTitle={"Goods"}></Navbar>
+        <Navbar>
+          <Searchbar
+            handleSearchInput={handleSearchInput}
+            list={PlantsService.getListOfPlants(plants)}
+          />
+        </Navbar>
       </header>
       <main className="storageMain">
-        <section className="storageSearchbarSection">
-          <form className="storageForm">
-            <input
-              type="text"
-              name="storageSearchbar"
-              onChange={(e) =>
-                handleSearchInput(e, PlantsService.getListOfPlants(plants))
-              }
-            />
-          </form>
-          <MoneyDisplay />
-        </section>
+        <div className="pageTitle">Goods</div>
         <section className="storageList">
           <nav className="storageTableNav">
             <h2>Name</h2>
             <h2>Image</h2>
             <h2>Price</h2>
-            <h2>available</h2>
-            <h2>buy</h2>
+            <h2>Available</h2>
+            <h2>Buy</h2>
           </nav>
           <ul className="listStorageItems">
             {marketPlace.map((marketItem: any, index: number) => {
@@ -249,7 +238,12 @@ export default function MarketItemList() {
 
                   <div>
                     {buyingButton !== index + 1 && (
-                      <button onClick={() => clickBuy(index + 1)}>buy</button>
+                      <button
+                        className="sellButton"
+                        onClick={() => clickBuy(index + 1)}
+                      >
+                        Buy
+                      </button>
                     )}
                     {buyingButton === index + 1 && (
                       <NumberInput

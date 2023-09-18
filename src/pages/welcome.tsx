@@ -21,7 +21,6 @@ export default function Welcome() {
   if (isLoading || !user) {
     return <div>loading...</div>;
   }
-  console.log("user", user);
 
   if (user.region === "none") {
     return (

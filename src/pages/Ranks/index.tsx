@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import Navbar from "../../../components/general/Navbar";
-import MoneyDisplay from "../../../components/general/MoneyDisplay";
 import { useEffect, useState } from "react";
+import Searchbar from "../../../components/general/Searchbar";
 
 export default function Rankings() {
   const [query, setQuery] = useState("");
@@ -16,7 +16,7 @@ export default function Rankings() {
     if (sortedUsers) {
       setFilteredUsers(sortedUsers);
     }
-  }, [users]);
+  }, [users, sortedUsers]);
 
   if (isLoading || !users) {
     return <div>loading</div>;
@@ -38,19 +38,12 @@ export default function Rankings() {
   return (
     <>
       <header>
-        <Navbar pageTitle={"Ranks"}></Navbar>
+        <Navbar>
+          <Searchbar handleSearchInput={handleSearchInput} list={sortedUsers} />
+        </Navbar>
       </header>
       <main className="storageMain">
-        <section className="storageSearchbarSection">
-          <form className="storageForm">
-            <input
-              type="text"
-              name="storageSearchbar"
-              onChange={(e) => handleSearchInput(e, sortedUsers)}
-            />
-          </form>
-          <MoneyDisplay />
-        </section>
+        <section className="storageSearchbarSection"></section>
         <section className="storageList">
           <nav className="storageTableNav">
             <h2>Rank</h2>

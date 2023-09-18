@@ -12,5 +12,5 @@ export default function MoneyDisplay() {
       setMoney(data.currentMoney);
     }
   });
-  return <span className="MoneyDisplay">{money}$</span>;
+  return <span className="moneyDisplay">{money} $</span>;
 }

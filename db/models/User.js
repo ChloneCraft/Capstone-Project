@@ -14,6 +14,7 @@ export const userSchema = new Schema(
       required: true,
     },
     totalMoney: { type: Number, default: 1000, required: true },
+    css_class: { type: String },
     currentMoney: { type: Number, default: 1000, required: true },
     unlockedFields: { type: Number, default: 16, required: true },
     plantsCollected: {
