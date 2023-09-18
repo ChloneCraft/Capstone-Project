@@ -210,6 +210,7 @@ export default function Crop({
         <Image
           src={hasMouseOver ? image_hover : image}
           alt="Plant"
+          quality={100}
           width={250}
           height={250}
           className={css_class + " cropImage"}
