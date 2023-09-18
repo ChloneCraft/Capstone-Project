@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 
 export default function NumberInput({
   handler,
@@ -38,39 +38,36 @@ export default function NumberInput({
   }
   let buySell = "";
   if (isSelling) {
-    buySell = "sell";
+    buySell = "Sell";
   } else {
-    buySell = "buy";
+    buySell = "Buy";
   }
   return (
-    <div style={{ position: "relative" }}>
+    <div className="numberInputContainer" style={{ position: "relative" }}>
       <form className="numberInputSelectAmountForm" onSubmit={handleSubmit}>
-        <label>Amount: </label>
+        {/* <label>Amount: </label> */}
         <input
           type="number"
           className="numberInputSelectAmountInput"
           min="1"
           onChange={handleChange}
+          placeholder="amount"
           name="amountInput"
         ></input>
-        {!isDisabled && (
+        {!isDisabled ? (
           <input
             type="submit"
-            className="numberInputSelectAmountBuyButton"
+            className="sellButton numberInputSelectAmountBuyButton"
             value={buySell}
             disabled={isDisabled}
           />
+        ) : (
+          <p className="red amountSelectionWarning">
+            {!isSelling && "insufficiant account balance!"}
+            {isSelling && "not enough in storage!"}
+          </p>
         )}
       </form>
-      {isDisabled && (
-        <p
-          className="red"
-          style={{ fontSize: "15px", position: "absolute", top: "25px" }}
-        >
-          {/* {!isSelling && "insufficiant account balance!"} */}
-          {isSelling && "not enough in storage!"}
-        </p>
-      )}
     </div>
   );
 }

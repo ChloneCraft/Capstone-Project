@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { PlantsService } from "@/services/PlantsService";
 import { calcGrowthRate } from "./CropInfo";
 import { sendRequest } from "./SelectSeed";
+import InfoPopUp from "../general/InfoPopUp";
 
 const interval = 5000;
 
@@ -12,6 +13,9 @@ export default function Farm() {
   const [farm, setFarm] = useState([]);
   let [count, setCount] = useState(0);
   const [weather, setWeather] = useState();
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popup, setPopup] = useState(false);
+
   let weatherStatus = 1;
   let weatherData = null;
 
@@ -96,9 +100,19 @@ export default function Farm() {
     setFarm(response);
     return newFarm;
   }
+  //---------------------------------------
+  function activatePopup(message) {
+    setPopup(true);
+    setPopupMessage(message);
+    setTimeout(() => {
+      setPopup(false);
+    }, 2500);
+  }
+
   if (farm.length !== 0) {
     return (
       <section className="farmContainer">
+        <InfoPopUp message={popupMessage} condition={popup} />
         <div className="farm">
           {farm.map((plot, index) => {
             return (
@@ -110,6 +124,7 @@ export default function Farm() {
                 updateFarm={updateFarm}
                 key={index}
                 weather={weather}
+                activatePopup={activatePopup}
               />
             );
           })}

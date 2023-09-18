@@ -129,11 +129,11 @@ export default function CropInfo({
               )}
             </div>
             {weather?.daily?.rain_sum[0] ? (
-              <p className="cropInfoExtra">
+              <p className="cropInfoExtra plus">
                 - Your plants enjoy being watered.
               </p>
             ) : (
-              <p className="cropInfoExtra plus">
+              <p className="cropInfoExtra minus">
                 - Your plants need water.
                 <br /> &nbsp; wait for rain!
               </p>
@@ -141,11 +141,11 @@ export default function CropInfo({
             {PlantsService.checkWeatherCode(
               weather?.current_weather.weathercode
             ) ? (
-              <p className="cropInfoExtra minus">
+              <p className="cropInfoExtra plus">
                 - Your Plants embrace the <br /> &nbsp; sun.
               </p>
             ) : (
-              <p className="cropInfoExtra plus">
+              <p className="cropInfoExtra minus">
                 - it is too cloudy. <br />
                 &nbsp; Your Plants dont get enough sunlight.
               </p>

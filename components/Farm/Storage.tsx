@@ -24,10 +24,10 @@ export default function Storage() {
   useEffect(() => {
     if (userStorage) {
       let sortedUserStorage = userStorage.sort((item1: any, item2: any) => {
-        return item2.plant.type.length - item1.plant.type.length;
+        return item2.amount - item1.amount;
       });
       sortedUserStorage = sortedUserStorage.sort((item1: any, item2: any) => {
-        return item2.amount - item1.amount;
+        return item2.plant.type.length - item1.plant.type.length;
       });
       setFilteredStorage(sortedUserStorage);
     }
@@ -191,7 +191,12 @@ export default function Storage() {
                         </button>
                       )}
                     {wantsToChooseAmount === index && (
-                      <>
+                      <div
+                        style={{
+                          transform: "translateX(90px)",
+                          position: "absolute",
+                        }}
+                      >
                         <NumberInput
                           handler={handleSelling}
                           price={storageItem.plant.price}
@@ -202,10 +207,13 @@ export default function Storage() {
                           }}
                           comparer={storageItem.amount}
                         />
-                        <button onClick={() => setWantsToChooseAmount(-1)}>
-                          cancel
+                        <button
+                          className="sellButton cancel"
+                          onClick={() => setWantsToChooseAmount(-1)}
+                        >
+                          Cancel
                         </button>
-                      </>
+                      </div>
                     )}
                     {storageItem.plant.type === "seed" && (
                       <button className="sellButton" disabled>
@@ -225,7 +233,12 @@ export default function Storage() {
                         </button>
                       )}
                     {wantsToChooseAmount === index + 10 && (
-                      <>
+                      <div
+                        style={{
+                          transform: "translateX(-80px)",
+                          position: "absolute",
+                        }}
+                      >
                         <NumberInput
                           handler={handleListing}
                           price={storageItem.plant.price}
@@ -236,10 +249,13 @@ export default function Storage() {
                           }}
                           comparer={storageItem.amount}
                         />
-                        <button onClick={() => setWantsToChooseAmount(-1)}>
+                        <button
+                          className="sellButton cancel"
+                          onClick={() => setWantsToChooseAmount(-1)}
+                        >
                           cancel
                         </button>
-                      </>
+                      </div>
                     )}
                     {storageItem.plant.type === "seed" && (
                       <button className="sellButton" disabled>

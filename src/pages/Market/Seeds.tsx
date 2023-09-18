@@ -157,7 +157,7 @@ export default function Seeds() {
                       />
                     </div>
                     <h3>100 $</h3>
-                    <div>
+                    <div className="buyButtonArea">
                       {buyingButton !== index + 1 && (
                         <button
                           className="sellButton"

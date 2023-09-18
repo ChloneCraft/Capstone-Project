@@ -27,5 +27,8 @@
     "swr": "^2.2.2",
     "typescript": "5.2.2",
     "uid": "^2.0.2"
+  },
+  "devDependencies": {
+    "@types/react-numeric-input": "^2.2.4"
   }
 }

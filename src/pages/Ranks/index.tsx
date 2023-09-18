@@ -38,7 +38,7 @@ export default function Rankings() {
   return (
     <>
       <header>
-        <Navbar pageTitle={"Ranks"}>
+        <Navbar>
           <Searchbar handleSearchInput={handleSearchInput} list={sortedUsers} />
         </Navbar>
       </header>

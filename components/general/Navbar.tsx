@@ -16,8 +16,8 @@ export default function Navbar({ children }: { children: any }) {
           Market
         </Link>
         {/* <Link href={"/Weather"}>Weather Forecast</Link> */}
-        <Link className="navbarLink" href={"/Rankings"}>
-          Rankings
+        <Link className="navbarLink" href={"/Ranks"}>
+          Ranks
         </Link>
       </section>
       <section className="section2">

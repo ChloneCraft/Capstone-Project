@@ -30,6 +30,7 @@ export default function Crop({
   farm,
   updateFarm,
   weather,
+  activatePopup,
 }: {
   content: any;
   index: number;
@@ -37,6 +38,7 @@ export default function Crop({
   farm: any;
   updateFarm: Function;
   weather: any;
+  activatePopup: Function;
 }) {
   const [hasMouseOver, setHasMouseOver] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -48,8 +50,9 @@ export default function Crop({
 
   async function harvestCrop() {
     killCrop();
-    const cropId = content.plant._id;
+    const cropId = farm[index].plant._id;
     addItemToInventory(cropId);
+    activatePopup(`Added ${farm[index].plant.name} \n to storage.`);
   }
 
   function addItemToInventory(plantId: mongoose.Schema.Types.ObjectId) {
