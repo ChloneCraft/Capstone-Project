@@ -164,6 +164,7 @@ export default function Storage() {
                     <Image
                       src={storageItem.plant.image.img}
                       alt="plantImage"
+                      quality={100}
                       width={40}
                       height={60}
                     />

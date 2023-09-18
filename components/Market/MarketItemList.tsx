@@ -223,6 +223,7 @@ export default function MarketItemList() {
                     <Image
                       src={marketItem.image.item}
                       alt="plantImage"
+                      quality={100}
                       width={40}
                       height={60}
                     />

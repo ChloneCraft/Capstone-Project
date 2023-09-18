@@ -151,6 +151,7 @@ export default function Seeds() {
                     <div className="imageContainer">
                       <Image
                         src={storageItem.image.img}
+                        quality={100}
                         alt="plantImage"
                         width={40}
                         height={60}

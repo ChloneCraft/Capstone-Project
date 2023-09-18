@@ -147,6 +147,7 @@ export default function SelectSeed({
                 <div className="selectSeed__list__item__content__imageContainer">
                   <Image
                     src={storageItem.plant.image.img}
+                    quality={100}
                     alt="Seed_Image"
                     width={50}
                     height={55}
