@@ -190,8 +190,8 @@ a {
   height: 450px;
   margin-left: 100px;
   background-color: rgb(182, 140, 84);
-  left: -110%;
-  top: 20%;
+  left: -105%;
+  top: 45%;
   transform: rotate3d(0, 1, 1, -45deg);
   z-index: 2;
 }

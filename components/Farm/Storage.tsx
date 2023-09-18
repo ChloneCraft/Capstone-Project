@@ -162,7 +162,11 @@ export default function Storage() {
                   <h3>{storageItem.plant.name}</h3>
                   <div className="imageContainer">
                     <Image
-                      src={storageItem.plant.image.img}
+                      src={
+                        storageItem.plant.type === "plant"
+                          ? storageItem.plant.image.item
+                          : storageItem.plant.image.img
+                      }
                       alt="plantImage"
                       quality={100}
                       width={40}
