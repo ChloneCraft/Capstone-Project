@@ -190,8 +190,8 @@ a {
   height: 450px;
   margin-left: 100px;
   background-color: rgb(182, 140, 84);
-  left: -105%;
-  top: 45%;
+  left: -110%;
+  top: 20%;
   transform: rotate3d(0, 1, 1, -45deg);
   z-index: 2;
 }
@@ -246,9 +246,9 @@ a {
   font-size: 25px;
   cursor: pointer;
 }
-.navbarLink:current {
+/* .currentLink {
   background-color: var(--tertiary-color-hover);
-}
+} */
 nav a {
   font-size: 25px;
   text-align: center;
