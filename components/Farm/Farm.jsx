@@ -85,7 +85,7 @@ export default function Farm() {
         } else {
           const decrease =
             ((interval / 100) * calcGrowthRate(weatherStatus)) / 50;
-          let newGrowthStatus = crop.growthStatus - decrease * 2;
+          let newGrowthStatus = crop.growthStatus - decrease;
           if (newGrowthStatus <= 0) {
             newGrowthStatus = 0;
           }
