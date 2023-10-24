@@ -9,11 +9,17 @@ export interface MarketType {
   listDate: Date;
 }
 export interface MarketsType extends Array<MarketType> {}
+export interface ImageType {
+  img: String;
+  hover: String;
+  stage1: String;
+  stage2: String;
+}
 
 export type PlantType = InferSchemaType<typeof plantSchema>;
 
 const plantSchema = new Schema({
-  _id: { type: Schema.Types.ObjectId, required: true },
+  _id: { type: Schema.Types.ObjectId, ref: "user", required: true },
   name: { type: String, default: "empty", required: true },
   type: { type: String, default: "", required: true },
   plantID: { type: Number, default: 0, required: true },
@@ -31,6 +37,7 @@ const plantSchema = new Schema({
     type: [
       {
         sellerId: Schema.Types.ObjectId,
+        ref: "user",
         amount: Number,
         active: Boolean,
         listDate: Date,

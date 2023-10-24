@@ -1,9 +1,9 @@
 import mongoose, { InferSchemaType } from "mongoose";
-import Plant from "./Plant.ts";
+import Plant from "./Plant.js";
 
 const { Schema } = mongoose;
 
-// export type UserType = InferSchemaType<typeof userSchema>;
+export type UserType = InferSchemaType<typeof userSchema>;
 
 export const userSchema = new Schema(
   {
@@ -26,7 +26,7 @@ export const userSchema = new Schema(
     plantStorage: {
       type: [
         {
-          _id: { type: mongoose.Types.ObjectId },
+          _id: { type: mongoose.Types.ObjectId, ref: "User" },
           plant: { type: Schema.Types.ObjectId, ref: "Plant" },
           amount: Number,
           decayStatus: Number,

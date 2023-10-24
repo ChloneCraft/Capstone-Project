@@ -2,7 +2,6 @@ import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "../../../../db/mongoDBAdapter";
-import Player from "../../../../db/models/Player";
 
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
